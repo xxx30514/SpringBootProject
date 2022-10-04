@@ -3,5 +3,5 @@ spring:
     static-path-pattern: /res/**
   web:
     resources: 
-      static-locations: classpath:/static
+      static-locations: classpath:/static/img
           
