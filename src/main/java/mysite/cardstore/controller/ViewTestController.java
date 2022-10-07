@@ -12,4 +12,9 @@ public class ViewTestController {
 		model.addAttribute("msg","你好");
 		return "success";
 	}
+	@GetMapping("/admin")
+	public String admin() {
+		
+		return "admin_index";
+	}
 }
