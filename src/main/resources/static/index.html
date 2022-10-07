@@ -51,12 +51,19 @@
 </nav>
 	<div id="app">
 	</div>
+	<a href="/thymeleaf">跳轉測試</a><br>
+	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
 	<form action="/user" method="post">
 		<input type="hidden" name="_method" value="delete"> 
 		<input type="submit" value="springboot刪除使用者"><br>
 	</form>
 	<form action="/user" method="get">
 		<input type="submit" value="springboot get 測試"><br>
+	</form>
+	<form action="/save" method="post">
+		帳號:<input type="text" name="username"><br> 密碼:<input
+			type="password" name="password"><br> <input
+			type="submit" value="測試@RequestBody"><br>
 	</form>
 </body>
 <script>

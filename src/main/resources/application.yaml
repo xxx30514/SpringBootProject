@@ -8,4 +8,11 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-          
+server:
+  servlet:
+    encoding: 
+      charset: UTF-8
+      force: true
+      enabled: true
+  tomcat:
+    uri-encoding: UTF-8
