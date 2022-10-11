@@ -52,4 +52,9 @@ public class ViewTestController {
 		}
 		return "admin_login";
 	}
+	@GetMapping("/data")
+	public String adminData() {
+		
+		return "table/data";
+	}
 }
