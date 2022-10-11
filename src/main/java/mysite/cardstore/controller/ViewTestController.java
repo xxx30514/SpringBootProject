@@ -42,15 +42,15 @@ public class ViewTestController {
 	@GetMapping("/admin")
 	//到後台首頁
 	public String adminIndex(HttpSession session,Model model) {
-		//是否登入 攔截器
-		Object loginUser = session.getAttribute("loginUser");
-		if (loginUser!=null) {
-			return "admin_index";
-		}else {
-			//回到登入頁面
-			model.addAttribute("msg","尚未登入");
-		}
-		return "admin_login";
+		//是否登入 改由攔截器攔截
+//		Object loginUser = session.getAttribute("loginUser");
+//		if (loginUser!=null) {
+//			return "admin_index";
+//		}else {
+//			//回到登入頁面
+//			model.addAttribute("msg","尚未登入");
+//		}
+		return "admin_index";
 	}
 	@GetMapping("/data")
 	public String adminData() {
