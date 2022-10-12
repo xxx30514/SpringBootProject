@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,8 +14,9 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author yeh
  * 登入檢查
- * 1.配置攔截器要攔截那些請求
- * 2.將配置放在容器中(註冊組件)
+ * 1.配置攔截器要攔截那些請求 實現implements HandlerInterceptor介面
+ * 2.配置攔截器至IOC容器中(註冊組件) implements WebMvcConfigurer
+ * 3.指定攔截規則
  */
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor{
