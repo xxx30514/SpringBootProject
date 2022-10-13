@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +36,10 @@ public class FormTestController {
 		if (!headerImg.isEmpty()) {
 			//保存到文件伺服器
 			String originalFilename = headerImg.getOriginalFilename();
-			headerImg.transferTo(new File("C:\\Users\\yeh\\Desktop\\img\\"+originalFilename));
+		//	String realPath = ResourceUtils.getURL("classpath:").getPath()+"static/img/";
+			//System.out.println("路徑為:"+realPath);
+//			headerImg.transferTo(new File("C:\\Users\\yeh\\Desktop\\img\\"+originalFilename));
+			//headerImg.transferTo(new File(realPath+originalFilename));
 		}
 		if (productImgs.length >0) {
 			for (MultipartFile productImg : productImgs) {
