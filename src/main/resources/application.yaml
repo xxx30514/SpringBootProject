@@ -8,6 +8,25 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+        
+# 資料庫配置   
+     
+  datasource:
+    url: jdbc:mysql://localhost:3306/cardstoredb?serverTimezone=GMT%2B8
+    username: pm
+    password: pm
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    type: com.zaxxer.hikari.HikariDataSource
+    
+# mybatis  config-location: configuration: 會衝突 僅能存在一個配置
+mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration: # 指定mybatis相關配置
+  
+    map-underscore-to-camel-case: true
+
+    
 server:
   servlet:
     encoding: 

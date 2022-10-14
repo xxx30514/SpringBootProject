@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import mysite.cardstore.admin.pojo.Emp;
+import mysite.cardstore.service.EmpService;
 /**
  * 
  * @author yeh
@@ -34,6 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 //@ResponseBody+@Controller
 public class HelloController {
+	@Autowired
+	EmpService empService;
 	
 	@RequestMapping("/hello")
 	public String handle01() {
@@ -75,4 +82,11 @@ public class HelloController {
 		//中文會轉碼
 		return map;
 	}
+	
+	@GetMapping(value = "/emp/{id}",produces = "application/json;charset=utf-8")
+	public Emp getEmpById(@PathVariable("id")Integer empId) {
+		
+		return empService.getEmpById(empId);
+	}
+
 }
