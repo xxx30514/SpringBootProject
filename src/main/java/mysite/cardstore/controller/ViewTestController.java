@@ -1,17 +1,28 @@
 package mysite.cardstore.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import mysite.cardstore.admin.pojo.Emp;
 import mysite.cardstore.admin.pojo.User;
+import mysite.cardstore.service.EmpService;
 
 @Controller
 public class ViewTestController {
+	
+	@Autowired
+	EmpService empService;
 	
 	@GetMapping("/thymeleaf")
 	public String thymeleaf(Model model) {
@@ -53,8 +64,15 @@ public class ViewTestController {
 		return "admin_index";
 	}
 	@GetMapping("/data")
-	public String adminData() {
-		
+	public String adminData(@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo ,Model model) {
+		List<Emp> list = empService.list();
+		model.addAttribute("emps",list); 
+		//獲取分頁資訊 pageNo=起始頁  5=每頁顯示5筆
+		Page<Emp> Emppage = new Page<Emp>(pageNo,5);
+		//分頁查詢結果
+		Page<Emp> page = empService.page(Emppage, null);
+		List<Emp> records = page.getRecords();
+		model.addAttribute("page",page);
 		return "table/data";
 	}
 }
