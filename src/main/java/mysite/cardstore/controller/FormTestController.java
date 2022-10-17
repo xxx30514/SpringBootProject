@@ -38,7 +38,7 @@ public class FormTestController {
 			String originalFilename = headerImg.getOriginalFilename();
 		//	String realPath = ResourceUtils.getURL("classpath:").getPath()+"static/img/";
 			//System.out.println("路徑為:"+realPath);
-//			headerImg.transferTo(new File("C:\\Users\\yeh\\Desktop\\img\\"+originalFilename));
+			headerImg.transferTo(new File("C:\\Users\\yeh\\Desktop\\img\\"+originalFilename));
 			//headerImg.transferTo(new File(realPath+originalFilename));
 		}
 		if (productImgs.length >0) {
