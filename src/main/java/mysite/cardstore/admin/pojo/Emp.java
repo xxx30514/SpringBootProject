@@ -4,28 +4,44 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+@TableName("t_emp")
 public class Emp implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@TableId
 	private Integer empId;
 	private String empName;
 	private Integer empAge;
 	private String empGender;
+	private Integer deptId;
+	@TableField(exist = false)
 	private Dept dept; //員工對部門 多對一 對一 對應一個實體對象 對多 對應集合
+	@TableField(exist = false)
 	private String[] hobby;
+	@TableField(exist = false)
 	private Map<String, Teacher> teacherMap;
 	
 	public Emp() {
 	}
 
-	public Emp(Integer empId, String empName, Integer empAge, String empGender) {
+	public Emp(Integer empId, String empName, Integer empAge, String empGender, Integer deptId, Dept dept,
+			String[] hobby, Map<String, Teacher> teacherMap) {
 		this.empId = empId;
 		this.empName = empName;
 		this.empAge = empAge;
 		this.empGender = empGender;
+		this.deptId = deptId;
+		this.dept = dept;
+		this.hobby = hobby;
+		this.teacherMap = teacherMap;
 	}
+
+	
 
 	public Integer getEmpId() {
 		return empId;
@@ -87,10 +103,19 @@ public class Emp implements Serializable {
 		this.teacherMap = teacherMap;
 	}
 
+	public Integer getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+	
 	@Override
 	public String toString() {
 		return "Emp [empId=" + empId + ", empName=" + empName + ", empAge=" + empAge + ", empGender=" + empGender
-				+ ", dept=" + dept + ", hobby=" + Arrays.toString(hobby) + ", teacherMap=" + teacherMap + "]";
+				+ ", deptId=" + deptId + ", dept=" + dept + ", hobby=" + Arrays.toString(hobby) + ", teacherMap="
+				+ teacherMap + "]";
 	}
 	
 	
