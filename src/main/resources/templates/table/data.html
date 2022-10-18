@@ -1205,31 +1205,31 @@
               </div>
               <!-- /.card-body -->
               <!-- 自訂分頁 -->
-              <div class="row">
+              <div class="row d-flex justify-content-center">
               	<div class="col-sm-12 col-md-5">
               		<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
               		Showing 1 to 5 of [[${page.total}]] entries<br>
               		當前訪問第[[${page.current}]]頁 共[[${page.pages}]]頁 共[[${page.total}]]筆資料
-              	</div>
               		</div>
+              	</div>
               	<div class="col-sm-12 col-md-7">
               		<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
               			<ul class="pagination">
-              				<li class="paginate_button page-item previous" id="example1_previous">
-              					<a th:if="${page.hasPrevious}" th:href="@{/data(pageNo=1)}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
+              				<li class="paginate_button page-item previous" id="example1_previous" th:classappend="${page.current==1?'disabled':''}">
+              					<a th:href="@{/data(pageNo=1)}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
               				</li>
-              				<li class="paginate_button page-item previous" id="example1_previous">
-              					<a th:if="${page.hasPrevious}" th:href="@{/data(pageNo=${page.current-1})}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
+              				<li class="paginate_button page-item previous" id="example1_previous" th:classappend="${page.current==1?'disabled':''}" >
+              					<a th:href="@{/data(pageNo=${page.current-1})}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
               				</li>
               				<!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
-              				<li class="paginate_button page-item active" th:each="num :${#numbers.sequence(1,page.pages)}" th:class="${num==page.current?'active':''}">
+              				<li class="paginate_button page-item" th:each="num :${#numbers.sequence(1,page.pages)}" th:classappend="${num==page.current?'active':''}">
               					<a th:href="@{/data(pageNo=${num})}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">[[${num}]]</a>
               				</li>
-              				<li class="paginate_button page-item next" id="example1_next">
-              					<a th:if="${page.hasNext}" th:href="@{/data(pageNo=${page.current+1})}" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
+              				<li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
+              					<a th:href="@{/data(pageNo=${page.current+1})}" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
               				</li>
-              				<li class="paginate_button page-item next" id="example1_next">
-              					<a th:if="${page.hasNext}" th:href="@{/data(pageNo=${page.pages})}" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">末頁</a>
+              				<li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
+              					<a th:href="@{/data(pageNo=${page.pages})}" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">末頁</a>
               				</li>
               			</ul>
               		</div>
