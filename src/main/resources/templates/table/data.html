@@ -1185,7 +1185,9 @@
                     <td th:text="${emp.empAge}">Win 95+</td>
                     <td th:text="${emp.empGender}">4</td>
                     <td th:text="${emp.deptId}">4</td>
-                    <td>+-</td>
+                    <td>
+                    	<a th:href="@{/emp/delete/{empId}(empId=${emp.empId},pageNo=${page.current})}"  class="btn btn-block btn-danger btn-sm">刪除</a>
+					</td>
                     
                   </tr> 
                   </tbody>

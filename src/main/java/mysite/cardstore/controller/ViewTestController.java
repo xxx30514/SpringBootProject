@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -71,8 +73,17 @@ public class ViewTestController {
 		Page<Emp> Emppage = new Page<Emp>(pageNo,5);
 		//分頁查詢結果
 		Page<Emp> page = empService.page(Emppage, null);
-		List<Emp> records = page.getRecords();
+		//List<Emp> records = page.getRecords(); //每頁資料的集合
 		model.addAttribute("page",page);
 		return "table/data";
+	}
+	
+	@GetMapping("/emp/delete/{empId}")
+	public String deleteEmp(@PathVariable("empId") Integer empId, 
+							@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
+							RedirectAttributes ra) {
+		empService.removeById(empId);
+		ra.addAttribute("pageNo",pageNo);
+		return "redirect:/data";
 	}
 }
