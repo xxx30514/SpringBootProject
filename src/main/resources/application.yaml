@@ -3,12 +3,11 @@ spring:
 #    static-path-pattern: /res/**
 #  web:
 #    resources: 
-#      static-locations: classpath:/static/img
+#      static-locations: classpath:/static/
   mvc:
     hiddenmethod:
       filter:
         enabled: true
-        
 # 資料庫配置   
      
   datasource:
@@ -20,7 +19,7 @@ spring:
     multipart: 
       max-file-size: 10MB
       max-request-size: 100MB
-        
+       
         
 #    type: com.zaxxer.hikari.HikariDataSource
     
@@ -37,9 +36,13 @@ mybatis-plus:
   mapper-locations: classpath:mysite.cardstore/mapper/*.xml 
   configuration:
     map-underscore-to-camel-case: true    
-    
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      
 server:
-  port: 8888
+  port: 80
   servlet:
     encoding: 
       charset: UTF-8

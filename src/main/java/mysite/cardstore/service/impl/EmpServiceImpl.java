@@ -20,6 +20,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpSe
 		
 		return empMapper.getEmp(empId);
 	}
+	
 
 	
 
