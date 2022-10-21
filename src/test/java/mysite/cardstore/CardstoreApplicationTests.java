@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.admin.pojo.Emp;
@@ -67,5 +72,38 @@ class CardstoreApplicationTests {
 		empMapper.selectList(null);
 
 	}
+	@Test
+	void testPage() {
+		IPage<Emp> page = new Page(1,5); 
+		empMapper.selectPage(page, null);
+
+	}
+	@Test
+	void testGetBy() {
+		QueryWrapper<Emp> emp =new QueryWrapper<>();
+		emp.like("emp_name", "王" );
+		empMapper.selectList(emp);
+
+	}
+	@Test
+	void testGetBy2() {
+		String name = "王";
+		IPage<Emp> page = new Page(1,5); 
+		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<Emp>();
+		emp.like(StringUtils.isNotEmpty(name),Emp::getEmpName, name);
+		empMapper.selectPage(page,emp);
+		empService.page(page);
+
+	}
+	@Test
+	void testService() {
+		String name = "王";
+		IPage<Emp> page = new Page(1,5); 
+		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<Emp>();
+		emp.like(StringUtils.isNotEmpty(name),Emp::getEmpName, name);
+		empService.page(page,emp);
+
+	}
+
 
 }

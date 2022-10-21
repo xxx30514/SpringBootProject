@@ -10,5 +10,5 @@ import mysite.cardstore.admin.pojo.Emp;
 @Service
 public interface EmpService extends IService<Emp>{
 		
-	public Emp getEmpById(Integer empId); 
+	Emp getEmpById(Integer empId); 
 }
