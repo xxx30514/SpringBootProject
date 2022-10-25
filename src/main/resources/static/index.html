@@ -50,9 +50,9 @@
   </div>
 </nav>
 	<div id="app">
-	<p>{{message}}</p>
-	<p>{{empId}}</p>
-	<p>{{dataList}}</p>
+		<p>{{message}}</p>
+		<p>{{length}}</p>
+		<p>{{dataList}}</p>
 	</div>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
@@ -92,27 +92,28 @@
  */
     const app  = Vue.createApp({
       data() {
-        return {
-          message: 'Hello Vue!',
-          dataList: [],
-          empId: ''
-          
-        }
+        	return {
+          		message: 'Hello Vue!',
+         		dataList: [],
+         		length: ''
+        	}
       },
-      //Vue初始化後執行
-      created(){
+      //頁面載入完成Vue後執行
+      mounted(){
     	  		//查詢所有
     	  		this.getAll();
       },
       
       methods:{
-    	  getAll(){
-    		  		axios.get("/emps").then(function (response) {//成功時執行的回調函數
+    	  getAll() {
+    		  		axios.get("/emps").then((response)=> {//成功時執行的回調函數
   		 		      console.log(response.data);
+  		 		      console.log(response.data.data.length);
+  		 		      console.log(response.data.data[0]);
+  		 		      console.log(response.data.data);
+  		 		      console.log(response.data.data.empId);
     		  		  this.dataList = response.data.data;
-    		  		  this.empId = response.data
-    		  		  
-    		  		 
+		 			  this.length = response.data.data.length;
   		 		  });
     	  },
     	  testAjax(){	
@@ -140,6 +141,7 @@
     	  }
       }
     })
+    
     app.mount('#app')
      
     
