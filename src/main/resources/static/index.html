@@ -50,6 +50,9 @@
   </div>
 </nav>
 	<div id="app">
+	<p>{{message}}</p>
+	<p>{{empId}}</p>
+	<p>{{dataList}}</p>
 	</div>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
@@ -87,14 +90,31 @@
  }
  }).mount('#app')
  */
-    const { createApp } = Vue  
-    createApp({
+    const app  = Vue.createApp({
       data() {
         return {
-          message: 'Hello Vue!'
+          message: 'Hello Vue!',
+          dataList: [],
+          empId: ''
+          
         }
       },
+      //Vue初始化後執行
+      created(){
+    	  		//查詢所有
+    	  		this.getAll();
+      },
+      
       methods:{
+    	  getAll(){
+    		  		axios.get("/emps").then(function (response) {//成功時執行的回調函數
+  		 		      console.log(response.data);
+    		  		  this.dataList = response.data.data;
+    		  		  this.empId = response.data
+    		  		  
+    		  		 
+  		 		  });
+    	  },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",
@@ -119,7 +139,10 @@
  		 		  });
     	  }
       }
-    }).mount('#app')
-        
+    })
+    app.mount('#app')
+     
+    
+    
     </script>
 </html>
