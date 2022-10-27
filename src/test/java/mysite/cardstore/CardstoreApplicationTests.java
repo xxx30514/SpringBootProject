@@ -62,7 +62,7 @@ class CardstoreApplicationTests {
 	}
 	@Test
 	void testDeleteUpdateEmp() {
-		empMapper.deleteById(35);
+		empService.removeById(55);
 
 	}
 	@Test

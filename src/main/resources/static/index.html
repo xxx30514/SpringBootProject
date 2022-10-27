@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>首頁</title>
-<script src="https://unpkg.com/vue@3"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/element-plus"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -52,7 +54,129 @@
 	<div id="app">
 		<p>{{message}}</p>
 		<p>{{length}}</p>
-		<p>{{dataList}}</p>
+<!-- 		<p>{{dataList}}</p> -->
+<!-- 		<ul> -->
+<!-- 			<li v-for="item in dataList">{{item}}</li> -->
+<!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
+<!-- 		</ul> -->
+		
+		<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  新增
+</button>
+<div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>員工ID</th>
+                    <th>姓名</th>
+                    <th>年齡</th>
+                    <th>性別</th>
+                    <th>部門</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="item in dataList">
+                    <td>{{item.empId}}</td>
+                    <td>{{item.empName}}</td>
+                    <td>{{item.empAge}}</td>
+                    <td>{{item.empGender}}</td>
+                    <td>{{item.deptId}}</td>
+                    <td>
+                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="deleteEmp(item.empId)">刪除</button>
+                    	&nbsp;
+                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0">編輯</button>
+					</td>
+                    
+                  </tr> 
+                  </tbody>
+<!--                   <tfoot> -->
+<!--                   <tr> -->
+<!--                     <th>Rendering engine</th> -->
+<!--                     <th>Browser</th> -->
+<!--                     <th>Platform(s)</th> -->
+<!--                     <th>Engine version</th> -->
+<!--                     <th>CSS grade</th> -->
+<!--                     <th>CSS grade</th> -->
+<!--                   </tr> -->
+<!--                   </tfoot> -->
+                </table>
+              </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">新增表單</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>       
+      <div class="modal-body">
+       <form id="addEmp" class="row g-3">
+  	   		<div class="col-md-6">
+   			 	<label for="inputEmail4" class="form-label">姓名</label>
+    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail4" v-model="formData.empName">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputPassword4" class="form-label">年齡</label>
+    			<input type="text"  autocomplete="off" class="form-control" id="inputPassword4" v-model="formData.empAge">
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress" class="form-label">性別</label>
+    			<div class="form-check">
+  					<input class="form-check-input" value="男"  type="radio" name="flexRadioDefault" id="flexRadioDefault1" v-model="formData.empGender"checked>
+  					<label class="form-check-label" for="flexRadioDefault1">
+    					男
+  					</label>
+				</div>
+				<div class="form-check">
+  					<input class="form-check-input" value="女" type="radio" name="flexRadioDefault" id="flexRadioDefault2" v-model="formData.empGender">
+  					<label class="form-check-label" for="flexRadioDefault2">
+    					女
+  					</label>
+				</div>
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress2" class="form-label">Address 2</label>
+    			<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputCity" class="form-label">City</label>
+    			<input type="text" class="form-control" id="inputCity">
+  			</div>
+  			<div class="col-md-4">
+    			<label for="inputState" class="form-label">State</label>
+    			<select id="inputState" class="form-select">
+      				<option selected>Choose...</option>
+      				<option>...</option>
+    			</select>
+  			</div>
+  			<div class="col-md-2">
+    			<label for="inputZip" class="form-label">Zip</label>
+    			<input type="text" class="form-control" id="inputZip">
+  			</div>
+  			<div class="col-12">
+    			<div class="form-check">
+     			 <input class="form-check-input" type="checkbox" id="gridCheck" required>
+      			 <label class="form-check-label" for="gridCheck">
+        		  Check me out
+      			 </label>
+      			 
+    	        </div>
+  		    </div>
+  			<div class="col-12">
+    			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
+  			</div>
+		</form>
+      </div><!-- modal-body -->
+      <div class="modal-footer">
+        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="cancel()">取消</button>
+        <button type="submit" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+      </div>
+    </div>
+  </div>
+</div>
 	</div>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
@@ -68,8 +192,11 @@
 			type="password" name="password"><br> <input
 			type="submit" value="測試@RequestBody"><br>
 	</form>
+
 </body>
+
 <script>
+//import ElementPlus from 'element-plus';
 /**
  *  
  methods:{
@@ -90,12 +217,15 @@
  }
  }).mount('#app')
  */
+	
     const app  = Vue.createApp({
       data() {
         	return {
           		message: 'Hello Vue!',
          		dataList: [],
-         		length: ''
+         		length: '',
+         		formData:{},
+
         	}
       },
       //頁面載入完成Vue後執行
@@ -111,11 +241,46 @@
   		 		      console.log(response.data.data.length);
   		 		      console.log(response.data.data[0]);
   		 		      console.log(response.data.data);
-  		 		      console.log(response.data.data.empId);
     		  		  this.dataList = response.data.data;
 		 			  this.length = response.data.data.length;
   		 		  });
     	  },
+    	  addEmp() {
+		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
+		  			  //判斷操作是否成功
+		  			  if (response.data.flag) {
+		  			  	//this.$message.success("新增成功");					
+					  }else {
+						//this.$message.alert-danger("新增失敗");	
+					  }
+	 		  		}).finally(()=>{
+	 		  		   //刪除完成後再查詢 	
+		  			   this.getAll();			  
+	 		  		});
+	 	  },
+	 	  deleteEmp(empId) {
+	  			axios.delete("/emps/"+empId).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  			  	//this.$message.success("新增成功");					
+				  }else {
+					//this.$message.alert-danger("新增失敗");	
+				  }
+		  		}).finally(()=>{
+		  		   //新增完成後再查詢 	
+	  			   this.getAll();
+		  		});
+	  	  },
+	 	  cancel(){	
+	 		 		this.ElMessage.success('能不能顯示');
+	 			// this.$message({
+	 	        // showClose: true,
+	 	        // message: '错了哦，这是一条错误消息',
+	 	        //  type: 'error'
+	 	       // });
+	 				//this.$message.info("当前操作取消");
+	 				//this.$message.error("拜託顯示出來")
+	      },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",
@@ -141,10 +306,10 @@
     	  }
       }
     })
-    
+
     app.mount('#app')
-     
-    
+ 
+      
     
     </script>
 </html>
