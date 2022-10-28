@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>首頁</title>
 <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
-<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/element-plus"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -66,7 +66,7 @@
 <!-- 		</ul> -->
 		
 		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm" @:click="resetForm()">
   新增
 </button>
 <div class="card-body">
@@ -89,9 +89,9 @@
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>
                     <td>
-                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
-                    	&nbsp;
                     	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal2" v-on:click=" updateEmp(item.empId)">編輯</button>
+                    	&nbsp;
+                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
 					</td>
                     
                   </tr> 
@@ -173,12 +173,13 @@
   		    </div>
   			<div class="col-12">
     			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
+    			
   			</div>
 		</form>
       </div><!-- modal-body -->
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+        <button data-bs-dismiss="modal" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
       </div>
     </div>
   </div>
@@ -233,7 +234,7 @@
       </div><!-- modal-body -->
       <div class="modal-footer">
         <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="cancel()">取消</button>
-        <button type="submit" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" form="addEmp" v-on:click="addEmp()">新增</button>
       </div>
     </div>
   </div>
@@ -256,7 +257,7 @@
 
 </body>
 
-<script>
+<script type="module">
 //import ElementPlus from 'element-plus';
 /**
  *  
@@ -279,7 +280,26 @@
  }).mount('#app')
  */
 
- 
+ import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+ const Toast = Swal.mixin({
+     toast: true,
+     position: 'top-right',
+     showConfirmButton: false,
+     showClass: {
+         popup: 'animate__animated animate__fadeInRight'
+     },
+     hideClass: {
+         popup: 'animate__animated animate__fadeOutRight'
+     },
+     timer: 2500,
+     timerProgressBar: true,
+     didOpen: toast => {
+         toast.addEventListener('mouseenter', Swal.stopTimer);
+         toast.addEventListener('mouseleave', Swal.resumeTimer);
+     },
+     showCloseButton: true
+ });
  
     const app  = Vue.createApp({
       data() {
@@ -313,6 +333,7 @@
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 		  			  //判斷操作是否成功
 		  			  if (response.data.flag) {
+		  				//this.$refs.Close.click();
 // 		  				Swal.fire({
 // 	       	  				  position: 'top',
 // 	       	  				  icon: 'success',
@@ -320,9 +341,9 @@
 // 	       	  				  showConfirmButton: false,
 // 	       	  				  timer: 3000
 // 	       	  				})		
-// 		  				Toast.fire({
-// 		  	                icon: 'success', title: '資料更新完成'
-// 		  	            });
+		  				Toast.fire({
+		  	                icon: 'success', title: '資料新增完成'
+		  	            });
 					  }else {
 						//this.$message.alert-danger("新增失敗");	
 					  }
@@ -395,10 +416,9 @@
 	      },
 	      updateEmp(empId) {
 	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
-	  			  	this.formData = response.data.data;	
 	  				//判斷操作是否成功
 	  			  if (response.data.flag) {
-	  			  	//this.$message.success("新增成功");					
+	  			  	this.formData = response.data.data;	 			  					
 				  }else {
 					//this.$message.alert-danger("新增失敗");	
 				  }
@@ -407,6 +427,10 @@
 	  			   this.getAll();
 		  		});
 	  	  },
+	  	  //清空表單
+          resetForm() {
+              this.formData = {empGender:'男'};
+          },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",
