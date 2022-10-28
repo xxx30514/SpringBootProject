@@ -12,7 +12,7 @@ import mysite.cardstore.interceptor.LoginInterceptor;
  * 2.配置攔截器至IOC容器中(註冊組件) implements WebMvcConfigurer
  * 3.指定攔截規則
  */
-@Configuration
+//@Configuration
 public class AdminWebConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

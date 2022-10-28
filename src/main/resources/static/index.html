@@ -3,14 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>首頁</title>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
 <script src="https://unpkg.com/vue@3"></script>
 <script src="https://unpkg.com/element-plus"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -61,7 +66,7 @@
 <!-- 		</ul> -->
 		
 		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm">
   新增
 </button>
 <div class="card-body">
@@ -84,9 +89,9 @@
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>
                     <td>
-                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="deleteEmp(item.empId)">刪除</button>
+                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
                     	&nbsp;
-                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0">編輯</button>
+                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal2" v-on:click=" updateEmp(item.empId)">編輯</button>
 					</td>
                     
                   </tr> 
@@ -104,8 +109,8 @@
                 </table>
               </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal  彈出新增表單-->
+<div class="modal fade" id="addForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -125,14 +130,15 @@
   			<div class="col-12">
     			<label for="inputAddress" class="form-label">性別</label>
     			<div class="form-check">
-  					<input class="form-check-input" value="男"  type="radio" name="flexRadioDefault" id="flexRadioDefault1" v-model="formData.empGender"checked>
-  					<label class="form-check-label" for="flexRadioDefault1">
+  					<input class="form-check-input" value="男"  type="radio"  id="male" v-model="formData.empGender">
+  					<!--checked屬性搭配v-model會抓不到 要在Vue的data模型中設定formData.empGender的初始值  -->
+  					<label class="form-check-label" for="male">
     					男
   					</label>
 				</div>
 				<div class="form-check">
-  					<input class="form-check-input" value="女" type="radio" name="flexRadioDefault" id="flexRadioDefault2" v-model="formData.empGender">
-  					<label class="form-check-label" for="flexRadioDefault2">
+  					<input class="form-check-input" value="女" type="radio" id="female" v-model="formData.empGender">
+  					<label class="form-check-label" for="female">
     					女
   					</label>
 				</div>
@@ -158,8 +164,63 @@
   			</div>
   			<div class="col-12">
     			<div class="form-check">
-     			 <input class="form-check-input" type="checkbox" id="gridCheck" required>
-      			 <label class="form-check-label" for="gridCheck">
+     			  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+      		<label class="form-check-label" for="invalidCheck2">
+        		Agree to terms and conditions
+      		</label>
+      			 
+    	        </div>
+  		    </div>
+  			<div class="col-12">
+    			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
+  			</div>
+		</form>
+      </div><!-- modal-body -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal  彈出修改表單-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">修改表單</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>       
+      <div class="modal-body">
+       <form id="UpdateEmp" class="row g-3">
+  	   		<div class="col-md-6">
+   			 	<label for="inputEmail24" class="form-label">姓名</label>
+    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail24" v-model="formData.empName">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputPassword24" class="form-label">年齡</label>
+    			<input type="text"  autocomplete="off" class="form-control" id="inputPassword24" v-model="formData.empAge">
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress" class="form-label">性別</label>
+    			<div class="form-check">
+  					<input class="form-check-input" value="男" type="radio" name="flexRadioDefault" id="flexRadioDefault21" v-model="formData.empGender">
+  					<label class="form-check-label" for="flexRadioDefault21">
+    					男
+  					</label>
+				</div>
+				<div class="form-check">
+  					<input class="form-check-input" value="女" type="radio" name="flexRadioDefault" id="flexRadioDefault22" v-model="formData.empGender">
+  					<label class="form-check-label" for="flexRadioDefault22">
+    					女
+  					</label>
+				</div>
+  			</div>
+  			   		 		
+  			<div class="col-12">
+    			<div class="form-check">
+     			 <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+      			 <label class="form-check-label" for="gridCheck1">
         		  Check me out
       			 </label>
       			 
@@ -217,14 +278,17 @@
  }
  }).mount('#app')
  */
-	
+
+ 
+ 
     const app  = Vue.createApp({
       data() {
         	return {
           		message: 'Hello Vue!',
          		dataList: [],
          		length: '',
-         		formData:{},
+         		formData:{empGender:'男'},
+
 
         	}
       },
@@ -249,12 +313,22 @@
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 		  			  //判斷操作是否成功
 		  			  if (response.data.flag) {
-		  			  	//this.$message.success("新增成功");					
+// 		  				Swal.fire({
+// 	       	  				  position: 'top',
+// 	       	  				  icon: 'success',
+// 	       	  				  title: '新增成功',
+// 	       	  				  showConfirmButton: false,
+// 	       	  				  timer: 3000
+// 	       	  				})		
+// 		  				Toast.fire({
+// 		  	                icon: 'success', title: '資料更新完成'
+// 		  	            });
 					  }else {
 						//this.$message.alert-danger("新增失敗");	
 					  }
 	 		  		}).finally(()=>{
-	 		  		   //刪除完成後再查詢 	
+	 		  			
+	 		  		   //新增完成後再查詢 	
 		  			   this.getAll();			  
 	 		  		});
 	 	  },
@@ -267,20 +341,72 @@
 					//this.$message.alert-danger("新增失敗");	
 				  }
 		  		}).finally(()=>{
-		  		   //新增完成後再查詢 	
+		  		   //刪除完成後再查詢 	
 	  			   this.getAll();
 		  		});
 	  	  },
-	 	  cancel(){	
-	 		 		this.ElMessage.success('能不能顯示');
+	 	  removeEmp(empId){	
+	  		   	   Swal.fire({
+                   		title: "確定刪除此項資料(序號:" + empId + ")?",
+                   		icon: "warning",
+                   		showCancelButton: true,
+                   		closeOnConfirm: false, //false=確認時關閉彈出框
+                   		showLoaderOnConfirm: true,
+                   		showCloseButton: true, //右上角x
+                   		confirmButtonClass: "btn-danger",
+                   	 	confirmButtonColor: '#d33',
+                   		cancelButtonText: "取消",
+                   		confirmButtonText: "刪除",
+                   	 	reverseButtons: true //反轉按鈕位置讓確定在右側
+               	   }).then((result)=>{
+               		   if (result.isConfirmed) {			
+               		 axios.delete("/emps/"+empId).then((response)=> {//成功時執行的回調函數
+       	  			  //判斷操作是否成功
+       	  			  if (response.data.flag) {
+       	  				Swal.fire({
+       	  				  position: 'top',
+       	  				  icon: 'success',
+       	  				  title: '刪除成功',
+       	  				  showConfirmButton: false,
+       	  				  timer: 3000
+       	  				})				
+       				  }else {
+       					Swal.fire({
+         	  				  position: 'top',
+         	  				  icon: 'error',
+         	  				  title: '刪除失敗,請重新嘗試',
+         	  				  showConfirmButton: false,
+         	  				  timer: 3000
+         	  				})	
+       				  }
+       		  		}).finally(()=>{
+       		  		   //刪除完成後再查詢 	
+       	  			   this.getAll();
+       		  		});  
+               		 
+					}		   
+               	   });
+	 		 	//	this.ElMessage.success('能不能顯示');
 	 			// this.$message({
 	 	        // showClose: true,
 	 	        // message: '错了哦，这是一条错误消息',
 	 	        //  type: 'error'
 	 	       // });
-	 				//this.$message.info("当前操作取消");
-	 				//this.$message.error("拜託顯示出來")
 	      },
+	      updateEmp(empId) {
+	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
+	  			  	this.formData = response.data.data;	
+	  				//判斷操作是否成功
+	  			  if (response.data.flag) {
+	  			  	//this.$message.success("新增成功");					
+				  }else {
+					//this.$message.alert-danger("新增失敗");	
+				  }
+		  		}).finally(()=>{
+		  		   //新增完成後再查詢 	
+	  			   this.getAll();
+		  		});
+	  	  },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",
