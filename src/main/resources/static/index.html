@@ -15,7 +15,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -89,7 +89,7 @@
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>
                     <td>
-                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal2" v-on:click=" updateEmp(item.empId)">編輯</button>
+                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
                     	&nbsp;
                     	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
 					</td>
@@ -110,7 +110,7 @@
               </div>
 
 <!-- Modal  彈出新增表單-->
-<div class="modal fade" id="addForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade"  data-bs-backdrop="static" id="addForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -164,7 +164,7 @@
   			</div>
   			<div class="col-12">
     			<div class="form-check">
-     			  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+     			  <input class="form-check-input" type="checkbox"  id="invalidCheck2"  required>
       		<label class="form-check-label" for="invalidCheck2">
         		Agree to terms and conditions
       		</label>
@@ -185,7 +185,7 @@
   </div>
 </div>
 <!-- Modal  彈出修改表單-->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateMoadl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -228,13 +228,13 @@
     	        </div>
   		    </div>
   			<div class="col-12">
-    			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
+    			<button type="submit" class="btn btn-primary" v-on:click="updateEmp()">Sign in</button>
   			</div>
 		</form>
       </div><!-- modal-body -->
       <div class="modal-footer">
-        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="cancel()">取消</button>
-        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" form="addEmp" v-on:click="addEmp()">新增</button>
+        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="">取消</button>
+        <button  class="btn btn-primary" data-bs-dismiss="modal" form="addEmp" v-on:click="updateEmp()">修改</button>
       </div>
     </div>
   </div>
@@ -257,7 +257,7 @@
 
 </body>
 
-<script type="module">
+<script>
 //import ElementPlus from 'element-plus';
 /**
  *  
@@ -280,7 +280,7 @@
  }).mount('#app')
  */
 
- import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+ //import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
  const Toast = Swal.mixin({
      toast: true,
@@ -301,6 +301,7 @@
      showCloseButton: true
  });
  
+ 	
     const app  = Vue.createApp({
       data() {
         	return {
@@ -308,6 +309,7 @@
          		dataList: [],
          		length: '',
          		formData:{empGender:'男'},
+         		hideModal: "",
 
 
         	}
@@ -342,33 +344,22 @@
 // 	       	  				  timer: 3000
 // 	       	  				})		
 		  				Toast.fire({
-		  	                icon: 'success', title: '資料新增完成'
+		  	                icon: 'success', title: '資料新增成功'
 		  	            });
 					  }else {
-						//this.$message.alert-danger("新增失敗");	
+						  Toast.fire({
+			  	                icon: 'error', title: '資料新增失敗，請重新嘗試'
+			  	            });
 					  }
-	 		  		}).finally(()=>{
-	 		  			
-	 		  		   //新增完成後再查詢 	
+	 		  		}).finally(()=>{	
+	 		  		   //新增完成後再查詢一次，重整資料 	
 		  			   this.getAll();			  
 	 		  		});
 	 	  },
-	 	  deleteEmp(empId) {
-	  			axios.delete("/emps/"+empId).then((response)=> {//成功時執行的回調函數
-	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {
-	  			  	//this.$message.success("新增成功");					
-				  }else {
-					//this.$message.alert-danger("新增失敗");	
-				  }
-		  		}).finally(()=>{
-		  		   //刪除完成後再查詢 	
-	  			   this.getAll();
-		  		});
-	  	  },
-	 	  removeEmp(empId){	
+	 	  removeEmp(empId){		  	　
 	  		   	   Swal.fire({
                    		title: "確定刪除此項資料(序號:" + empId + ")?",
+                   		text:"刪除後將無法復原，請謹慎操作！",
                    		icon: "warning",
                    		showCancelButton: true,
                    		closeOnConfirm: false, //false=確認時關閉彈出框
@@ -378,7 +369,7 @@
                    	 	confirmButtonColor: '#d33',
                    		cancelButtonText: "取消",
                    		confirmButtonText: "刪除",
-                   	 	reverseButtons: true //反轉按鈕位置讓確定在右側
+                   	 	//reverseButtons: true //反轉按鈕位置讓確定在右側
                	   }).then((result)=>{
                		   if (result.isConfirmed) {			
                		 axios.delete("/emps/"+empId).then((response)=> {//成功時執行的回調函數
@@ -387,7 +378,7 @@
        	  				Swal.fire({
        	  				  position: 'top',
        	  				  icon: 'success',
-       	  				  title: '刪除成功',
+       	  				  title: '資料刪除成功',
        	  				  showConfirmButton: false,
        	  				  timer: 3000
        	  				})				
@@ -395,7 +386,7 @@
        					Swal.fire({
          	  				  position: 'top',
          	  				  icon: 'error',
-         	  				  title: '刪除失敗,請重新嘗試',
+         	  				  title: '資料刪除失敗，請重新嘗試',
          	  				  showConfirmButton: false,
          	  				  timer: 3000
          	  				})	
@@ -407,29 +398,53 @@
                		 
 					}		   
                	   });
-	 		 	//	this.ElMessage.success('能不能顯示');
-	 			// this.$message({
-	 	        // showClose: true,
-	 	        // message: '错了哦，这是一条错误消息',
-	 	        //  type: 'error'
-	 	       // });
+
 	      },
-	      updateEmp(empId) {
+	      openUpdateForm(empId) {
 	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
 	  				//判斷操作是否成功
-	  			  if (response.data.flag) {
-	  			  	this.formData = response.data.data;	 			  					
+	  			  if (response.data.flag && response.data.data!=null ) {
+	  			  		this.formData = response.data.data;	 			  					
 				  }else {
-					//this.$message.alert-danger("新增失敗");	
+//					  	bootstrap.Modal.getOrCreateInstance(document.getElementById('updateMoadl')).hide()
+// 					  	this.hideModal = new bootstrap.Modal(document.getElementById('updateMoadl'));
+// 					  	this.hideModal.hide();
+						Swal.fire({
+       	  				  position: 'top',
+       	  				  icon: 'error',
+       	  				  title: '資料獲取失敗，請重新嘗試',
+       	  				  showConfirmButton: false,
+       	  				  timer: 3000
+       	  				})	
+					  	
 				  }
 		  		}).finally(()=>{
+		  			
 		  		   //新增完成後再查詢 	
 	  			   this.getAll();
 		  		});
 	  	  },
+	  	 　updateEmp() {
+	  			axios.put("/emps",this.formData).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料修改成功'
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: '資料修改失敗，請重新嘗試'
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	      },
 	  	  //清空表單
           resetForm() {
-              this.formData = {empGender:'男'};
+              this.formData = {empGender:'男'};          
+             
           },
     	  testAjax(){	
     		 		axios.post(
@@ -461,5 +476,5 @@
  
       
     
-    </script>
+</script>
 </html>
