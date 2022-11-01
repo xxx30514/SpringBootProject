@@ -348,7 +348,7 @@
 		  	            });
 					  }else {
 						  Toast.fire({
-			  	                icon: 'error', title: '資料新增失敗，請重新嘗試'
+			  	                icon: 'error', title: response.data.msg
 			  	            });
 					  }
 	 		  		}).finally(()=>{	
@@ -403,6 +403,7 @@
 	      openUpdateForm(empId) {
 	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
 	  				//判斷操作是否成功
+					 
 	  			  if (response.data.flag && response.data.data!=null ) {
 	  			  		this.formData = response.data.data;	 			  					
 				  }else {

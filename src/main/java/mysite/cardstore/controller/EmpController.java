@@ -1,6 +1,8 @@
 package mysite.cardstore.controller;
 
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +32,8 @@ public class EmpController {
 	}
 	
 	@PostMapping
-	public Result save(@RequestBody Emp emp){
+	public Result save(@RequestBody Emp emp) throws IOException{
+		if ("123".equals(emp.getEmpName())) throw new IOException(); 
 		return new Result(true,empService.save(emp));
 	}
 	
