@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import mysite.cardstore.admin.pojo.Emp;
 import mysite.cardstore.controller.utils.Result;
@@ -54,6 +54,10 @@ public class EmpController {
 	
 	@GetMapping("{currentPage}/{pageSize}")
 	public Result getIPage(@PathVariable int currentPage,@PathVariable int pageSize){
-		return new Result(true,empService.getPage(currentPage, pageSize));
+		IPage<Emp> page = empService.getPage(currentPage, pageSize);
+		if (currentPage>page.getPages()) {
+			page = empService.getPage((int) page.getPages(), pageSize);
+		}
+		return new Result(true,page);
 	}
 }

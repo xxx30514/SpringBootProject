@@ -88,6 +88,7 @@
                     <td>{{item.empAge}}</td>
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>
+                    <td>{{item.deptId}}</td>
                     <td>
                     	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
                     	&nbsp;
@@ -239,6 +240,49 @@
     </div>
   </div>
 </div>
+<a>總筆數:{{pagination.total}}</a><br>
+<a>總頁數:{{pagination.pages}}</a><br>
+<a>當前頁:{{pagination.currentPage}}</a>
+<div class="">
+     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+          <ul class="pagination justify-content-center">
+              <li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
+              		<a v-on:click="changePage(1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
+              </li>
+              <li class="paginate_button page-item previous" id="example1_previous">
+              		<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
+              </li>
+              <!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
+              <li class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }">
+              		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a>
+              </li>
+              <li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
+              		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
+              </li>
+              <li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
+              		<a v-on:click="changePage(pagination.pages)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">末頁</a>
+              </li>
+              </ul>
+              <input type="text" v-model="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
+      </div>
+</div>
+<!-- <template> -->
+<!--    <div class="pagination-container"> -->
+
+<!--                 <el-pagination class="pagiantion" @current-change="changePage" -->
+
+<!--                         :current-page="pagination.currentPage" -->
+
+<!--                         :page-size="pagination.pageSize" -->
+
+<!--                         layout="total, prev, pager, next, jumper" -->
+
+<!--                         :total="pagination.total"> -->
+
+<!--                 </el-pagination> -->
+
+<!--             </div> -->
+<!-- </template>             -->
 	</div>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
@@ -309,9 +353,12 @@
          		dataList: [],
          		length: '',
          		formData:{empGender:'男'},
-         		hideModal: "",
-
-
+         		pagination: {//分頁相關資料
+                     currentPage: 1,//當前頁
+                     pageSize:10,//每頁顯示幾筆
+                     total:0, //資料總筆數
+                     pages: 0,//總頁數
+                 },
         	}
       },
       //頁面載入完成Vue後執行
@@ -321,15 +368,23 @@
       },
       
       methods:{
-    	  getAll() {
-    		  		axios.get("/emps").then((response)=> {//成功時執行的回調函數
+    	  getAll() {//查詢所有資料並進行分頁
+    		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize).then((response)=> {//成功時執行的回調函數
   		 		      console.log(response.data);
   		 		      console.log(response.data.data.length);
   		 		      console.log(response.data.data[0]);
   		 		      console.log(response.data.data);
-    		  		  this.dataList = response.data.data;
+  		 		   	  this.pagination.currentPage=response.data.data.current;
+  		 		   	  this.pagination.pageSize=response.data.data.size;
+  		 		   	  this.pagination.total=response.data.data.total;
+  		 		   	  this.pagination.pages=response.data.data.pages;
+    		  		  this.dataList = response.data.data.records;
 		 			  this.length = response.data.data.length;
   		 		  });
+    	  },
+    	  changePage(currentPage){
+    		  	this.pagination.currentPage=currentPage;
+    		  	this.getAll();
     	  },
     	  addEmp() {
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
