@@ -16,4 +16,6 @@ public interface EmpService extends IService<Emp>{
 	Boolean updateEmp(Emp emp); 
 	
 	IPage<Emp> getPage(int currentPage,int pageSize);
+	
+	IPage<Emp> getPage(int currentPage,int pageSize,Emp emp);
 }

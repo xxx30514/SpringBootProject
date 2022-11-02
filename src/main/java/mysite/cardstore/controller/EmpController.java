@@ -52,12 +52,21 @@ public class EmpController {
 		return new Result(true,empService.getById(empId));
 	}
 	
+//	@GetMapping("{currentPage}/{pageSize}")
+//	public Result getIPage(@PathVariable int currentPage,@PathVariable int pageSize){
+//		IPage<Emp> page = empService.getPage(currentPage, pageSize);
+//		if (currentPage>page.getPages()) {
+//			page = empService.getPage((int) page.getPages(), pageSize);
+//		}
+//		return new Result(true,page);
+//	}
 	@GetMapping("{currentPage}/{pageSize}")
-	public Result getIPage(@PathVariable int currentPage,@PathVariable int pageSize){
-		IPage<Emp> page = empService.getPage(currentPage, pageSize);
+	public Result getIPage(@PathVariable int currentPage,@PathVariable int pageSize,Emp emp){
+		IPage<Emp> page = empService.getPage(currentPage, pageSize,emp);
 		if (currentPage>page.getPages()) {
-			page = empService.getPage((int) page.getPages(), pageSize);
+			page = empService.getPage((int) page.getPages(), pageSize,emp);
 		}
 		return new Result(true,page);
 	}
+	
 }

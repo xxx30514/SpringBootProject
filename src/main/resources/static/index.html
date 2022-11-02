@@ -20,7 +20,7 @@
 
 <body>
 
- <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+ <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -64,13 +64,19 @@
 <!-- 			<li v-for="item in dataList">{{item}}</li> -->
 <!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
 <!-- 		</ul> -->
-		
+<input type="text" v-model.trim="pagination.empName" placeholder="依姓名查詢">		
+<input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">		
+<input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		
+<button type="button" class="btn btn-outline-success" @:click="getAll()" >
+查詢
+</button>		
 		<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm" @:click="resetForm()">
   新增
 </button>
-<div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+<div class="card-body table-responsive">
+				<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
+                <table id="example1" class="table table-bordered table-striped table-hover " v-if="dataList.length>0">
                   <thead>
                   <tr>
                     <th>員工ID</th>
@@ -87,14 +93,13 @@
                     <td>{{item.empName}}</td>
                     <td>{{item.empAge}}</td>
                     <td>{{item.empGender}}</td>
-                    <td>{{item.deptId}}</td>
-                    <td>{{item.deptId}}</td>
+                    <td>{{item.deptId}}</td>                 
                     <td>
                     	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
                     	&nbsp;
                     	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
 					</td>
-                    
+					
                   </tr> 
                   </tbody>
 <!--                   <tfoot> -->
@@ -351,6 +356,7 @@
         	return {
           		message: 'Hello Vue!',
          		dataList: [],
+         		empty: null,
          		length: '',
          		formData:{empGender:'男'},
          		pagination: {//分頁相關資料
@@ -358,6 +364,9 @@
                      pageSize:10,//每頁顯示幾筆
                      total:0, //資料總筆數
                      pages: 0,//總頁數
+                     empName:'',
+                     empAge:'',
+                     empGender:''
                  },
         	}
       },
@@ -369,7 +378,11 @@
       
       methods:{
     	  getAll() {//查詢所有資料並進行分頁
-    		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize).then((response)=> {//成功時執行的回調函數
+    		  		param="?qyery"
+    		  		param+="&empName="+this.pagination.empName;
+    		  		param+="&empAge="+this.pagination.empAge;
+    		  		param+="&empGender="+this.pagination.empGender;
+    		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize+param).then((response)=> {//成功時執行的回調函數
   		 		      console.log(response.data);
   		 		      console.log(response.data.data.length);
   		 		      console.log(response.data.data[0]);
