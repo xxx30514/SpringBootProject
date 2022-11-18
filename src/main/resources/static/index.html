@@ -601,7 +601,7 @@
          　updateStatus(item) {
         	   this.empName=item.empName;
 	  			axios.put("/emps",{empId:item.empId,empName:this.empName.length>2?"張三":"老李"}).then((response)=> {//成功時執行的回調函數
-	  			  //對應的欄位名:數值 修改權限測試 
+	  			  //對應的欄位名:數值 修改權限測試  三元運算判斷測試 姓名長度>2更新為張三 反之老李
 	  			  //判斷操作是否成功
 	  			  if (response.data.flag) {
 	  				 //console.log(this.formData.empId);
