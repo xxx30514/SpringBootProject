@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="icon" href="/img/favicon.ico"/>
 <meta charset="UTF-8">
 <title>首頁</title>
 <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/element-plus"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 
 <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script>
@@ -78,7 +76,7 @@
 </button>
 <div class="card-body table-responsive">
 				<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
-                <table id="example1" class="table table-bordered table-striped table-hover" v-if="dataList.length>0">
+                <table id="example1" class="table table-bordered table-striped table-hover " v-if="dataList.length>0">
                   <thead>
                   <tr>
                     <th>員工ID</th>
@@ -96,31 +94,11 @@
                     <td>{{item.empAge}}</td>
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>                 
-                    <td class="d-flex">
+                    <td>
                     	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
                     	&nbsp;
                     	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
-                    	&nbsp;
-                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="updateStatus(item)">權限更改</button>
-	
-<!-- 								<div class="form-check form-switch"> -->
-<!--   <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> -->
-<!--   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label> -->
-<!-- </div> -->
-<!-- {{item.deptId=='1'||item.deptId=='2' ? '有部門':'沒部門'}} -->
-<!--  <div class="col"> -->
-<!--             <div class="d-inline-block me-1">禁用</div> -->
-<!--             <div class="form-check form-switch d-inline-block"> -->
-<!--                 <input type="checkbox" class="form-check-input" id="site_state" style="cursor: pointer;"> -->
-<!--                 <label for="site_state" class="form-check-label">啟用</label> -->
-<!--                 </div> -->
-<!--         </div> -->
-
 					</td>
-				
-	
-					
-
 					
                   </tr> 
                   </tbody>
@@ -262,7 +240,7 @@
       </div><!-- modal-body -->
       <div class="modal-footer">
         <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="">取消</button>
-        <button  class="btn btn-primary" data-bs-dismiss="modal" form="updateEmp" v-on:click="updateEmp()">修改</button>
+        <button  class="btn btn-primary" data-bs-dismiss="modal" form="addEmp" v-on:click="updateEmp()">修改</button>
       </div>
     </div>
   </div>
@@ -281,12 +259,8 @@
               </li>
               <!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
               <li class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }">
-              		<a v-if="item <11" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a>
+              		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a>
               </li>
-<!--               		<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{pagination.currentPage-1}}</a> -->
-<!--               		<a v-on:click="changePage(pagination.currentPage)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{pagination.currentPage}}</a> -->
-<!--               		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{pagination.currentPage+1}}</a> -->
-              
               <li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
               		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
               </li>
@@ -297,13 +271,6 @@
               <input type="text" v-model="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
       </div>
 </div>
-<form id="userLogin" v-if="JSON.stringify(userInfo)=='{}'">
-		帳號:<input type="text" name="username" v-model="loginForm.userAccount"><br> 
-		密碼:<input type="password" name="password" v-model="loginForm.userPassword"><br> 
-		<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
-</form>
-<p>{{userInfo.userName}}</p>
-<button v-if="JSON.stringify(userInfo)!='{}'" v-on:click="userLogout()">登出</button>
 <!-- <template> -->
 <!--    <div class="pagination-container"> -->
 
@@ -331,7 +298,11 @@
 	<form action="/user" method="get">
 		<input type="submit" value="springboot get 測試"><br>
 	</form>
-	
+	<form action="/save" method="post">
+		帳號:<input type="text" name="username"><br> 密碼:<input
+			type="password" name="password"><br> <input
+			type="submit" value="測試@RequestBody"><br>
+	</form>
 
 </body>
 
@@ -388,13 +359,11 @@
          		empty: null,
          		length: '',
          		formData:{empGender:'男'},
-         		loginForm:{},
-         		userInfo:{},
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
                      pageSize:10,//每頁顯示幾筆
                      total:0, //資料總筆數
-                     pages:0,//總頁數
+                     pages: 0,//總頁數
                      empName:'',
                      empAge:'',
                      empGender:''
@@ -405,15 +374,7 @@
       mounted(){
     	  		//查詢所有
     	  		this.getAll();
-    	  		
       },
-      //頁面渲染前執行
-      created(){
-	  			const userInfo = window.localStorage.getItem('userInfo')
-	  			if(userInfo){
-	  			this.userInfo=JSON.parse(userInfo)
-	  		}
-	 },
       
       methods:{
     	  getAll() {//查詢所有資料並進行分頁
@@ -423,8 +384,8 @@
     		  		param+="&empGender="+this.pagination.empGender;
     		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize+param).then((response)=> {//成功時執行的回調函數
   		 		      console.log(response.data);
-  		 		      console.log(response.data.data.records.length);
-  		 		      console.log(response.data.data.records[0]);
+  		 		      console.log(response.data.data.length);
+  		 		      console.log(response.data.data[0]);
   		 		      console.log(response.data.data);
   		 		   	  this.pagination.currentPage=response.data.data.current;
   		 		   	  this.pagination.pageSize=response.data.data.size;
@@ -442,7 +403,6 @@
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 		  			  //判斷操作是否成功
 		  			  if (response.data.flag) {
-		  				
 		  				//this.$refs.Close.click();
 // 		  				Swal.fire({
 // 	       	  				  position: 'top',
@@ -537,7 +497,6 @@
 	  			axios.put("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  if (response.data.flag) {
-	  				 //console.log(this.formData.empId);
 	  				Toast.fire({
 	  	                icon: 'success', title: '資料修改成功'
 	  	            });
@@ -556,68 +515,6 @@
               this.formData = {empGender:'男'};          
              
           },
-          userLogin(){
-        	  axios.post("/users/login",this.loginForm).then((response)=> {//成功時執行的回調函數
-	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {	
-	  				Toast.fire({
-	  	                icon: 'success', title: '登入成功'
-	  	            });
-	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data));
-	  				const userInfo = window.localStorage.getItem('userInfo')
-		  			if(userInfo){
-		  			this.userInfo=JSON.parse(userInfo)
-		  			}
-	  				//window.location.href='/index.html';
-				  }else {
-					  Toast.fire({
-		  	                icon: 'error', title: response.data.msg
-		  	            });
-				  }
- 		  		}).finally(()=>{	
- 		  		   //新增完成後再查詢一次，重整資料 	
-	  			   this.getAll();			  
- 		  		});    	  
-          },
-          userLogout(){
-        	  axios.post("/users/logout").then((response)=> {//成功時執行的回調函數
-	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {	
-	  				Toast.fire({
-	  	                icon: 'success', title: '登出成功'
-	  	            });
-	  				localStorage.removeItem('userInfo');
-	  				window.location.href='/index.html';
-				  }else {
-					  Toast.fire({
-		  	                icon: 'error', title: response.data.msg
-		  	            });
-				  }
- 		  		}).finally(()=>{	
- 		  		   //新增完成後再查詢一次，重整資料 	
-	  			   //this.getAll();			  
- 		  		});    	  
-          },
-         　updateStatus(item) {
-        	   this.empName=item.empName;
-	  			axios.put("/emps",{empId:item.empId,empName:this.empName.length>2?"張三":"老李"}).then((response)=> {//成功時執行的回調函數
-	  			  //對應的欄位名:數值 修改權限測試 
-	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {
-	  				 //console.log(this.formData.empId);
-	  				Toast.fire({
-	  	                icon: 'success', title: '權限修改成功'
-	  	            });
-				  }else {
-					  Toast.fire({
-		  	                icon: 'error', title: '修改失敗，請重新嘗試'
-		  	            });
-				  }
-		  		}).finally(()=>{	
-		  		   //新增完成後再查詢一次，重整資料 	
-	  			   this.getAll();			  
-		  		});
-	      },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",

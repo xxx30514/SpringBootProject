@@ -3,16 +3,17 @@ package mysite.cardstore.service.impl;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import mysite.cardstore.admin.pojo.Emp;
-import mysite.cardstore.mapper.EmpMapper;
-import mysite.cardstore.service.EmpService;
 
+import mysite.cardstore.mapper.EmpMapper;
+import mysite.cardstore.model.Emp;
+import mysite.cardstore.service.EmpService;
+@Transactional
 @Service
 public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpService{
 	
@@ -52,6 +53,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpSe
 		empMapper.selectPage(page, lqw);
 		return page;
 	}
+
 	
 
 	

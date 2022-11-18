@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import mysite.cardstore.admin.pojo.Emp;
-import mysite.cardstore.admin.pojo.User;
+import mysite.cardstore.model.Emp;
+import mysite.cardstore.model.User;
 import mysite.cardstore.service.EmpService;
 
 @Controller
@@ -37,21 +37,21 @@ public class ViewTestController {
 		return "admin_login";
 	}
 	
-	@PostMapping("/login")
-	//避免表單重複提交
-	public String adminLogin(User user,HttpSession session,Model model) {
-		if(!ObjectUtils.isEmpty(user.getUserName())&& !ObjectUtils.isEmpty(user.getPassword())) {
-			//儲存登入成功的使用者
-			session.setAttribute("loginUser", user);
-			//管理員登入成功重定向到後台首頁
-			return "redirect:/admin";
-		}else {
-			model.addAttribute("msg","帳號或密碼錯誤");
-			//沒成功返回登入頁
-			return "admin_login";
-		}
-	}
-	
+//	@PostMapping("/login")
+//	//避免表單重複提交
+//	public String adminLogin(User user,HttpSession session,Model model) {
+//		if(!ObjectUtils.isEmpty(user.getUserName())&& !ObjectUtils.isEmpty(user.getPassword())) {
+//			//儲存登入成功的使用者
+//			session.setAttribute("loginUser", user);
+//			//管理員登入成功重定向到後台首頁
+//			return "redirect:/admin";
+//		}else {
+//			model.addAttribute("msg","帳號或密碼錯誤");
+//			//沒成功返回登入頁
+//			return "admin_login";
+//		}
+//	}
+//	
 	@GetMapping("/admin")
 	//到後台首頁
 	public String adminIndex(HttpSession session,Model model) {

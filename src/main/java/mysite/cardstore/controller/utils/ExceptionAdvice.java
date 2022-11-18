@@ -10,6 +10,11 @@ public class ExceptionAdvice {
 	@ExceptionHandler
 	public Result doException(Exception exception) {
 		exception.printStackTrace();
+		if (exception.getMessage().contains("Duplicate entry")) {
+			String[] split = exception.getMessage().split(" ");
+			String msg = split[2]+"已存在";
+			return new Result(msg);
+		}
 		return new Result("發生異常，請稍後再試!");
 	}
 }

@@ -1,4 +1,4 @@
-package mysite.cardstore.admin.pojo;
+package mysite.cardstore.model;
 
 import java.util.List;
 

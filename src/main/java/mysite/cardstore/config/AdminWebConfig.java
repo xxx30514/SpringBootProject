@@ -12,12 +12,13 @@ import mysite.cardstore.interceptor.LoginInterceptor;
  * 2.配置攔截器至IOC容器中(註冊組件) implements WebMvcConfigurer
  * 3.指定攔截規則
  */
-//@Configuration
+@Configuration
 public class AdminWebConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginInterceptor())
 		.addPathPatterns("/**") //攔截所有請求 包括靜態資源
-		.excludePathPatterns("/","/login","/css/**","/dist/**","/img/**","/js/**","/plugins/**","/index.html","/emps/**");
+		.excludePathPatterns("/","/login","/css/**","/dist/**","/img/**","/js/**","/plugins/**","/index.html",
+				"/emps/**","/users/**","/backend/login.html","/favicon.ico");
 	}
 }

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,12 +30,15 @@ public class LoginInterceptor implements HandlerInterceptor{
 		HttpSession session =request.getSession();
 		Object loginUser = session.getAttribute("loginUser");
 		if (loginUser != null) {
+			log.info("路徑:{}已放行",requestURI);
+			log.info("使用者已登入,ID為:{}",loginUser);
 			//放行
 			return true;
 		}
 		//攔截 =未登入 =>跳轉到登入頁面
+		log.info("使用者尚未登入,跳轉到登入頁面");
 		request.setAttribute("msg", "請先登入");
-		request.getRequestDispatcher("/login").forward(request, response);
+		request.getRequestDispatcher("/backend/login.html").forward(request, response);
 		return false;
 	}
 	

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 /**
- * mybatis+分頁插件配置
+ * mybatisplus分頁插件配置
  * @author yeh
  *
  */

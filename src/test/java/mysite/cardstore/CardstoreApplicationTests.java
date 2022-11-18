@@ -13,9 +13,11 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import lombok.extern.slf4j.Slf4j;
-import mysite.cardstore.admin.pojo.Emp;
 import mysite.cardstore.mapper.EmpMapper;
+import mysite.cardstore.model.Emp;
+import mysite.cardstore.model.User;
 import mysite.cardstore.service.EmpService;
+import mysite.cardstore.service.UserService;
 
 @Slf4j
 @SpringBootTest
@@ -26,6 +28,8 @@ class CardstoreApplicationTests {
 	EmpMapper empMapper;
 	@Autowired
 	EmpService empService;
+	@Autowired
+	UserService userService;
 	
 	@Test
 	void contextLoads() {
@@ -106,6 +110,21 @@ class CardstoreApplicationTests {
 		empService.page(page,emp);
 
 	}
-
+	@Test
+	void testMybatisInsert() {
+		Emp emp = new Emp();
+		emp.setEmpName("新增測試");
+		emp.setEmpAge(25);
+		emp.setEmpGender("男");
+		empMapper.insertEmp(emp);
+	}
+	@Test
+	void testMybatisInsert2() {
+		User user = new User();
+		user.setUserAccount("1234567");
+		user.setUserPassword("123456");
+		user.setUserEmail("12001@gmail.com");
+		userService.saveUser(user);
+	}
 
 }
