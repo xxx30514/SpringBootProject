@@ -304,6 +304,55 @@
 </form>
 <p>{{userInfo.userName}}</p>
 <button v-if="JSON.stringify(userInfo)!='{}'" v-on:click="userLogout()">登出</button>
+<button v-on:click="addCategory()">新增分類測試(資料固定)</button>
+<button v-on:click="removeCategory(1)">刪除分類測試(資料固定)</button>
+<div class="row row-cols-1 row-cols-md-4 g-0">
+<div class="card">
+              <div class="card-header bg-primary mb-3 text-white">
+                <h3 class="card-title">Quick Example</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="common/upload" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">姓名</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" name="headerImg" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
+                      </div>
+                      <div class="form-group">
+                       <label for="exampleInputFile">商品圖片</label>
+                       <input type="file" name="productImgs" multiple="multiple" id="exampleInputFile">
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">上傳</button>
+                </div>
+              </form>
+            </div>
+</div>
+            <!-- /.card -->
 <!-- <template> -->
 <!--    <div class="pagination-container"> -->
 
@@ -399,6 +448,7 @@
                      empAge:'',
                      empGender:''
                  },
+               categoryForm:{type:1,name:'SD45',sort:1}
         	}
       },
       //頁面載入完成Vue後執行
@@ -604,7 +654,6 @@
 	  			  //對應的欄位名:數值 修改權限測試  三元運算判斷測試 姓名長度>2更新為張三 反之老李
 	  			  //判斷操作是否成功
 	  			  if (response.data.flag) {
-	  				 //console.log(this.formData.empId);
 	  				Toast.fire({
 	  	                icon: 'success', title: '權限修改成功'
 	  	            });
@@ -618,6 +667,76 @@
 	  			   this.getAll();			  
 		  		});
 	      },
+	      addCategory() {
+	  			axios.post("/categorys",this.categoryForm).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				
+	  				//this.$refs.Close.click();
+//	  				Swal.fire({
+//      	  				  position: 'top',
+//      	  				  icon: 'success',
+//      	  				  title: '新增成功',
+//      	  				  showConfirmButton: false,
+//      	  				  timer: 3000
+//      	  				})		
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料新增成功'
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	  },
+	  removeCategory(categoryId){		  	　
+		   	   Swal.fire({
+          		title: "確定刪除此項資料(序號:" + categoryId + ")?",
+          		text:"刪除後將無法復原，請謹慎操作！",
+          		icon: "warning",
+          		showCancelButton: true,
+          		closeOnConfirm: false, //false=確認時關閉彈出框
+          		showLoaderOnConfirm: true,
+          		showCloseButton: true, //右上角x
+          		confirmButtonClass: "btn-danger",
+          	 	confirmButtonColor: '#d33',
+          		cancelButtonText: "取消",
+          		confirmButtonText: "刪除",
+          	 	//reverseButtons: true //反轉按鈕位置讓確定在右側
+      	   }).then((result)=>{
+      		   if (result.isConfirmed) {			
+      		 axios.delete("/categorys/"+categoryId).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				Swal.fire({
+	  				  position: 'top',
+	  				  icon: 'success',
+	  				  title: '資料刪除成功',
+	  				  showConfirmButton: false,
+	  				  timer: 3000
+	  				})				
+				  }else {
+					Swal.fire({
+	  				  position: 'top',
+	  				  icon: 'error',
+	  				  title: response.data.msg,
+	  				  showConfirmButton: false,
+	  				  timer: 3000
+	  				})	
+				  }
+		  		}).finally(()=>{
+		  		   //刪除完成後再查詢 	
+	  			   this.getAll();
+		  		});  
+      		 
+			}		   
+      	   });
+
+ },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",

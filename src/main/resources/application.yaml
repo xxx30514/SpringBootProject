@@ -51,3 +51,6 @@ server:
       enabled: true  
   tomcat:
     uri-encoding: UTF-8
+cardstore:
+ path: C:\myproject\testimg\    
+  

@@ -19,6 +19,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 	@Override
 	public Boolean saveUser(User user) {
+	
 		user.setUserCreatedate(LocalDateTime.now());
 		user.setUserUpdatedate(LocalDateTime.now());
 		return userMapper.insert(user)>0;

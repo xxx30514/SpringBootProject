@@ -1,11 +1,14 @@
 package mysite.cardstore.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("t_user")
-public class User {
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@TableId
 	private Integer userId;
 	private String userAccount;
