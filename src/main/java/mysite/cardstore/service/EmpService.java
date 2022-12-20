@@ -4,7 +4,7 @@ package mysite.cardstore.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import mysite.cardstore.model.Emp;
+import mysite.cardstore.pojo.Emp;
 
 
 

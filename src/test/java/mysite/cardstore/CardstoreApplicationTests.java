@@ -14,8 +14,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.mapper.EmpMapper;
-import mysite.cardstore.model.Emp;
-import mysite.cardstore.model.User;
+import mysite.cardstore.pojo.Emp;
+import mysite.cardstore.pojo.User;
 import mysite.cardstore.service.EmpService;
 import mysite.cardstore.service.UserService;
 

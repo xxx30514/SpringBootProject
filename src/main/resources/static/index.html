@@ -297,13 +297,20 @@
               <input type="text" v-model="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
       </div>
 </div>
-<form id="userLogin" v-if="JSON.stringify(userInfo)=='{}'">
+<form id="userLogin" v-if="userInfo==''">
 		帳號:<input type="text" name="username" v-model="loginForm.userAccount"><br> 
 		密碼:<input type="password" name="password" v-model="loginForm.userPassword"><br> 
 		<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
 </form>
 <p>{{userInfo.userName}}</p>
-<button v-if="JSON.stringify(userInfo)!='{}'" v-on:click="userLogout()">登出</button>
+<!-- v-if="JSON.stringify(userInfo)!='{}'"本來是使用這個判斷生效 不知為何突然無效 改成現行用法 -->
+<button v-if="userInfo!=''" v-on:click="userLogout()">登出</button>
+<select class="form-select" aria-label="Default select example">
+ <option v-for="item in categoryList" :value="item.id">{{item.name}}</option>
+<!--   <option value="1">One</option> -->
+<!--   <option value="2">Two</option> -->
+<!--   <option value="3">Three</option> -->
+</select>
 <button v-on:click="addCategory()">新增分類測試(資料固定)</button>
 <button v-on:click="removeCategory(1)">刪除分類測試(資料固定)</button>
 <div class="row row-cols-1 row-cols-md-4 g-0">
@@ -327,8 +334,9 @@
                     <label for="exampleInputFile">File input</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" name="headerImg" class="custom-file-input" id="exampleInputFile">
+                        <input type="file" name="headerImg" class="custom-file-input" id="exampleInputFile" @change="fileSelected">
                         <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
+                        <img v-if="image" :src="image" width="400"/> 
                       </div>
                       <div class="form-group">
                        <label for="exampleInputFile">商品圖片</label>
@@ -353,7 +361,7 @@
             </div>
             
 </div>
-            <button type="submit" class="btn btn-block btn-danger btn-sm my-2 my-sm-0">下載</button>
+            <button type="submit" class="btn btn-block btn-danger btn-sm my-2 my-sm-0"   v-on:click="testFile()">下載</button>
             <img v:if="imageUrl" alt="" :src="imageUrl"></img>
             <!-- /.card -->
 <!-- <template> -->
@@ -373,6 +381,10 @@
 
 <!--             </div> -->
 <!-- </template>             -->
+	<form id="check">
+		帳號:<input type="text" name="username" v-model="checkForm.userAccount"><br> 
+		<input type="button" value="檢查" form="check" v-on:click="userCheck()"><br>
+	</form>
 	</div>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
@@ -440,8 +452,10 @@
          		empty: null,
          		length: '',
          		formData:{empGender:'男'},
-         		headerImg:{},
+         		headerImg:'',
+         		image:'',
          		loginForm:{},
+         		checkForm:{},
          		userInfo:'',
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
@@ -452,8 +466,10 @@
                      empAge:'',
                      empGender:''
                  },
-               	categoryForm:{type:1,name:'SD45',sort:1},
+               	categoryForm:{type:1,name:'套牌',sort:1},
                	imageUrl:'',
+               	fileForm: new FormData(),
+               	categoryList: [],
         	}
       },
       //頁面載入完成Vue後執行
@@ -467,7 +483,8 @@
 	  			const userInfo = window.localStorage.getItem('userInfo')
 	  			if(userInfo){
 	  			this.userInfo=JSON.parse(userInfo)
-	  		}
+	  			}
+	  			this.getCategoryList();
 	 },
       
       methods:{
@@ -618,6 +635,8 @@
 	  				Toast.fire({
 	  	                icon: 'success', title: '登入成功'
 	  	            });
+	  				//let xx =JSON.parse(sessionStorage.getItem("loginUser")); 
+	  				//console.log("session:"+xx);
 	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data));
 	  				const userInfo = window.localStorage.getItem('userInfo')
 		  			if(userInfo){
@@ -688,8 +707,8 @@
 	  				Toast.fire({
 	  	                icon: 'success', title: '資料新增成功'
 	  	            });
-				  }else {
-					  Toast.fire({
+		 		  }else {
+		 			  Toast.fire({
 		  	                icon: 'error', title: response.data.msg
 		  	            });
 				  }
@@ -697,8 +716,8 @@
 		  		   //新增完成後再查詢一次，重整資料 	
 	  			   this.getAll();			  
 		  		});
-	  },
-	  removeCategory(categoryId){		  	　
+	  	 },
+	  	 removeCategory(categoryId){		  	　
 		   	   Swal.fire({
           		title: "確定刪除此項資料(序號:" + categoryId + ")?",
           		text:"刪除後將無法復原，請謹慎操作！",
@@ -712,9 +731,9 @@
           		cancelButtonText: "取消",
           		confirmButtonText: "刪除",
           	 	//reverseButtons: true //反轉按鈕位置讓確定在右側
-      	   }).then((result)=>{
-      		   if (result.isConfirmed) {			
-      		 axios.delete("/categorys/"+categoryId).then((response)=> {//成功時執行的回調函數
+      	   	   }).then((result)=>{
+      		    if (result.isConfirmed) {			
+      		     axios.delete("/categorys/"+categoryId).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  if (response.data.flag) {
 	  				Swal.fire({
@@ -743,12 +762,65 @@
 
  		  },
     	  testFile(){	//先調用上傳 上傳成功後處理url
-		 		axios.post("/commons/upload",{headerImg:this.headerImg}).then(function (response) {
+		 		axios.post("/commons/upload").then(function (response) {
 		 			//成功時執行的回調函數
-		 			 this.imageUrl='/commons/download/'+response.data.data
+		 			 //this.imageUrl='/commons/download/'+response.data.msg
+		 		      console.log(response.data.msg);
+		 		  });
+	  	  },
+	  	  testDownload(){	//先調用上傳 上傳成功後處理url
+		 		axios.post("/commons/upload",this.fileForm).then(function (response) {
+		 			//成功時執行的回調函數
+		 			 this.imageUrl="/commons/download/"+response.data.msg
 		 		      console.log(response);
 		 		  });
 	  	  },
+	  	  fileChange(e) {
+	            this.fileForm.append('file', e.target.files[0]) //放進上傳的檔案
+	      },
+	      fileSelected(e) {
+	            const file = e.target.files.item(0);
+	            const reader = new FileReader();
+	            reader.addEventListener('load', this.imageLoaded);
+	            reader.readAsDataURL(file);
+	      },
+	      imageLoaded(e) {
+	            this.image = e.target.result;
+	      },
+	      getCategoryList(){
+	    	    //get請求傳參數使用params {params:{type:1}} 或是/categorys/list?type=1拼接
+    		  		axios.get("/categorys/list",{params:{type:1}}).then((response)=> {//成功時執行的回調函數
+  		 		    if (response.data.flag) {	
+  		 		        console.log(response.data);  		 		    
+  		 		        console.log(response.data.data);   		 			
+  		 		     	this.categoryList = response.data.data;
+				   }else {
+// 						Toast.fire({
+// 			  	           icon: 'error', title: response.data.msg
+// 			  	        });
+					}
+	 		  	  }).finally(()=>{	
+		  
+	 		  		});
+	      },  
+	      userCheck(){
+        	  axios.post("/users/check",this.checkForm).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  console.log(response)
+	  			  if (response.data.code==001) {	
+	  				Toast.fire({
+	  	                icon: 'success', title: response.data.msg
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+ 		  		}).finally(()=>{	
+ 		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+ 		  		});    	  
+          },
     	  testAjax(){	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",

@@ -1,4 +1,4 @@
-package mysite.cardstore.model;
+package mysite.cardstore.pojo;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -1,9 +1,13 @@
-package mysite.cardstore.model;
+package mysite.cardstore.pojo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotBlank;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 @TableName("t_user")
 public class User implements Serializable {
 	
@@ -12,9 +16,12 @@ public class User implements Serializable {
 	@TableId
 	private Integer userId;
 	private String userAccount;
+	@JsonInclude(JsonInclude.Include.NON_NULL) //為空時不生成json
+	@NotBlank
 	private String userPassword;
 	private String userName;
 	private String userNickname;
+	@NotBlank
 	private String userEmail;
 	private LocalDateTime userCreatedate;
 	private LocalDateTime userUpdatedate;

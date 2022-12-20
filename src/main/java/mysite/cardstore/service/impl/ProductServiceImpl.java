@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mysite.cardstore.mapper.ProductMapper;
-import mysite.cardstore.model.Product;
+import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.ProductService;
 
 @Transactional

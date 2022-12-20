@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import mysite.cardstore.model.Category;
+import mysite.cardstore.pojo.Category;
 
 
 public interface CategoryService extends IService<Category>{

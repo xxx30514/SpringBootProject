@@ -38,7 +38,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 		//攔截 =未登入 =>跳轉到登入頁面
 		log.info("使用者尚未登入,跳轉到登入頁面");
 		request.setAttribute("msg", "請先登入");
-		request.getRequestDispatcher("/backend/login.html").forward(request, response);
+		//request.getRequestDispatcher("/backend/login.html").forward(request, response);
+		response.sendRedirect("/backend/login.html");
 		return false;
 	}
 	

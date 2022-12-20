@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import mysite.cardstore.controller.utils.Result;
-import mysite.cardstore.model.Emp;
+import mysite.cardstore.pojo.Emp;
 import mysite.cardstore.service.EmpService;
 
 @RestController

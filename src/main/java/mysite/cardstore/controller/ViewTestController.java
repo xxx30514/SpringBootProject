@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import mysite.cardstore.model.Emp;
-import mysite.cardstore.model.User;
+import mysite.cardstore.pojo.Emp;
+import mysite.cardstore.pojo.User;
 import mysite.cardstore.service.EmpService;
 
 @Controller

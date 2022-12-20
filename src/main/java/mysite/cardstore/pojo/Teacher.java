@@ -1,4 +1,4 @@
-package mysite.cardstore.model;
+package mysite.cardstore.pojo;
 
 public class Teacher {
 	

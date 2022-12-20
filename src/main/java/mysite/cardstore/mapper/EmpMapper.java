@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import mysite.cardstore.model.Emp;
+import mysite.cardstore.pojo.Emp;
 
 @Mapper
 public interface EmpMapper extends  BaseMapper<Emp> {

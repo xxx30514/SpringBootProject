@@ -14,8 +14,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import mysite.cardstore.controller.utils.CustomException;
 import mysite.cardstore.mapper.CategoryMapper;
-import mysite.cardstore.model.Category;
-import mysite.cardstore.model.Product;
+import mysite.cardstore.pojo.Category;
+import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.CategoryService;
 import mysite.cardstore.service.ProductService;
 

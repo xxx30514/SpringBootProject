@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mysite.cardstore.mapper.EmpMapper;
-import mysite.cardstore.model.Emp;
+import mysite.cardstore.pojo.Emp;
 import mysite.cardstore.service.EmpService;
 
 @Transactional
@@ -45,7 +45,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpSe
 	@Override
 	public IPage<Emp> getPage(int currentPage, int pageSize, Emp emp) {
 		LambdaQueryWrapper<Emp> lqw =new LambdaQueryWrapper<Emp>();
-		lqw.like(Strings.isNotEmpty(emp.getEmpName()),Emp::getEmpName,emp.getEmpName());
+		lqw.like(emp.getEmpName()!=null,Emp::getEmpName,emp.getEmpName());
 		lqw.like(emp.getEmpAge()!=null,Emp::getEmpAge,emp.getEmpAge());
 		lqw.like(Strings.isNotEmpty(emp.getEmpGender()),Emp::getEmpGender,emp.getEmpGender());
 		IPage<Emp> page =new Page<Emp>(currentPage,pageSize);
