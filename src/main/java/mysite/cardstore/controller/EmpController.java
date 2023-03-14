@@ -10,8 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.controller.utils.Result;
 import mysite.cardstore.pojo.Emp;
 import mysite.cardstore.service.EmpService;
@@ -22,6 +28,7 @@ public class EmpController {
 	
 	@Autowired
 	private EmpService empService;
+
 	
 	@GetMapping(produces = "application/json;charset=utf-8")
 	public Result getAll(){
@@ -30,7 +37,7 @@ public class EmpController {
 	
 	@PostMapping
 	public Result save(@RequestBody Emp emp) throws IOException{
-		if ("123".equals(emp.getEmpName())) throw new IOException(); 
+		//if ("123".equals(emp.getEmpName())) throw new IOException(); 
 		return new Result(true,empService.save(emp));
 	}
 	
@@ -65,6 +72,15 @@ public class EmpController {
 			page = empService.getPage((int) page.getPages(), pageSize,emp);
 		}
 		return new Result(true,page);
+	}
+	@PostMapping("/file")
+	public Result savefile(MultipartFile file,@RequestBody Emp emp) throws IOException{
+		//if ("123".equals(emp.getEmpName())) throw new IOException(); 
+		empService.upload(file);
+		String originalFilename = file.getOriginalFilename();
+		empService.save(emp);
+		System.out.println(file);	
+		return new Result(true,emp);
 	}
 	
 }

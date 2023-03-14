@@ -112,4 +112,14 @@ public class UserController {
 		}
 		return userService.login(userLoginParam);
 	}
+	//postman測試過
+	@PostMapping("/newlogin2")
+	public R newlogin2(@RequestBody @Validated UserLoginParam userLoginParam, BindingResult result,HttpServletRequest request) {
+		// 檢查是否符合校驗規則 符合false 不符合true
+		boolean b = result.hasErrors();
+		if (b) {
+			return R.fail("請輸入您的帳號與密碼");
+		}
+		return userService.login2(request,userLoginParam);
+	}
 }

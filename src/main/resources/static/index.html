@@ -18,6 +18,19 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<style type="text/css">
+ .carousel-inner  .item{
+      width: 100%;    
+ }
+ .carousel-inner > .item > img{
+      width: 100%;
+      margin: auto;
+ }
+ .carousel{
+ 	width: 100%;
+ 	height: auto;
+ }
+</style>
 </head>
 
 <body>
@@ -58,6 +71,38 @@
     </div>
   </div>
 </nav>
+
+<div id="carouselExampleIndicators" class="carousel slide carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<!--     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+  </div>
+  <div class="carousel-inner container">
+  <!-- data-bs-interval="5000" 5秒輪播  data-pause="hover" 滑鼠在上面時暫停輪播 -->
+    <div class="carousel-item active" data-bs-interval="3000" data-pause="hover" >
+      <img src="img\0612.png" class="d-block w-100"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/favicon.ico" class="d-block w-80" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="" class="d-block w-100" alt="...">
+    </div>
+<!--      <div class="carousel-item"> -->
+<!--       <img src="img/house-door.svg" class="d-block w-100" alt="..."> -->
+<!--     </div> -->
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 	<div id="app">
 		<p>{{message}}</p>
 		<p>{{length}}</p>
@@ -385,7 +430,53 @@
 		帳號:<input type="text" name="username" v-model="checkForm.userAccount"><br> 
 		<input type="button" value="檢查" form="check" v-on:click="userCheck()"><br>
 	</form>
-	</div>
+	<div class="row row-cols-1 row-cols-md-4 g-0">
+<div class="card">
+              <div class="card-header bg-primary mb-3 text-white">
+                <h3 class="card-title">上傳測試Example</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form  action=""  enctype="multipart/form-data" id="up2">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">姓名</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名"  v-model="formData.empName">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="exampleInputFile2" @change="fileSelected">
+                        <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
+                        <img v-if="image" :src="image" width="400"/> 
+                      </div>                 
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" form="up2"  v-on:click="addEmpWithFile()">上傳</button>
+                </div>
+              </form>
+            </div>
+            
+</div>
+	
+	</div><!-- /app -->
+	
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
 	<form action="/user" method="post">
@@ -400,6 +491,7 @@
 </body>
 
 <script>
+
 //import ElementPlus from 'element-plus';
 /**
  *  
@@ -524,7 +616,8 @@
 // 	       	  				  timer: 3000
 // 	       	  				})		
 		  				Toast.fire({
-		  	                icon: 'success', title: '資料新增成功'
+		  	                icon: 'success', title: '資料新增成功',
+		  	                timer: 3000
 		  	            });
 					  }else {
 						  Toast.fire({
@@ -536,6 +629,37 @@
 		  			   this.getAll();			  
 	 		  		});
 	 	  },
+	 	  addEmpWithFile() {
+	 		 		const options = {
+	 				headers: {"content-type": "application/json"}
+	 				}
+	 		 		//formData.append("file",file)
+	  			axios.post("/emps/file",this.formData,options).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				
+	  				//this.$refs.Close.click();
+//	  				Swal.fire({
+//      	  				  position: 'top',
+//      	  				  icon: 'success',
+//      	  				  title: '新增成功',
+//      	  				  showConfirmButton: false,
+//      	  				  timer: 3000
+//      	  				})		
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料新增成功',
+	  	                timer: 3000
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	  	  },
 	 	  removeEmp(empId){		  	　
 	  		   	   Swal.fire({
                    		title: "確定刪除此項資料(序號:" + empId + ")?",
@@ -629,9 +753,9 @@
              
           },
           userLogin(){
-        	  axios.post("/users/login",this.loginForm).then((response)=> {//成功時執行的回調函數
+        	  axios.post("/users/newlogin2",this.loginForm).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {	
+	  			  if (response.data.code=="001") {	
 	  				Toast.fire({
 	  	                icon: 'success', title: '登入成功'
 	  	            });
@@ -661,6 +785,7 @@
 	  	                icon: 'success', title: '登出成功'
 	  	            });
 	  				localStorage.removeItem('userInfo');
+	  				localStorage.removeItem('loginUser');
 	  				window.location.href='/index.html';
 				  }else {
 					  Toast.fire({
@@ -848,6 +973,7 @@
     })
 
     app.mount('#app')
+  
  
       
     

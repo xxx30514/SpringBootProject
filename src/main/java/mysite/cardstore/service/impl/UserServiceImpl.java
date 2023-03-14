@@ -2,6 +2,7 @@ package mysite.cardstore.service.impl;
 
 import java.time.LocalDateTime;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	public R check(UserCheckParam userCheckParam) {
 		// 參數封裝
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_account",userCheckParam.getUserAccount());
+		queryWrapper.eq("user_account", userCheckParam.getUserAccount());
 		// 資料庫查詢
 		Long total = userMapper.selectCount(queryWrapper);
 		if (total == 0) {
@@ -85,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		// 2.資料庫查詢
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("user_account", userLoginParam.getUserAccount());
-		//queryWrapper.eq("user_password", userLoginParam.getUserPassword());
+		// queryWrapper.eq("user_password", userLoginParam.getUserPassword());
 		User userResult = userMapper.selectOne(queryWrapper);
 		// 3.結果處理
 		// 4.沒有該帳號返回登入失敗結果
@@ -100,9 +101,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		if (0 == userResult.getUserStatus()) {
 			return new Result("帳號未啟用，請洽詢客服人員");
 		}
-		//不返回password屬性
+		// 不返回password屬性
 		userResult.setUserPassword(null);
-		return new Result(true,userResult);
+		return new Result(true, userResult);
+	}
+
+	@Override
+	public R login2(HttpServletRequest request,UserLoginParam userLoginParam) {
+		// 1.密碼處理
+		String password = userLoginParam.getUserPassword();
+		// 2.資料庫查詢
+		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("user_account", userLoginParam.getUserAccount());
+		// queryWrapper.eq("user_password", userLoginParam.getUserPassword());
+		User userResult = userMapper.selectOne(queryWrapper);
+		// 3.結果處理
+		// 4.沒有該帳號返回登入失敗結果
+		if (userResult == null) {
+			return R.fail("查無該帳號，請重新輸入");
+		}
+		// 5.確認密碼一致,若不一致返回失敗
+		if (!userResult.getUserPassword().equals(password)) {
+			return R.fail("密碼錯誤，請重新輸入");
+		}
+		// 6.判斷帳號是否啟用
+		if (0 == userResult.getUserStatus()) {
+			return R.fail("帳號未啟用，請洽詢客服人員");
+		}
+		// 不返回password屬性
+		userResult.setUserPassword(null);
+		// 7.登入成功 將使用者id存入session
+		request.getSession().setAttribute("loginUser", userResult.getUserId());
+		
+		return R.success(userResult);
 	}
 
 }

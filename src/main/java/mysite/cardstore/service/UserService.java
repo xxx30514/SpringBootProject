@@ -2,6 +2,8 @@ package mysite.cardstore.service;
 
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import mysite.cardstore.controller.utils.R;
@@ -21,5 +23,7 @@ public interface UserService extends IService<User>{
 	Result register(User user);
 
 	Result login(UserLoginParam userLoginParam);
+	
+	R login2(HttpServletRequest request,UserLoginParam userLoginParam);
 
 }
