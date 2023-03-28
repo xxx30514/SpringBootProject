@@ -19,6 +19,6 @@ public class AdminWebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(new LoginInterceptor())
 		.addPathPatterns("/**") //攔截所有請求 包括靜態資源
 		.excludePathPatterns("/","/login","/css/**","/dist/**","/img/**","/js/**","/plugins/**","/index.html",
-				"/emps/**","/users/**","/backend/login.html","/favicon.ico","/categorys/list");
+				"/emps/**","/users/**","/backend/login.html","/favicon.ico","/categorys/list","/error");
 	}
 }

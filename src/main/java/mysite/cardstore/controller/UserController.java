@@ -3,6 +3,8 @@ package mysite.cardstore.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mysql.cj.Session;
 
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.controller.utils.R;
@@ -120,6 +123,8 @@ public class UserController {
 		if (b) {
 			return R.fail("請輸入您的帳號與密碼");
 		}
-		return userService.login2(request,userLoginParam);
+
+		
+		return userService.login2(request, userLoginParam);
 	}
 }

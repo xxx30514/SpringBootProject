@@ -132,7 +132,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		userResult.setUserPassword(null);
 		// 7.登入成功 將使用者id存入session
 		request.getSession().setAttribute("loginUser", userResult.getUserId());
-		
+		Integer attribute = (Integer) request.getSession().getAttribute("loginUser");
+		System.out.println(attribute);
 		return R.success(userResult);
 	}
 

@@ -3,6 +3,9 @@ package mysite.cardstore.controller;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,14 +76,34 @@ public class EmpController {
 		}
 		return new Result(true,page);
 	}
-	@PostMapping("/file")
-	public Result savefile(MultipartFile file,@RequestBody Emp emp) throws IOException{
+	@PostMapping(path = "/file",consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
+	public Result savefile(@RequestPart(required = false) MultipartFile file,@RequestPart String emp) throws IOException{
 		//if ("123".equals(emp.getEmpName())) throw new IOException(); 
-		empService.upload(file);
-		String originalFilename = file.getOriginalFilename();
+		Object data = empService.upload(file).getData();
+		Emp empJson =empService.getEmpJson(emp, file);
+		empService.save(empJson);
+		System.out.println(file);	
+		System.out.println(data);
+		return new Result(true,empJson);
+		//null
+	}
+	@PostMapping(path = "/newfile",consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
+	public Result savefile2(@RequestPart(name = "file", required = false) MultipartFile file,@RequestPart("emp") Emp emp) throws IOException{
+		//if ("123".equals(emp.getEmpName())) throw new IOException(); 
+		if (file!=null) {		
+			Object data = empService.upload(file).getData();
+			System.out.println(data);
+		}
 		empService.save(emp);
 		System.out.println(file);	
 		return new Result(true,emp);
+		//null
 	}
+	@GetMapping("/test")
+	public ResponseEntity<Emp> testResponseEntity(@RequestBody Emp emp){
+		return new ResponseEntity<>(emp,HttpStatus.OK);
+	}
+	
+	
 	
 }

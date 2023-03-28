@@ -40,6 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		request.setAttribute("msg", "請先登入");
 		//request.getRequestDispatcher("/backend/login.html").forward(request, response);
 		response.sendRedirect("/backend/login.html");
+		
 		return false;
 	}
 	

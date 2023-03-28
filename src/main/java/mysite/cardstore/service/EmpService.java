@@ -1,6 +1,8 @@
 package mysite.cardstore.service;
 
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -25,5 +27,7 @@ public interface EmpService extends IService<Emp>{
 	Boolean saveEmp(Emp emp,MultipartFile headerImg);
 	
 	Result upload(MultipartFile headerImg);
+	
+	Emp getEmpJson(String emp,MultipartFile file);
 	
 }

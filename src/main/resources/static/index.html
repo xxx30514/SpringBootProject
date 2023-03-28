@@ -347,11 +347,14 @@
 		密碼:<input type="password" name="password" v-model="loginForm.userPassword"><br> 
 		<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
 </form>
-<p>{{userInfo.userName}}</p>
+<p>姓名:{{userInfo.userName}}</p>
+<p>ID:{{userInfo.userId}}</p>
+<p v-if="sessionInfo!=''">ID:{{sessionInfo}}</p>
+<p v-if="sessionInfo!=''">ID:{{sessionInfo.userId}}</p>
 <!-- v-if="JSON.stringify(userInfo)!='{}'"本來是使用這個判斷生效 不知為何突然無效 改成現行用法 -->
 <button v-if="userInfo!=''" v-on:click="userLogout()">登出</button>
 <select class="form-select" aria-label="Default select example">
- <option v-for="item in categoryList" :value="item.id">{{item.name}}</option>
+ <option v-for="item in categoryList" >{{item.name}}</option>
 <!--   <option value="1">One</option> -->
 <!--   <option value="2">Two</option> -->
 <!--   <option value="3">Three</option> -->
@@ -445,13 +448,13 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">姓名</label>
-                    <input type="text" name="username" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名"  v-model="formData.empName">
+                    <input type="text" name="empName" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名"  v-model="emp.empName">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputFile">File input</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" name="file" class="custom-file-input" id="exampleInputFile2" @change="fileSelected">
+                        <input type="file" name="file" class="custom-file-input" id="fileupload" @change="fileSelected">
                         <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
                         <img v-if="image" :src="image" width="400"/> 
                       </div>                 
@@ -468,13 +471,13 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" form="up2"  v-on:click="addEmpWithFile()">上傳</button>
+                  <button type="button" class="btn btn-primary" form="up2"  v-on:click="addEmpWithFile">上傳</button>
                 </div>
               </form>
             </div>
             
 </div>
-	
+	{{emp}}
 	</div><!-- /app -->
 	
 	<a href="/thymeleaf">跳轉測試</a><br>
@@ -544,11 +547,15 @@
          		empty: null,
          		length: '',
          		formData:{empGender:'男'},
+         		//emp:{empName:'老五',empGender:'男'},
+         		emp:{empName:'老五'},
          		headerImg:'',
+         		file:'',
          		image:'',
          		loginForm:{},
          		checkForm:{},
          		userInfo:'',
+         		sessionInfo:'',
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
                      pageSize:10,//每頁顯示幾筆
@@ -568,13 +575,24 @@
       mounted(){
     	  		//查詢所有
     	  		this.getAll();
+    	  		//const user = sessionStorage.getItem('test')
+	  			//if(user){
+	  			//this.user=JSON.parse(user)
+	  			//}
+    	  		//console.log(user);
+    	  		
+    	  		
     	  		
       },
       //頁面渲染前執行
       created(){
 	  			const userInfo = window.localStorage.getItem('userInfo')
 	  			if(userInfo){
-	  			this.userInfo=JSON.parse(userInfo)
+	  			this.userInfo=JSON.parse(userInfo);	  			
+	  			}
+	  			const sessionInfo = sessionStorage.getItem('test');
+	  			if(sessionInfo){
+	  			this.sessionInfo=JSON.parse(sessionInfo);
 	  			}
 	  			this.getCategoryList();
 	 },
@@ -629,13 +647,41 @@
 		  			   this.getAll();			  
 	 		  		});
 	 	  },
-	 	  addEmpWithFile() {
+	 	  addEmpWithFile(e) {
+	 		 		//event.preventDefault();
+	 		  		console.log(e)
+	 		  	 	
+	 		  		const file = document.querySelector('#fileupload');
 	 		 		const options = {
-	 				headers: {"content-type": "application/json"}
+	 				headers: //{"Content-Type": "application/x-www-form-urlencoded"}
+	 				{"Content-Type":"multipart/form-data"}
+	 		 		//contentType:false,
+	 		 		//processData:false
 	 				}
-	 		 		//formData.append("file",file)
-	  			axios.post("/emps/file",this.formData,options).then((response)=> {//成功時執行的回調函數
+	 		 		let fileForm2 = new FormData();
+	 		 		fileForm2.append("empName","007");
+	 		 		fileForm2.append("empGender","男");
+	 		 		//fileForm2.append("emp",new Blob([JSON.stringify({"empName": "小黑",
+ 		 				//"empAge": 26,"empGender":"男"})],{type:"application/json"}));
+	 		 		//fileForm2.append("file",file[0]);
+	 		 		console.log(fileForm2.get("empName"));
+	 		 		var empdata = 
+	 		 		{"empName": this.emp.empName,
+	 		 				"empAge": 26,"empGender":"男"}
+//	 		 		fileForm2.append("emp",JSON.stringify(empdata));	
+	 		 		fileForm2.append('file',file.files[0]);
+	 		 		fileForm2.append("emp",new Blob([JSON.stringify(empdata)],{type:"application/json"}));	
+// 	 		 		fileForm2.append("emp",empdata);	
+	 		 		console.log(fileForm2);
+	 		 		console.log(fileForm2.get("emp"));
+	 		 		//fileForm2.append("emp",JSON.stringify(emp));
+	 		 		//fileForm2.append("emp",emp);
+	 		 		//fileForm2.append("emp",{"empName": "小王","empAge": 26,"empGender":"男"});
+	 		 		
+	 		 		
+	  			axios.post("/emps/newfile",fileForm2,options).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
+	  			  	console.log("回應"+response);
 	  			  if (response.data.flag) {
 	  				
 	  				//this.$refs.Close.click();
@@ -753,7 +799,10 @@
              
           },
           userLogin(){
-        	  axios.post("/users/newlogin2",this.loginForm).then((response)=> {//成功時執行的回調函數
+        	 const config ={
+        		  withcredentials : true
+        	  }
+        	  axios.post("/users/newlogin2",this.loginForm,config).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  if (response.data.code=="001") {	
 	  				Toast.fire({
@@ -764,7 +813,10 @@
 	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data));
 	  				const userInfo = window.localStorage.getItem('userInfo')
 		  			if(userInfo){
-		  			this.userInfo=JSON.parse(userInfo)
+		  			this.userInfo=JSON.parse(userInfo);
+		  			sessionStorage.setItem('test',userInfo);
+		  			const sessionInfo =sessionStorage.getItem('test');
+	  			    this.sessionInfo=JSON.parse(sessionInfo);
 		  			}
 	  				//window.location.href='/index.html';
 				  }else {
@@ -786,6 +838,7 @@
 	  	            });
 	  				localStorage.removeItem('userInfo');
 	  				localStorage.removeItem('loginUser');
+	  				sessionStorage.removeItem('test');
 	  				window.location.href='/index.html';
 				  }else {
 					  Toast.fire({
@@ -839,7 +892,10 @@
 				  }
 		  		}).finally(()=>{	
 		  		   //新增完成後再查詢一次，重整資料 	
-	  			   this.getAll();			  
+	  			   this.getAll();
+	  		
+	  			   
+	  			 	
 		  		});
 	  	 },
 	  	 removeCategory(categoryId){		  	　
@@ -902,12 +958,14 @@
 	  	  },
 	  	  fileChange(e) {
 	            this.fileForm.append('file', e.target.files[0]) //放進上傳的檔案
+	            console.log(e.target.files[0]);
 	      },
 	      fileSelected(e) {
 	            const file = e.target.files.item(0);
 	            const reader = new FileReader();
 	            reader.addEventListener('load', this.imageLoaded);
 	            reader.readAsDataURL(file);
+	            this.fileChange(e);
 	      },
 	      imageLoaded(e) {
 	            this.image = e.target.result;
@@ -968,13 +1026,15 @@
      		   ).then(function (response) {//成功時執行的回調函數
  		 		      console.log(response);
  		 		  });
-    	  }
-      }
+    	  },
+    	
+    	 
+      } //methods
     })
 
     app.mount('#app')
   
- 
+
       
     
 </script>

@@ -45,12 +45,15 @@ mybatis-plus:
 server:
   port: 80
   servlet:
+    session:
+      timeout: 0
     encoding: 
       charset: UTF-8
       force: true
-      enabled: true  
+      enabled: true      
   tomcat:
     uri-encoding: UTF-8
+    
 cardstore:
  path: C:\myproject\testimg\    
   
