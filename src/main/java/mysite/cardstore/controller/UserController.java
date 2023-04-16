@@ -123,7 +123,8 @@ public class UserController {
 		if (b) {
 			return R.fail("請輸入您的帳號與密碼");
 		}
-
+		Object attribute = request.getAttribute("loginUser");
+		System.out.println("abc"+attribute);//null
 		
 		return userService.login2(request, userLoginParam);
 	}

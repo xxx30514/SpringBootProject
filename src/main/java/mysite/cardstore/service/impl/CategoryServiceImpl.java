@@ -29,6 +29,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	ProductService productService;
 
 	@Override
+	@Transactional
 	public Boolean saveCategory(HttpServletRequest request, Category category) {
 		category.setCreateTime(LocalDateTime.now());
 		category.setUpdateTime(LocalDateTime.now());

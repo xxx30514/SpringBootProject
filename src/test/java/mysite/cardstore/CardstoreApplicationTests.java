@@ -41,8 +41,10 @@ class CardstoreApplicationTests {
 	void testEmpMapper() {
 		Emp emp = empMapper.selectById(1);
 		Emp emp2 = empService.getEmpById(1);
+		Emp emp3 = empMapper.getEmp(5);
 		log.info("員工資訊:{}",emp);
 		log.info("員工資訊:{}",emp2);
+		log.info("員工資訊:{}",emp3);
 	}
 	
 	@Test
@@ -126,5 +128,7 @@ class CardstoreApplicationTests {
 		user.setUserEmail("12001@gmail.com");
 		userService.saveUser(user);
 	}
+	
+	
 
 }
