@@ -13,7 +13,7 @@ public class Category implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@TableId
-	private Integer id;
+	private Integer categoryId;
 	private Integer type;
 	private String name;
 	private Integer sort;

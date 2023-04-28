@@ -325,29 +325,23 @@
               		<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
               </li>
               <!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
-              <li  class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }">
+<!--               <li  class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }"> -->
+              <li class="paginate_button page-item" v-for="item in navpages" :class="{ 'active' : pagination.currentPage === item }">
 <!--               		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
-<!--               		<a v-if="item <11" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
-              		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a>
+              		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" :class="{ 'disabled' : item === '...'}" >{{item}}</a>
 <!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
               </li>
-<!--               		<a   v-if="pagination.currentPage >10" v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{pagination.currentPage-1}}</a> -->
-<!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(pagination.currentPage)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link active" >{{pagination.currentPage}}</a> -->
-<!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{pagination.currentPage+1}}</a> -->
-              
-              
-              
+   
               <li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
               		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
               </li>
               <li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
               		<a v-on:click="changePage(pagination.pages)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">末頁</a>
               </li>
-              <li v-for="item in navpages">
-              {{item}}
-              </li>
-              </ul>
-              <input type="text" v-model="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
+            
+             </ul>
+             <!-- v-model.number 沒有.number修飾時 移開焦點字尾會多一個0 ex.7 會識別成70 currentPage+1=71 應該是字串與數字格式的問題 -->
+              <input type="text" v-model.number="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
       </div>
 </div>
 <form id="userLogin" v-if="userInfo==''">
@@ -1048,11 +1042,11 @@
     	        var l = page.length
     	        if (l <= 10) { //總頁數<=10 顯示所有頁碼
     	          return page
-    	        } else if (l > 5 && current <= 3) { // 總頁數>5 && 當前頁<=3
-    	          return [1, 2, 3, 4, '...', total] 
-    	        } else if (l > 5 && current > 3 && current <= l - 2) { // 總頁數 > 5 && 當前頁 > 3 && 當前頁 < 總頁數 - 3
-    	          return [1, '...', current - 1, current , current +1, '...', total]  
-    	        } else { // 總頁數 > 5 && 當前頁 > 3 && 當前頁 > 總頁數 - 3
+    	        } else if (l > 10 && current <= 5) { // 總頁數>10 && 當前頁<=5
+    	          return [1, 2, 3, 4, 5, '...', total] 
+    	        } else if (l > 10 && current > 5 && current < l - 3) { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 < 總頁數 - 3
+    	          return [1, '...', current - 2, current - 1, current , current +1, current + 2, '...', total]  
+    	        } else { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 > 總頁數 - 3
     	          return [1, '...', total - 3, total - 2, total - 1, total] 
     	        }
     		  
