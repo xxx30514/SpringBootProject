@@ -1,5 +1,8 @@
 package mysite.cardstore.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.param.ProductIdParam;
+import mysite.cardstore.param.ProductListParam;
 import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.ProductService;
 
@@ -49,6 +53,13 @@ public class ProductController {
 		R detail = productService.detail(productIdParam.getProductId());
 		Product product = (Product) detail.getData();
 		return product;
+	}
+	@PostMapping("/cart/list")
+	public List<Product> cartList(@RequestBody @Validated ProductListParam productListParam,BindingResult result){
+		if (result.hasErrors()) {
+			return new ArrayList<Product>();
+		}
+		return productService.cartList(productListParam.getProductIds());
 	}
 	
 	

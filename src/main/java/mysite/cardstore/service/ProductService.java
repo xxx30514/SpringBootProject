@@ -2,6 +2,8 @@ package mysite.cardstore.service;
 
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +20,8 @@ public interface ProductService extends IService<Product>{
 	R detail(Integer productId); 
 	
 	Product cartDetail(Integer productId);
+	
+	List<Product> cartList(List<Integer> productIds);
 	
 	
 	

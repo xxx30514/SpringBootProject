@@ -44,10 +44,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Override
 	public R check(UserCheckParam userCheckParam) {
 		// 參數封裝
-		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_account", userCheckParam.getUserAccount());
+		QueryWrapper<User> query = new QueryWrapper<>();
+		query.eq("user_account", userCheckParam.getUserAccount());
 		// 資料庫查詢
-		Long total = userMapper.selectCount(queryWrapper);
+		Long total = userMapper.selectCount(query);
 		if (total == 0) {
 			// 沒有該帳號存在 可以註冊
 			return R.success("可使用的帳號");
@@ -61,10 +61,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Override
 	public Result register(User user) {
 		// 1.檢查帳號是否存在
-		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_account", user.getUserAccount());
+		QueryWrapper<User> query = new QueryWrapper<>();
+		query.eq("user_account", user.getUserAccount());
 		// 資料庫查詢
-		Long total = userMapper.selectCount(queryWrapper);
+		Long total = userMapper.selectCount(query);
 		if (total > 0) {
 			// 帳號已重複
 			return new Result("該帳號已存在");
@@ -84,10 +84,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		// 1.密碼處理
 		String password = userLoginParam.getUserPassword();
 		// 2.資料庫查詢
-		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_account", userLoginParam.getUserAccount());
+		QueryWrapper<User> query = new QueryWrapper<>();
+		query.eq("user_account", userLoginParam.getUserAccount());
 		// queryWrapper.eq("user_password", userLoginParam.getUserPassword());
-		User userResult = userMapper.selectOne(queryWrapper);
+		User userResult = userMapper.selectOne(query);
 		// 3.結果處理
 		// 4.沒有該帳號返回登入失敗結果
 		if (userResult == null) {
@@ -111,10 +111,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		// 1.密碼處理
 		String password = userLoginParam.getUserPassword();
 		// 2.資料庫查詢
-		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("user_account", userLoginParam.getUserAccount());
+		QueryWrapper<User> query = new QueryWrapper<>();
+		query.eq("user_account", userLoginParam.getUserAccount());
 		// queryWrapper.eq("user_password", userLoginParam.getUserPassword());
-		User userResult = userMapper.selectOne(queryWrapper);
+		User userResult = userMapper.selectOne(query);
 		// 3.結果處理
 		// 4.沒有該帳號返回登入失敗結果
 		if (userResult == null) {

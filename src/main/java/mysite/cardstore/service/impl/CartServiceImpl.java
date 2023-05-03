@@ -1,6 +1,13 @@
 package mysite.cardstore.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +42,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 	ProductService productService;
 
 	@Override
-	public R saveCart(CartSaveParam cartSaveParam) {
+	public R saveCart(@NotNull CartSaveParam cartSaveParam) {
 		// 1.查詢商品資料
 		ProductIdParam productIdParam = new ProductIdParam();
 		productIdParam.setProductId(cartSaveParam.getProductId());
@@ -78,6 +85,36 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 		// 5.封裝並返回資料
 		CartVo cartVo = new CartVo(product,cart);
 		return R.success("加入購物車成功",cartVo);
+	}
+
+	@Override
+	public R cartList(@NotNull Integer userId) {
+		// 1.使用者id查詢購物車資料 
+		QueryWrapper<Cart> query = new QueryWrapper<>();
+		query.eq("user_id", userId);
+		List<Cart> cartList = cartMapper.selectList(query);
+		//2.判斷是否存在 不存在返回空集合
+		if (cartList == null || cartList.size()==0) {
+			cartList = new ArrayList<>();
+			return R.success("尚未加入任何商品",cartList);
+		}
+		//3.獲取商品id集合 調用商品查詢服務
+		List<Integer> productIds = new ArrayList<>();
+		for (Cart cart : cartList) {
+			productIds.add(cart.getProductId());
+		}
+		List<Product> productList = productService.cartList(productIds);
+		//商品map集合 key=productId value=Product實體類
+		Map<Integer, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
+		//4.封裝vo資料 
+		List<CartVo> cartVoList = new ArrayList<>();
+		for (Cart cart : cartList) {
+			CartVo cartVo = new CartVo(productMap.get(cart.getProductId()),cart);
+			cartVoList.add(cartVo);
+		}
+		R result = R.success("購物車資料查詢成功", cartVoList);
+		log.info("CartServiceImpl.cartList業務結束,結果:{}",result);
+		return result;
 	}
 
 }

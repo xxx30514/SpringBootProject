@@ -2,12 +2,15 @@ package mysite.cardstore.service.impl;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +49,15 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 		Product product = productMapper.selectById(productId);
 		log.info("ProductServiceImpl.cartDetail,結果:{}",product);
 		return product;
+	}
+
+	@Override
+	public List<Product> cartList(List<Integer> productIds) {
+		QueryWrapper<Product> query = new QueryWrapper<>();
+		query.in("product_id", productIds);
+		List<Product> productList = productMapper.selectList(query);
+		log.info("ProductServiceImpl.cartList,結果:{}",productList);
+		return productList;
 	}
 
 	

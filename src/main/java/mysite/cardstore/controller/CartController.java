@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mysite.cardstore.controller.utils.R;
+import mysite.cardstore.param.CartListParam;
 import mysite.cardstore.param.CartSaveParam;
 import mysite.cardstore.service.CartService;
 
@@ -25,5 +26,13 @@ public class CartController {
 			return R.fail("加入購物車失敗，請重新嘗試");
 		}
 		return cartService.saveCart(cartSaveParam);
+	}
+	
+	@PostMapping("/list")
+	public R list(@RequestBody @Validated CartListParam cartListParam,BindingResult result) {
+		if (result.hasErrors()) {
+			return R.fail("購物車資料查詢失敗，請重新嘗試");
+		}
+		return cartService.cartList(cartListParam.getUserId());
 	}
 }
