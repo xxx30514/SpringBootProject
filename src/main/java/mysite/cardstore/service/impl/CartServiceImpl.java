@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.controller.ProductController;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.mapper.CartMapper;
+import mysite.cardstore.mapper.ProductMapper;
 import mysite.cardstore.param.CartSaveParam;
 import mysite.cardstore.param.ProductIdParam;
 import mysite.cardstore.pojo.Cart;
@@ -37,9 +38,8 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 	@Autowired
 	CartMapper cartMapper;
 	@Autowired
-	ProductController productController;
-	@Autowired
-	ProductService productService;
+	ProductMapper productMapper;
+	
 
 	@Override
 	public R saveCart(@NotNull CartSaveParam cartSaveParam) {
@@ -47,7 +47,8 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 		ProductIdParam productIdParam = new ProductIdParam();
 		productIdParam.setProductId(cartSaveParam.getProductId());
 		//Product product = productController.cartDetail(productIdParam);
-		Product product = productService.cartDetail(productIdParam.getProductId());
+		//Product product = productService.cartDetail(productIdParam.getProductId());
+		Product product = productMapper.selectById(productIdParam.getProductId());
 		if (product == null) {
 			return R.fail("此商品已下架，無法加入購物車");
 		}
@@ -103,18 +104,43 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 		for (Cart cart : cartList) {
 			productIds.add(cart.getProductId());
 		}
-		List<Product> productList = productService.cartList(productIds);
+		//List<Product> productList = productService.cartList(productIds);
+		QueryWrapper<Product> productQuery = new QueryWrapper<>();
+		productQuery.in("product_id", productIds);
+		List<Product> selectList = productMapper.selectList(productQuery);
 		//商品map集合 key=productId value=Product實體類
-		Map<Integer, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
+		//Map<Integer, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
+		Map<Integer, Product> collect = selectList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
 		//4.封裝vo資料 
 		List<CartVo> cartVoList = new ArrayList<>();
 		for (Cart cart : cartList) {
-			CartVo cartVo = new CartVo(productMap.get(cart.getProductId()),cart);
+			//CartVo cartVo = new CartVo(productMap.get(cart.getProductId()),cart);
+			CartVo cartVo = new CartVo(collect.get(cart.getProductId()),cart);
 			cartVoList.add(cartVo);
 		}
 		R result = R.success("購物車資料查詢成功", cartVoList);
 		log.info("CartServiceImpl.cartList業務結束,結果:{}",result);
 		return result;
+	}
+
+	@Override
+	public R updateCart(Cart cart) {
+		// 1.查詢商品資料
+		ProductIdParam productIdParam = new ProductIdParam();
+		productIdParam.setProductId(cart.getProductId());
+		Product product = productMapper.selectById(productIdParam.getProductId());
+		// 2.判斷庫存量 (最大數量不可超過庫存量)
+		if (cart.getNumber()>product.getStock()) {
+			return R.fail("商品庫存不足，無法修改數量");
+		}
+		// 3.修改數量
+		QueryWrapper<Cart> query = new QueryWrapper<>();
+		query.eq("user_id", cart.getUserId());
+		query.eq("product_id", cart.getProductId());
+		Cart newCart = cartMapper.selectOne(query);
+		newCart.setNumber(cart.getNumber());
+		cartMapper.updateById(newCart);
+		return R.success("購物車數量修改成功");
 	}
 
 }

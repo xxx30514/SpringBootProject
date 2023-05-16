@@ -17,8 +17,9 @@ public class CartVo implements Serializable {
 
 	private Integer cartId;// 購物車id
 	private Integer userId;
-	private String productName; // 商品名稱
 	private Integer productId; // 商品id
+	private String productName; // 商品名稱
+	private String productDescription; // 商品描述
 	private String productImage; // 商品圖片
 	private Integer number; // 購買數量
 	private BigDecimal amount;
@@ -33,5 +34,6 @@ public class CartVo implements Serializable {
 		this.price = product.getPrice();
 		this.number = cart.getNumber();
 		this.stock = product.getStock();
+		this.productDescription = product.getDescription();
 	}
 }

@@ -34,7 +34,7 @@
 </head>
 
 <body>
-
+<!-- 頂部導航列 -->
  <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,8 +70,8 @@
       </form>
     </div>
   </div>
-</nav>
-
+</nav><!-- /頂部導航列 -->
+<!-- 輪播圖 -->
 <div id="carouselExampleIndicators" class="carousel slide carousel-dark slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -102,7 +102,8 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</div><!-- /輪播圖 -->
+<!-- vue -->
 	<div id="app">
 		<p>{{message}}</p>
 		<p>{{length}}</p>
@@ -121,17 +122,19 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm" @:click="resetForm()">
   新增
 </button>
+<!-- <div> -->
 <div class="card-body table-responsive">
 				<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
-                <table id="example1" class="table table-bordered table-striped table-hover" v-if="dataList.length>0">
-                  <thead>
-                  <tr>
+                <table id="example1" class="table table-bordered table-striped table-hover " v-if="dataList.length>0">
+                  <thead >
+                  <tr class="table-primary">
                     <th>員工ID</th>
                     <th>姓名</th>
                     <th>年齡</th>
                     <th>性別</th>
                     <th>部門</th>
                     <th>操作</th>
+<!--                     <th>圖片</th> -->
                   </tr>
                   </thead>
                   <tbody>
@@ -141,6 +144,7 @@
                     <td>{{item.empAge}}</td>
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>                 
+<!--                     <td><img alt="..." src="http://localhost/img/0612.png" class="img-fluid" width="100"></td>                  -->
                     <td class="d-flex">
                     	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
                     	&nbsp;
@@ -414,23 +418,6 @@
             <button type="submit" class="btn btn-block btn-danger btn-sm my-2 my-sm-0"   v-on:click="testFile()">下載</button>
             <img v:if="imageUrl" alt="" :src="imageUrl"></img>
             <!-- /.card -->
-<!-- <template> -->
-<!--    <div class="pagination-container"> -->
-
-<!--                 <el-pagination class="pagiantion" @current-change="changePage" -->
-
-<!--                         :current-page="pagination.currentPage" -->
-
-<!--                         :page-size="pagination.pageSize" -->
-
-<!--                         layout="total, prev, pager, next, jumper" -->
-
-<!--                         :total="pagination.total"> -->
-
-<!--                 </el-pagination> -->
-
-<!--             </div> -->
-<!-- </template>             -->
 	<form id="check">
 		帳號:<input type="text" name="username" v-model="checkForm.userAccount"><br> 
 		<input type="button" value="檢查" form="check" v-on:click="userCheck()"><br>
@@ -477,11 +464,13 @@
                 </div>
               </form>
             </div>
-            
 </div>
 	{{emp}}
 	</div><!-- /app -->
 	
+	<p>
+	<img alt="圖片路徑測試" src="/img/0612.png"  width="500px" height="300px">
+	</p>
 	<a href="/thymeleaf">跳轉測試</a><br>
 	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
 	<form action="/user" method="post">

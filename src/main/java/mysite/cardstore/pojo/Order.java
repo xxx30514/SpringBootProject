@@ -8,18 +8,18 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
-
 @Data
-@TableName("t_cart")
-public class Cart implements Serializable {
-
+@TableName("t_order")
+public class Order implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	@TableId
-	private Integer cartId;
+	private Integer orderId;
+	private Long orderNum;
 	private Integer userId;
 	private Integer productId;
-	private Integer number;
-	private BigDecimal amount;
-	private LocalDateTime createTime;
-
+	private Integer productNum;
+	private BigDecimal productPrice;
+	private LocalDateTime orderTime;
+	
 }

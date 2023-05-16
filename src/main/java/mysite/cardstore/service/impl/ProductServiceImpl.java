@@ -39,26 +39,30 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 	@Override
 	public R detail(Integer productId) {
 		Product product = productMapper.selectById(productId);
+		if (product==null) {
+			return R.fail("查無該商品");
+		}
 		R result = R.success(product);
 		log.info("ProductServiceImpl.detail,結果:{}",result);
+		
 		return result;
 	}
 
-	@Override
-	public Product cartDetail(Integer productId) {
-		Product product = productMapper.selectById(productId);
-		log.info("ProductServiceImpl.cartDetail,結果:{}",product);
-		return product;
-	}
-
-	@Override
-	public List<Product> cartList(List<Integer> productIds) {
-		QueryWrapper<Product> query = new QueryWrapper<>();
-		query.in("product_id", productIds);
-		List<Product> productList = productMapper.selectList(query);
-		log.info("ProductServiceImpl.cartList,結果:{}",productList);
-		return productList;
-	}
+//	@Override
+//	public Product cartDetail(Integer productId) {
+//		Product product = productMapper.selectById(productId);
+//		log.info("ProductServiceImpl.cartDetail,結果:{}",product);
+//		return product;
+//	}
+//
+//	@Override
+//	public List<Product> cartList(List<Integer> productIds) {
+//		QueryWrapper<Product> query = new QueryWrapper<>();
+//		query.in("product_id", productIds);
+//		List<Product> productList = productMapper.selectList(query);
+//		log.info("ProductServiceImpl.cartList,結果:{}",productList);
+//		return productList;
+//	}
 
 	
 

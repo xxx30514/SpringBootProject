@@ -47,9 +47,9 @@ public class EmpController {
 	
 	@PutMapping
 	public Result update(@RequestBody Emp emp){
-		
 		return new Result(true,empService.updateEmp(emp));
 	}
+	
 	
 	@DeleteMapping("{empId}")
 	public Result delete(@PathVariable("empId") Integer empId) {

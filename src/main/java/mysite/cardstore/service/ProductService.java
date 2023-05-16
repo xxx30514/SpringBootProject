@@ -19,9 +19,9 @@ public interface ProductService extends IService<Product>{
 
 	R detail(Integer productId); 
 	
-	Product cartDetail(Integer productId);
-	
-	List<Product> cartList(List<Integer> productIds);
+//	Product cartDetail(Integer productId);
+//	
+//	List<Product> cartList(List<Integer> productIds);
 	
 	
 	
