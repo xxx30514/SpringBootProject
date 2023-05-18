@@ -35,7 +35,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpSe
 	private String basePath;
 
 	@Autowired
-	EmpMapper empMapper;
+    private EmpMapper empMapper;
 
 	@Override
 	public Emp getEmpById(Integer empId) {

@@ -25,7 +25,7 @@ import mysite.cardstore.service.UserService;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 
 	@Override
 	public Boolean saveUser(User user) {

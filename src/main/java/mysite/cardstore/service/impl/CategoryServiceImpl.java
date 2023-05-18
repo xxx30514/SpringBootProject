@@ -24,9 +24,9 @@ import mysite.cardstore.service.ProductService;
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService{
 	
 	@Autowired
-	CategoryMapper categoryMapper;
+	private CategoryMapper categoryMapper;
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Override
 	@Transactional

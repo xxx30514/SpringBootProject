@@ -23,7 +23,7 @@ import mysite.cardstore.service.CartService;
 public class CartController {
 	
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 	
 	@PostMapping("/save")
 	public R save(@RequestBody @Validated CartSaveParam cartSaveParam,BindingResult result) {

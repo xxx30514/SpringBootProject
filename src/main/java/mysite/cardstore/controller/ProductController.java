@@ -25,7 +25,7 @@ import mysite.cardstore.service.ProductService;
 public class ProductController {
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	@PostMapping("/detail")
 	public R detail(@RequestBody @Validated ProductIdParam productIdParam,BindingResult result) {
@@ -36,7 +36,7 @@ public class ProductController {
 	
 		return productService.detail(productIdParam.getProductId());
 	}
-	@GetMapping("/detail/{productId}")
+	@GetMapping("{productId}")
 	public R detail(@PathVariable Integer productId) {
 	
 		return productService.detail(productId);

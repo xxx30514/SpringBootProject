@@ -2,7 +2,6 @@ package mysite.cardstore.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,13 +11,11 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
-import mysite.cardstore.controller.ProductController;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.mapper.CartMapper;
 import mysite.cardstore.mapper.ProductMapper;
@@ -27,7 +24,7 @@ import mysite.cardstore.param.ProductIdParam;
 import mysite.cardstore.pojo.Cart;
 import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.CartService;
-import mysite.cardstore.service.ProductService;
+
 import mysite.cardstore.vo.CartVo;
 
 @Transactional
@@ -36,9 +33,9 @@ import mysite.cardstore.vo.CartVo;
 public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService {
 
 	@Autowired
-	CartMapper cartMapper;
+	private CartMapper cartMapper;
 	@Autowired
-	ProductMapper productMapper;
+	private ProductMapper productMapper;
 	
 
 	@Override

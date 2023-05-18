@@ -15,7 +15,7 @@ import mysite.cardstore.service.OrderService;
 public class OrderController {
 	
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 	
 	@PostMapping
 	public R save(@RequestBody OrderParam orderParam) {

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +24,14 @@ import mysite.cardstore.vo.CartVo;
 @Slf4j
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implements OrderService{
 	@Autowired
-	OrderMapper orderMapper;
+	private OrderMapper orderMapper;
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 	/**
 	 * 產生訂單
 	 * 1.將購物車資料轉為訂單資料
 	 * 2.批量新增訂單資料
-	 * 3.商品庫存與販售數量修改
+	 * 3.修改商品庫存與販售數量
 	 * 4.刪除相應購物車資料
 	 */
 	@Transactional
@@ -60,6 +63,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 		}
 		//批量新增訂單
 		saveBatch(orderList);
+		//刪除相應購物車資料
+		//(exchange,routing-key,傳輸資料內容)
+		rabbitTemplate.convertAndSend("exchange.topic","clear.cart",cartIds);
+		//修改商品庫存與販售數量
+		rabbitTemplate.convertAndSend("exchange.topic","update.number",productList);
 		return null;
 	}
 }
