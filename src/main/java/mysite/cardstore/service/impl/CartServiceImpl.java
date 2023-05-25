@@ -27,7 +27,7 @@ import mysite.cardstore.service.CartService;
 
 import mysite.cardstore.vo.CartVo;
 
-@Transactional
+
 @Service
 @Slf4j
 public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService {

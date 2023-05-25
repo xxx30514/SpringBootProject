@@ -25,6 +25,7 @@ public class CartVo implements Serializable {
 	private BigDecimal amount;
 	private BigDecimal price; // 商品價格
 	private Integer stock; // 商品庫存量
+	private Boolean check = false; //是否勾選
 
 	public CartVo(Product product, Cart cart) {
 		this.cartId = cart.getCartId();
@@ -35,5 +36,6 @@ public class CartVo implements Serializable {
 		this.number = cart.getNumber();
 		this.stock = product.getStock();
 		this.productDescription = product.getDescription();
+		this.check = false;
 	}
 }

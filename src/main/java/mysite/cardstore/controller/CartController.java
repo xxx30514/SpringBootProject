@@ -42,7 +42,7 @@ public class CartController {
 	}
 	
 	@GetMapping("{userId}")
-	public R CartList(@PathVariable Integer userId) {
+	public R cartList(@PathVariable Integer userId) {
 		return cartService.cartList(userId);
 	}
 	

@@ -47,7 +47,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 	 * 3.修改商品庫存與販售數量
 	 * 4.刪除相應購物車資料
 	 */
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public R saveOrder(OrderParam orderParam) {
 		//1.準備購物車資料
@@ -78,10 +78,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 		saveBatch(orderList);
 		//刪除相應購物車資料
 		//(exchange,routing-key,傳輸資料內容)
-		rabbitTemplate.convertAndSend("exchange.topic","clear.cart",cartIds);
+		rabbitTemplate.convertAndSend("order.exchange","clear.cart",cartIds);
 		//修改商品庫存與販售數量
-		rabbitTemplate.convertAndSend("exchange.topic","update.number",productList);
-		return null;
+		rabbitTemplate.convertAndSend("order.exchange","update.number",productList);
+		R r = R.success("購買成功",orderList);
+		log.info("OrderServiceImpl.saveOrder業務結束,結果:{}",r);
+		return r;
 	}
 	/**
 	 * 分組查詢訂單資料
@@ -116,7 +118,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 				Product product = productMap.get(order.getProductId());
 				orderVo.setProductName(product.getName());
 				orderVo.setProductPicture(product.getImage());
-				orders.add(orderVo);
+				//List<OrderVo> 
+				orderVos.add(orderVo);
 			}
 			result.add(orderVos);
 		}

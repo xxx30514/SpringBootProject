@@ -22,7 +22,6 @@ import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.ProductService;
 
 @Slf4j
-@Transactional
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
 
@@ -57,6 +56,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 	 * @param productList
 	 */
 	@Override
+	@Transactional
 	public void updateNum(List<OrdertoProductParam> productList) {
 		// 將productList集合轉成map productId為key OrdertoProductParam(商品id與數量)為value
 		// key : OrdertoProductParam::getProductId 方法引用
@@ -73,7 +73,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 			product.setStock(product.getStock() - number);//-庫存
 			product.setSaleCount(product.getSaleCount() + number);//+銷量
 		}
-		// 批量更新資訊
+		// 批量更新資訊		
 		this.updateBatchById(productDataList);
 		log.info("ProductServiceImpl.updateNum業務結束,結果:{}",productDataList);
 	}

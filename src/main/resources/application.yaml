@@ -24,6 +24,8 @@ spring:
     port: 5672
     username: guest
     password: guest 
+    virtual-host: /
+    
        
         
 #    type: com.zaxxer.hikari.HikariDataSource

@@ -21,11 +21,11 @@ public class RabbitMqListener {
 	
 	@Autowired
 	private ProductService productService;
-	
+	//沒有在@exchange裡配置type = ExchangeTypes.TOPIC 預設為DIRECT
 	@RabbitListener(
 			bindings = @QueueBinding(
 					value = @Queue(name = "clear.queue"), 
-					exchange = @Exchange(value = "exchange.topic"),
+					exchange = @Exchange(value = "order.exchange"),
 					key = "clear.cart"
 					)
 	)
@@ -36,7 +36,7 @@ public class RabbitMqListener {
 	@RabbitListener(
 			bindings = @QueueBinding(
 					value = @Queue(name = "update.queue"), 
-					exchange = @Exchange(value = "exchange.topic"),
+					exchange = @Exchange(value = "order.exchange"),
 					key = "update.number"
 					)
 	)
