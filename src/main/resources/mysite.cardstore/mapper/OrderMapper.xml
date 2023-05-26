@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mysite.cardstore.mapper.OrderMapper">
+	<!-- void batchSaveOrder(@Param("orders") List<Order> orders); -->
+<insert id="batchSaveOrder" useGeneratedKeys="true" keyProperty="orderId">
+<!-- 	insert into t_order values -->
+<!-- 	<foreach collection="orders" item="order" separator=","> -->
+<!-- 		(null,#{order.orderNum},#{order.userId},#{order.productId},#{order.productNum}, -->
+<!-- 		#{order.productPrice},#{order.orderTime}) -->
+<!-- 	</foreach> -->
+		insert into t_order (order_num,user_id,product_id,product_num,product_price,order_time)
+		values
+	<foreach collection="orders" item="order" separator=","> 
+		(#{order.orderNum},#{order.userId},#{order.productId},#{order.productNum},
+		#{order.productPrice},#{order.orderTime})
+	</foreach>
+</insert>
+</mapper>

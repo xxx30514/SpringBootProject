@@ -1,5 +1,4 @@
 package mysite.cardstore.service.impl;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
+import mysite.cardstore.controller.utils.CustomException;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.mapper.OrderMapper;
 import mysite.cardstore.mapper.ProductMapper;
@@ -40,6 +41,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 	private ProductMapper productMapper;
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
+	@Autowired
+	ApplicationContext applicationContext;
 	/**
 	 * 產生訂單
 	 * 1.將購物車資料轉為訂單資料
@@ -47,8 +50,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 	 * 3.修改商品庫存與販售數量
 	 * 4.刪除相應購物車資料
 	 */
-	@Transactional(rollbackFor = Exception.class)
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public R saveOrder(OrderParam orderParam) {
 		//1.準備購物車資料
 		//購物車id集合 準備批量刪除
@@ -73,9 +76,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 			order.setProductNum(cartVo.getNumber());
 			order.setProductPrice(cartVo.getPrice());
 			orderList.add(order);
+			if (cartVo.getNumber()>cartVo.getStock()) {
+				throw new CustomException("商品庫存不足");
+			}
 		}
 		//批量新增訂單
-		saveBatch(orderList);
+		this.saveBatch(orderList);
+//		orderMapper.batchSaveOrder(orderList);
 		//刪除相應購物車資料
 		//(exchange,routing-key,傳輸資料內容)
 		rabbitTemplate.convertAndSend("order.exchange","clear.cart",cartIds);
@@ -127,4 +134,5 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 		log.info("OrderServiceImpl.getOrder業務結束,結果:{}",r);
 		return r;
 	}
+	
 }

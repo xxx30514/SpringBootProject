@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
+import mysite.cardstore.controller.utils.CustomException;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.mapper.ProductMapper;
 import mysite.cardstore.param.OrdertoProductParam;
@@ -55,8 +56,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 	 * 
 	 * @param productList
 	 */
-	@Override
-	@Transactional
+	@Override	
 	public void updateNum(List<OrdertoProductParam> productList) {
 		// 將productList集合轉成map productId為key OrdertoProductParam(商品id與數量)為value
 		// key : OrdertoProductParam::getProductId 方法引用
@@ -70,8 +70,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 		// 修改商品資訊 -庫存 +銷量
 		for (Product product : productDataList) {
 			Integer number = map.get(product.getProductId()).getNumber();
-			product.setStock(product.getStock() - number);//-庫存
-			product.setSaleCount(product.getSaleCount() + number);//+銷量
+//			if (product.getStock() - number>=0) {
+				product.setStock(product.getStock() - number);//-庫存
+				product.setSaleCount(product.getSaleCount() + number);//+銷量			
+//			}
+//			else {
+//				throw new CustomException("商品庫存不足");
+//			}
 		}
 		// 批量更新資訊		
 		this.updateBatchById(productDataList);

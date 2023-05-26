@@ -2,13 +2,11 @@ package mysite.cardstore.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,14 +18,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-import mysite.cardstore.controller.CommonController;
-import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.controller.utils.Result;
 import mysite.cardstore.mapper.EmpMapper;
 import mysite.cardstore.pojo.Emp;
 import mysite.cardstore.service.EmpService;
 
-@Transactional
+
 @Service
 @Slf4j
 public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpService {

@@ -19,7 +19,6 @@ import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.CategoryService;
 import mysite.cardstore.service.ProductService;
 
-@Transactional
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService{
 	

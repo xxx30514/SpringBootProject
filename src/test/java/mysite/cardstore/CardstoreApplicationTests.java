@@ -1,6 +1,9 @@
 package mysite.cardstore;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +17,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.mapper.EmpMapper;
+import mysite.cardstore.mapper.OrderMapper;
 import mysite.cardstore.pojo.Emp;
+import mysite.cardstore.pojo.Order;
 import mysite.cardstore.pojo.User;
 import mysite.cardstore.service.EmpService;
 import mysite.cardstore.service.UserService;
@@ -30,6 +35,8 @@ class CardstoreApplicationTests {
 	EmpService empService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	OrderMapper orderMapper;
 	
 	@Test
 	void contextLoads() {
@@ -128,7 +135,24 @@ class CardstoreApplicationTests {
 		user.setUserEmail("12001@gmail.com");
 		userService.saveUser(user);
 	}
-	
-	
+	@Test
+	void testMybatisgetEmp() {
+		Emp emp = empMapper.getEmp(15);
+		System.out.println(emp);
+	}
+	@Test
+	void testBatchInsert() {
+		List<Order> orders = new ArrayList<>();
+		Order order = new Order();
+		order.setOrderNum((long) 465465465);
+		order.setProductId(1);
+		Order order2 =new Order();
+		order2.setOrderNum((long) 123453453);
+		order2.setProductId(2);
+		orders.add(order);
+		orders.add(order2);
+		orderMapper.batchSaveOrder(orders);
+		
+	}
 
 }

@@ -3,11 +3,10 @@ package mysite.cardstore.service.impl;
 import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,7 +19,6 @@ import mysite.cardstore.param.UserLoginParam;
 import mysite.cardstore.pojo.User;
 import mysite.cardstore.service.UserService;
 
-@Transactional
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
