@@ -112,7 +112,7 @@
 <!-- 			<li v-for="item in dataList">{{item}}</li> -->
 <!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
 <!-- 		</ul> -->
-<input type="text" v-model.trim="pagination.empName" placeholder="依姓名查詢">		
+<input type="text" v-model.trim.lazy="pagination.empName" placeholder="依姓名查詢">		
 <input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">		
 <input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		
 <button type="button" class="btn btn-outline-success" @:click="getAll()" >
@@ -195,10 +195,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>       
       <div class="modal-body">
-       <form id="addEmp" class="row g-3">
+       <form id="addEmp"  @submit.prevent="addEmp()" class="row g-3">
   	   		<div class="col-md-6">
    			 	<label for="inputEmail4" class="form-label">姓名</label>
-    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail4" v-model="formData.empName">
+    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail4" v-model="formData.empName" required="required">
   			</div>
   			<div class="col-md-6">
     			<label for="inputPassword4" class="form-label">年齡</label>
@@ -241,7 +241,7 @@
   			</div>
   			<div class="col-12">
     			<div class="form-check">
-     			  <input class="form-check-input" type="checkbox"  id="invalidCheck2"  required>
+     			  <input class="form-check-input" type="checkbox"  id="invalidCheck2" v-model="formData.check" required >
       		<label class="form-check-label" for="invalidCheck2">
         		Agree to terms and conditions
       		</label>
@@ -249,14 +249,13 @@
     	        </div>
   		    </div>
   			<div class="col-12">
-    			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
-    			
+    			<button type="submit" class="btn btn-primary">Sign in</button>  			
   			</div>
 		</form>
       </div><!-- modal-body -->
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button data-bs-dismiss="modal" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+        <button data-bs-dismiss="modal" class="btn btn-primary" form="addEmp">新增</button>
       </div>
     </div>
   </div>
@@ -270,7 +269,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>       
       <div class="modal-body">
-       <form id="UpdateEmp" class="row g-3">
+       <form id="updateEmp" @submit.prevent="updateEmp()"  class="row g-3">
   	   		<div class="col-md-6">
    			 	<label for="inputEmail24" class="form-label">姓名</label>
     	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail24" v-model="formData.empName">
@@ -297,7 +296,7 @@
   			   		 		
   			<div class="col-12">
     			<div class="form-check">
-     			 <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+     			 <input class="form-check-input" type="checkbox" id="gridCheck1" v-model="formData.check" required>
       			 <label class="form-check-label" for="gridCheck1">
         		  Check me out
       			 </label>
@@ -305,13 +304,13 @@
     	        </div>
   		    </div>
   			<div class="col-12">
-    			<button type="submit" class="btn btn-primary" v-on:click="updateEmp()">Sign in</button>
+    			<button type="submit" class="btn btn-primary">Sign in</button>
   			</div>
 		</form>
       </div><!-- modal-body -->
       <div class="modal-footer">
-        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="">取消</button>
-        <button  class="btn btn-primary" data-bs-dismiss="modal" form="updateEmp" v-on:click="updateEmp()">修改</button>
+        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button   class="btn btn-primary" data-bs-dismiss="modal" form="updateEmp">修改</button>
       </div>
     </div>
   </div>
@@ -547,6 +546,7 @@
          		checkForm:{},
          		userInfo:'',
          		sessionInfo:'',
+         		queryInfo:'',
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
                      pageSize:10,//每頁顯示幾筆
@@ -586,29 +586,58 @@
 	  			this.sessionInfo=JSON.parse(sessionInfo);
 	  			}
 	  			this.getCategoryList();
+	  			//重整頁面時保存當前頁面 不會因為重整回到第一頁
+	  			this.storePageNum();
+	  			const queryInfo = window.sessionStorage.getItem('query');
+	  			if(queryInfo){
+// 	  			this.squeryInfo=JSON.parse(queryInfo);
+// 	  			this.squeryInfo=JSON.stringify(queryInfo);
+	  			}
+	  			const  query = {
+	  					querys :{name : this.pagination.empName,
+	  							 age : this.pagination.empAge,
+	  							 gender: this.pagination.empGender
+	  					}
+	  			}
+	  			window.sessionStorage.setItem('search',JSON.stringify(query))	
 	 },
-      
+	 beforeRouteLeave(to,from){
+		  window.sessionStorage.setItem('currentPage',1)
+// 		  next();	  
+	 },
+// 	 watch:{
+// 		 'pagination.empName'(newValue,oldValue) {
+// 			 this.pagination.currentPage=1;
+// 			 if(newValue){
+// 				 this.pagination.empName= newValue;
+// 			 }
+// 		 }
+// 	 },
       methods:{
     	  getAll() {//查詢所有資料並進行分頁
-    		  		param="?query"
-    		  		param+="&empName="+this.pagination.empName;
-    		  		param+="&empAge="+this.pagination.empAge;
-    		  		param+="&empGender="+this.pagination.empGender;
+    		  param="?query"
+    		  param+="&empName="+this.pagination.empName;
+    		  param+="&empAge="+this.pagination.empAge;
+    		  param+="&empGender="+this.pagination.empGender;
     		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize+param).then((response)=> {//成功時執行的回調函數
   		 		      console.log(response.data);
   		 		      console.log(response.data.data.records.length);
   		 		      console.log(response.data.data.records[0]);
   		 		      console.log(response.data.data);
+  		 		      console.log(response.data.data.records);
   		 		   	  this.pagination.currentPage=response.data.data.current;
   		 		   	  this.pagination.pageSize=response.data.data.size;
   		 		   	  this.pagination.total=response.data.data.total;
   		 		   	  this.pagination.pages=response.data.data.pages;
     		  		  this.dataList = response.data.data.records;
 		 			  this.length = response.data.data.length;
+// 		 			  this.param=param;
+		 			  window.sessionStorage.setItem('query',param);		 	
   		 		  });
     	  },
     	  changePage(currentPage){
     		  	this.pagination.currentPage=currentPage;
+    		  	window.sessionStorage.setItem('currentPage',currentPage);
     		  	this.getAll();
     	  },
     	  addEmp() {
@@ -744,7 +773,7 @@
 	  				//判斷操作是否成功
 					 
 	  			  if (response.data.flag && response.data.data!=null ) {
-	  			  		this.formData = response.data.data;	 			  					
+	  			  		this.formData = response.data.data;	 
 				  }else {
 //					  	bootstrap.Modal.getOrCreateInstance(document.getElementById('updateMoadl')).hide()
 // 					  	this.hideModal = new bootstrap.Modal(document.getElementById('updateMoadl'));
@@ -784,7 +813,7 @@
 	      },
 	  	  //清空表單
           resetForm() {
-              this.formData = {empGender:'男'};          
+              this.formData = {empGender:'男' ,check:false};          
              
           },
           userLogin(){
@@ -1017,8 +1046,16 @@
  		 		      console.log(response);
  		 		  });
     	  },
-    	
-    	 
+    	  storePageNum(){ //重整頁面時保存當前頁碼 不會因為重整回到第一頁
+    		  let pageNum =Number(window.sessionStorage.getItem('currentPage')) || 1;
+//     	  	  let query = window.sessionStorage.getItem('query')||"";
+//     	  	  this.param=query;
+    		  this.pagination.currentPage=pageNum;
+//     		  if(this.pagination.empName!=''||this.pagination.empAge!=''||this.pagination.empGender!=''){
+//     			  this.pagination.currentPage = 1;
+//     		  }
+    			  
+    	  },
       }, //methods
       computed:{
     	  navpages:function(){
@@ -1032,11 +1069,11 @@
     	        if (l <= 10) { //總頁數<=10 顯示所有頁碼
     	          return page
     	        } else if (l > 10 && current <= 5) { // 總頁數>10 && 當前頁<=5
-    	          return [1, 2, 3, 4, 5, '...', total] 
+    	          return [1, 2, 3, 4, 5,6, '...', total] 
     	        } else if (l > 10 && current > 5 && current < l - 3) { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 < 總頁數 - 3
     	          return [1, '...', current - 2, current - 1, current , current +1, current + 2, '...', total]  
     	        } else { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 > 總頁數 - 3
-    	          return [1, '...', total - 3, total - 2, total - 1, total] 
+    	          return [1, '...', total - 4, total - 3, total - 2, total - 1, total] 
     	        }
     		  
     	  },
