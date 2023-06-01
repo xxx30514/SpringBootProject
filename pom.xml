@@ -7,8 +7,8 @@
 		<version>2.7.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>mysite</groupId>
-	<artifactId>cardstore</artifactId>
+	<groupId>com.mysite</groupId>
+	<artifactId>cardstore-fronted</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>cardstore</name>

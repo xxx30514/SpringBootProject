@@ -30,6 +30,92 @@
  	width: 100%;
  	height: auto;
  }
+/*  table { */
+/*     width: 10%; */
+/*     display: block; */
+/*     overflow-x: auto; */
+/*     white-space: nowrap; */
+/* } */
+/* table { */
+/*   border-collapse: collapse; */
+/*   border: 1px solid #cdcdcd; */
+/*   font: normal 16px arial; */
+/*   width: 100%; */
+/* } */
+/* td, */
+/* th { */
+/*   border: 1px solid #cdcdcd; */
+/*   padding: 8px; */
+/* } */
+
+/* @media only screen and (max-width: 760px), */
+/*   (min-device-width: 768px) and (max-device-width: 1024px) { */
+/*   table, */
+/*   thead, */
+/*   tbody, */
+/*   th, */
+/*   td, */
+/*   tr { */
+/*     display: block; */
+/*   } */
+
+/*   thead tr { */
+/*     position: absolute; */
+/*     top: -9999px; */
+/*     left: -9999px; */
+/*   } */
+
+/*   tr { */
+/*     border-bottom: 2px solid #690461; */
+/*   } */
+
+/*   td { */
+/*     border: none; */
+/*     border-bottom: 1px solid #eee; */
+/*     position: relative; */
+/*     padding-left: 50% !important; */
+/*     text-align: left !important; */
+/*   } */
+
+/*   td:before { */
+/*     position: absolute; */
+/*     top: 6px; */
+/*     left: 6px; */
+/*     width: 45%; */
+/*     padding-right: 10px; */
+/*     white-space: nowrap; */
+/*     font-weight: bold; */
+/*   } */
+
+/*   td:nth-of-type(1):before { */
+/*     content: "First Name"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(2):before { */
+/*     content: "Last Name"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(3):before { */
+/*     content: "Job Title"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(4):before { */
+/*     content: "Joining Date"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(5):before { */
+/*     content: "Total Experience"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(6):before { */
+/*     content: "Relevant Experience"; */
+/*     color: #0e9893; */
+/*   } */
+/*   td:nth-of-type(7):before { */
+/*     content: "Date of Birth"; */
+/*     color: #0e9893; */
+/*   } */
+/* } */
 </style>
 </head>
 
@@ -112,10 +198,15 @@
 <!-- 			<li v-for="item in dataList">{{item}}</li> -->
 <!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
 <!-- 		</ul> -->
-<input type="text" v-model.trim.lazy="pagination.empName" placeholder="依姓名查詢">		
-<input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">		
-<input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		
-<button type="button" class="btn btn-outline-success" @:click="getAll()" >
+<input type="text" v-model.trim="pagination.empName"   @keydown.enter="search()" placeholder="依姓名查詢">		
+<input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">	
+<select v-model.lazy="pagination.empGender">
+	<option value="">請選擇</option>
+	<option value="男">男</option>
+	<option value="女">女</option>
+</select>	
+<!-- <input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		 -->
+<button type="button" class="btn btn-outline-success" @click="search()" >
 查詢
 </button>		
 		<!-- Button trigger modal -->
@@ -123,25 +214,32 @@
   新增
 </button>
 <!-- <div> -->
-<div class="card-body table-responsive">
+<div class="table-responsive container-fluid">
 				<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
-                <table id="example1" class="table table-bordered table-striped table-hover " v-if="dataList.length>0">
-                  <thead >
-                  <tr class="table-primary">
-                    <th>員工ID</th>
-                    <th>姓名</th>
-                    <th>年齡</th>
-                    <th>性別</th>
-                    <th>部門</th>
-                    <th>操作</th>
+                <table id="example1" class="table table-bordered table-striped table-hover" v-if="dataList.length>0">
+                 <div>
+                  <thead>
+                  <tr class="table-primary">                
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">員工ID</th>                  
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">姓名</th>
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">年齡</th>
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">性別</th>
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">部門</th>
+                    <th class="col col-1 col-sm-2 col-md-4 col-lg-1">操作</th>
 <!--                     <th>圖片</th> -->
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="item in dataList">
+                  <tr v-for="item in dataList">      	
+                  <div>
                     <td>{{item.empId}}</td>
+                  </div>
+                   <div>
                     <td>{{item.empName}}</td>
+                   </div>
+                   <div>
                     <td>{{item.empAge}}</td>
+                     </div>
                     <td>{{item.empGender}}</td>
                     <td>{{item.deptId}}</td>                 
 <!--                     <td><img alt="..." src="http://localhost/img/0612.png" class="img-fluid" width="100"></td>                  -->
@@ -185,7 +283,6 @@
 <!--                   </tfoot> -->
                 </table>
               </div>
-
 <!-- Modal  彈出新增表單-->
 <div class="modal fade"  data-bs-backdrop="static" id="addForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -324,7 +421,7 @@
               <li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
               		<a v-on:click="changePage(1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
               </li>
-              <li class="paginate_button page-item previous" id="example1_previous">
+              <li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
               		<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
               </li>
               <!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
@@ -335,7 +432,7 @@
 <!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
               </li>
    
-              <li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
+              <li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
               		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
               </li>
               <li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
@@ -588,31 +685,35 @@
 	  			this.getCategoryList();
 	  			//重整頁面時保存當前頁面 不會因為重整回到第一頁
 	  			this.storePageNum();
-	  			const queryInfo = window.sessionStorage.getItem('query');
+	  			
+	  			const queryInfo = window.sessionStorage.getItem('name');
 	  			if(queryInfo){
+	  				this.pagination.empName = queryInfo;  			
 // 	  			this.squeryInfo=JSON.parse(queryInfo);
 // 	  			this.squeryInfo=JSON.stringify(queryInfo);
 	  			}
-	  			const  query = {
-	  					querys :{name : this.pagination.empName,
-	  							 age : this.pagination.empAge,
-	  							 gender: this.pagination.empGender
-	  					}
-	  			}
-	  			window.sessionStorage.setItem('search',JSON.stringify(query))	
 	 },
 	 beforeRouteLeave(to,from){
 		  window.sessionStorage.setItem('currentPage',1)
 // 		  next();	  
 	 },
-// 	 watch:{
-// 		 'pagination.empName'(newValue,oldValue) {
+	 watch:{
+		 'pagination.empName'(newValue,oldValue) {
+// 			 window.sessionStorage.setItem('currentPage',1)	
 // 			 this.pagination.currentPage=1;
+			console.log("new:",newValue);
+			console.log("old:",oldValue);
+			if(newValue){
+// 				 this.pagination.currentPage=1;
+// 				window.sessionStorage.setItem('currentPage',1)	
+// 				this.storePageNum();
+			}
+// 			 this.storePageNum();
 // 			 if(newValue){
 // 				 this.pagination.empName= newValue;
 // 			 }
-// 		 }
-// 	 },
+		 }
+	 },
       methods:{
     	  getAll() {//查詢所有資料並進行分頁
     		  param="?query"
@@ -632,7 +733,28 @@
     		  		  this.dataList = response.data.data.records;
 		 			  this.length = response.data.data.length;
 // 		 			  this.param=param;
-		 			  window.sessionStorage.setItem('query',param);		 	
+		 			  window.sessionStorage.setItem('name',this.pagination.empName);		 	
+  		 		  });
+    	  },
+    	  search() {//查詢所有資料並進行分頁
+    		  param="?query"
+    		  param+="&empName="+this.pagination.empName;
+    		  param+="&empAge="+this.pagination.empAge;
+    		  param+="&empGender="+this.pagination.empGender;
+    		  		axios.get("/emps/1"+"/"+this.pagination.pageSize+param).then((response)=> {//成功時執行的回調函數
+  		 		      console.log(response.data);
+  		 		      console.log(response.data.data.records.length);
+  		 		      console.log(response.data.data.records[0]);
+  		 		      console.log(response.data.data);
+  		 		      console.log(response.data.data.records); 		 		   
+  		 		   	  this.pagination.pageSize=response.data.data.size;
+  		 		   	  this.pagination.total=response.data.data.total;
+  		 		   	  this.pagination.pages=response.data.data.pages;
+    		  		  this.dataList = response.data.data.records;
+		 			  this.length = response.data.data.length;
+		 			  window.sessionStorage.setItem('name',this.pagination.empName);
+		 			  window.sessionStorage.setItem('currentPage',1)
+		 			  this.storePageNum();
   		 		  });
     	  },
     	  changePage(currentPage){
