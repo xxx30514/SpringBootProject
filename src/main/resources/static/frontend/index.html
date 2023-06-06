@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/img/favicon.ico"/>
+<meta charset="UTF-8">
+<title>首頁</title>
+<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/element-plus"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<style type="text/css">
+ .carousel-inner  .item{
+      width: 100%;    
+ }
+ .carousel-inner > .item > img{
+      width: 100%;
+      margin: auto;
+ }
+ .carousel{
+ 	width: 100%;
+ 	height: auto;
+ }
+</style>
+</head>
+
+<body>
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Navbar</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div id="carouselExampleIndicators" class="carousel slide carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<!--     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+  </div>
+  <div class="carousel-inner container">
+  <!-- data-bs-interval="5000" 5秒輪播  data-pause="hover" 滑鼠在上面時暫停輪播 -->
+    <div class="carousel-item active" data-bs-interval="3000" data-pause="hover" >
+      <img src="img\0612.png" class="d-block w-100"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/favicon.ico" class="d-block w-80" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="" class="d-block w-100" alt="...">
+    </div>
+<!--      <div class="carousel-item"> -->
+<!--       <img src="img/house-door.svg" class="d-block w-100" alt="..."> -->
+<!--     </div> -->
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+	<div id="app">
+		<p>{{message}}</p>
+		<p>{{length}}</p>
+<!-- 		<p>{{dataList}}</p> -->
+<!-- 		<ul> -->
+<!-- 			<li v-for="item in dataList">{{item}}</li> -->
+<!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
+<!-- 		</ul> -->
+<input type="text" v-model.trim="pagination.empName" placeholder="依姓名查詢">		
+<input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">		
+<input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		
+<button type="button" class="btn btn-outline-success" @:click="getAll()" >
+查詢
+</button>		
+		<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm" @:click="resetForm()">
+  新增
+</button>
+<div class="card-body table-responsive">
+				<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
+                <table id="example1" class="table table-bordered table-striped table-hover" v-if="dataList.length>0">
+                  <thead>
+                  <tr>
+                    <th>員工ID</th>
+                    <th>姓名</th>
+                    <th>年齡</th>
+                    <th>性別</th>
+                    <th>部門</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="item in dataList">
+                    <td>{{item.empId}}</td>
+                    <td>{{item.empName}}</td>
+                    <td>{{item.empAge}}</td>
+                    <td>{{item.empGender}}</td>
+                    <td>{{item.deptId}}</td>                 
+                    <td class="d-flex">
+                    	<button type="button"  class="btn btn-block btn-primary btn-sm my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#updateMoadl" v-on:click="openUpdateForm(item.empId)">編輯</button>
+                    	&nbsp;
+                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="removeEmp(item.empId)">刪除</button>
+                    	&nbsp;
+                    	<button type="button" class="btn btn-block btn-danger btn-sm my-2 my-sm-0" v-on:click="updateStatus(item)">權限更改</button>
+	
+<!-- 								<div class="form-check form-switch"> -->
+<!--   <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> -->
+<!--   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label> -->
+<!-- </div> -->
+<!-- {{item.deptId=='1'||item.deptId=='2' ? '有部門':'沒部門'}} -->
+<!--  <div class="col"> -->
+<!--             <div class="d-inline-block me-1">禁用</div> -->
+<!--             <div class="form-check form-switch d-inline-block"> -->
+<!--                 <input type="checkbox" class="form-check-input" id="site_state" style="cursor: pointer;"> -->
+<!--                 <label for="site_state" class="form-check-label">啟用</label> -->
+<!--                 </div> -->
+<!--         </div> -->
+
+					</td>
+				
+	
+					
+
+					
+                  </tr> 
+                  </tbody>
+<!--                   <tfoot> -->
+<!--                   <tr> -->
+<!--                     <th>Rendering engine</th> -->
+<!--                     <th>Browser</th> -->
+<!--                     <th>Platform(s)</th> -->
+<!--                     <th>Engine version</th> -->
+<!--                     <th>CSS grade</th> -->
+<!--                     <th>CSS grade</th> -->
+<!--                   </tr> -->
+<!--                   </tfoot> -->
+                </table>
+              </div>
+
+<!-- Modal  彈出新增表單-->
+<div class="modal fade"  data-bs-backdrop="static" id="addForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">新增表單</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>       
+      <div class="modal-body">
+       <form id="addEmp" class="row g-3">
+  	   		<div class="col-md-6">
+   			 	<label for="inputEmail4" class="form-label">姓名</label>
+    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail4" v-model="formData.empName">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputPassword4" class="form-label">年齡</label>
+    			<input type="text"  autocomplete="off" class="form-control" id="inputPassword4" v-model="formData.empAge">
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress" class="form-label">性別</label>
+    			<div class="form-check">
+  					<input class="form-check-input" value="男"  type="radio"  id="male" v-model="formData.empGender">
+  					<!--checked屬性搭配v-model會抓不到 要在Vue的data模型中設定formData.empGender的初始值  -->
+  					<label class="form-check-label" for="male">
+    					男
+  					</label>
+				</div>
+				<div class="form-check">
+  					<input class="form-check-input" value="女" type="radio" id="female" v-model="formData.empGender">
+  					<label class="form-check-label" for="female">
+    					女
+  					</label>
+				</div>
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress2" class="form-label">Address 2</label>
+    			<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputCity" class="form-label">City</label>
+    			<input type="text" class="form-control" id="inputCity">
+  			</div>
+  			<div class="col-md-4">
+    			<label for="inputState" class="form-label">State</label>
+    			<select id="inputState" class="form-select">
+      				<option selected>Choose...</option>
+      				<option>...</option>
+    			</select>
+  			</div>
+  			<div class="col-md-2">
+    			<label for="inputZip" class="form-label">Zip</label>
+    			<input type="text" class="form-control" id="inputZip">
+  			</div>
+  			<div class="col-12">
+    			<div class="form-check">
+     			  <input class="form-check-input" type="checkbox"  id="invalidCheck2"  required>
+      		<label class="form-check-label" for="invalidCheck2">
+        		Agree to terms and conditions
+      		</label>
+      			 
+    	        </div>
+  		    </div>
+  			<div class="col-12">
+    			<button type="submit" class="btn btn-primary" v-on:click="addEmp()">Sign in</button>
+    			
+  			</div>
+		</form>
+      </div><!-- modal-body -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button data-bs-dismiss="modal" class="btn btn-primary" form="addEmp" v-on:click="addEmp()">新增</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal  彈出修改表單-->
+<div class="modal fade" id="updateMoadl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">修改表單</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>       
+      <div class="modal-body">
+       <form id="UpdateEmp" class="row g-3">
+  	   		<div class="col-md-6">
+   			 	<label for="inputEmail24" class="form-label">姓名</label>
+    	 		<input type="text"  autocomplete="off" class="form-control" id="inputEmail24" v-model="formData.empName">
+  			</div>
+  			<div class="col-md-6">
+    			<label for="inputPassword24" class="form-label">年齡</label>
+    			<input type="text"  autocomplete="off" class="form-control" id="inputPassword24" v-model="formData.empAge">
+  			</div>
+  			<div class="col-12">
+    			<label for="inputAddress" class="form-label">性別</label>
+    			<div class="form-check">
+  					<input class="form-check-input" value="男" type="radio" name="flexRadioDefault" id="flexRadioDefault21" v-model="formData.empGender">
+  					<label class="form-check-label" for="flexRadioDefault21">
+    					男
+  					</label>
+				</div>
+				<div class="form-check">
+  					<input class="form-check-input" value="女" type="radio" name="flexRadioDefault" id="flexRadioDefault22" v-model="formData.empGender">
+  					<label class="form-check-label" for="flexRadioDefault22">
+    					女
+  					</label>
+				</div>
+  			</div>
+  			   		 		
+  			<div class="col-12">
+    			<div class="form-check">
+     			 <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+      			 <label class="form-check-label" for="gridCheck1">
+        		  Check me out
+      			 </label>
+      			 
+    	        </div>
+  		    </div>
+  			<div class="col-12">
+    			<button type="submit" class="btn btn-primary" v-on:click="updateEmp()">Sign in</button>
+  			</div>
+		</form>
+      </div><!-- modal-body -->
+      <div class="modal-footer">
+        <button  :plain="true" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="">取消</button>
+        <button  class="btn btn-primary" data-bs-dismiss="modal" form="updateEmp" v-on:click="updateEmp()">修改</button>
+      </div>
+    </div>
+  </div>
+</div>
+<a>總筆數:{{pagination.total}}</a><br>
+<a>總頁數:{{pagination.pages}}</a><br>
+<a>當前頁:{{pagination.currentPage}}</a>
+<div class="">
+     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+          <ul class="pagination justify-content-center">
+              <li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
+              		<a v-on:click="changePage(1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
+              </li>
+              <li class="paginate_button page-item previous" id="example1_previous">
+              		<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
+              </li>
+              <!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
+<!--               <li  class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }"> -->
+              <li class="paginate_button page-item" v-for="item in navpages" :class="{ 'active' : pagination.currentPage === item }">
+<!--               		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
+              		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" :class="{ 'disabled' : item === '...'}" >{{item}}</a>
+<!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
+              </li>
+   
+              <li class="paginate_button page-item next" id="example1_next" th:classappend="${page.current==page.pages?'disabled':''}">
+              		<a v-on:click="changePage(pagination.currentPage+1)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
+              </li>
+              <li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
+              		<a v-on:click="changePage(pagination.pages)" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">末頁</a>
+              </li>
+            
+             </ul>
+             <!-- v-model.number 沒有.number修飾時 移開焦點字尾會多一個0 ex.7 會識別成70 currentPage+1=71 應該是字串與數字格式的問題 -->
+              <input type="text" v-model.number="pagination.currentPage" v-on:blur="changePage(pagination.currentPage)" v-on:keyup.enter="changePage(pagination.currentPage)">
+      </div>
+</div>
+<form id="userLogin" v-if="userInfo==''">
+		帳號:<input type="text" name="username" v-model="loginForm.userAccount"><br> 
+		密碼:<input type="password" name="password" v-model="loginForm.userPassword"><br> 
+		<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
+</form>
+<p>姓名:{{userInfo.userName}}</p>
+<p>ID:{{userInfo.userId}}</p>
+<p v-if="sessionInfo!=''">ID:{{sessionInfo}}</p>
+<p v-if="sessionInfo!=''">ID:{{sessionInfo.userId}}</p>
+<!-- v-if="JSON.stringify(userInfo)!='{}'"本來是使用這個判斷生效 不知為何突然無效 改成現行用法 -->
+<button v-if="userInfo!=''" v-on:click="userLogout()">登出</button>
+<select class="form-select" aria-label="Default select example">
+ <option v-for="item in categoryList" >{{item.name}}</option>
+<!--   <option value="1">One</option> -->
+<!--   <option value="2">Two</option> -->
+<!--   <option value="3">Three</option> -->
+</select>
+<button v-on:click="addCategory()">新增分類測試(資料固定)</button>
+<button v-on:click="removeCategory(2)">刪除分類測試(資料固定)</button>
+<div class="row row-cols-1 row-cols-md-4 g-0">
+<div class="card">
+              <div class="card-header bg-primary mb-3 text-white">
+                <h3 class="card-title">Quick Example</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form  action="commons/upload" method="post" enctype="multipart/form-data" id="up">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">姓名</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" name="headerImg" class="custom-file-input" id="exampleInputFile" @change="fileSelected">
+                        <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
+                        <img v-if="image" :src="image" width="400"/> 
+                      </div>
+                      <div class="form-group">
+                       <label for="exampleInputFile">商品圖片</label>
+                       <input type="file" name="productImgs" multiple="multiple" id="exampleInputFile2">
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" form="up">上傳</button>
+                </div>
+              </form>
+            </div>
+            
+</div>
+            <button type="submit" class="btn btn-block btn-danger btn-sm my-2 my-sm-0"   v-on:click="testFile()">下載</button>
+            <img v:if="imageUrl" alt="" :src="imageUrl"></img>
+            <!-- /.card -->
+<!-- <template> -->
+<!--    <div class="pagination-container"> -->
+
+<!--                 <el-pagination class="pagiantion" @current-change="changePage" -->
+
+<!--                         :current-page="pagination.currentPage" -->
+
+<!--                         :page-size="pagination.pageSize" -->
+
+<!--                         layout="total, prev, pager, next, jumper" -->
+
+<!--                         :total="pagination.total"> -->
+
+<!--                 </el-pagination> -->
+
+<!--             </div> -->
+<!-- </template>             -->
+	<form id="check">
+		帳號:<input type="text" name="username" v-model="checkForm.userAccount"><br> 
+		<input type="button" value="檢查" form="check" v-on:click="userCheck()"><br>
+	</form>
+	<div class="row row-cols-1 row-cols-md-4 g-0">
+<div class="card">
+              <div class="card-header bg-primary mb-3 text-white">
+                <h3 class="card-title">上傳測試Example</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form  action=""  enctype="multipart/form-data" id="up2">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">姓名</label>
+                    <input type="text" name="empName" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名"  v-model="emp.empName">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="fileupload" @change="fileSelected">
+                        <label class="custom-file-label" for="exampleInputFile">選擇要上傳的檔案</label>
+                        <img v-if="image" :src="image" width="400"/> 
+                      </div>                 
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="button" class="btn btn-primary" form="up2"  v-on:click="addEmpWithFile">上傳</button>
+                </div>
+              </form>
+            </div>
+            
+</div>
+	{{emp}}
+	</div><!-- /app -->
+	
+	<a href="/thymeleaf">跳轉測試</a><br>
+	<a href="/car/1/owner/lee">params測試/car/{id}/owner/{user}</a>
+	<form action="/user" method="post">
+		<input type="hidden" name="_method" value="delete"> 
+		<input type="submit" value="springboot刪除使用者"><br>
+	</form>
+	<form action="/user" method="get">
+		<input type="submit" value="springboot get 測試"><br>
+	</form>
+	
+
+</body>
+
+<script>
+
+//import ElementPlus from 'element-plus';
+/**
+ *  
+ methods:{
+ testAjax(){
+ 	axios({
+	  url:"",//請求路徑
+	  method:"",//請求方式
+	  params:{},
+	  //請求參數:name=value&name=value的方式傳輸 
+	  不管傳輸方式為get或post請求參數都會被拼接到url後,可透過request.getParameter()獲取
+	  data:{}//請求參數:json格式發送的請求參數,請求參數會被保存到請求報文的請求體(HTTP報文主體)傳輸到伺服器 
+	  (get方式無請求體) ,不可透過request.getParameter()獲取
+  }).then(function (response) {//成功時執行的回調函數
+      console.log(response);
+  }).catch(function (error) {//有異常時執行的回調函數
+      console.log(error);
+  });
+ }
+ }).mount('#app')
+ */
+
+ //import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+ const Toast = Swal.mixin({
+     toast: true,
+     position: 'top-right',
+     showConfirmButton: false,
+     showClass: {
+         popup: 'animate__animated animate__fadeInRight'
+     },
+     hideClass: {
+         popup: 'animate__animated animate__fadeOutRight'
+     },
+     timer: 2500,
+     timerProgressBar: true,
+     didOpen: toast => {
+         toast.addEventListener('mouseenter', Swal.stopTimer);
+         toast.addEventListener('mouseleave', Swal.resumeTimer);
+     },
+     showCloseButton: true
+ });
+ 
+ 	
+    const app  = Vue.createApp({
+      data() {
+        	return {
+          		message: 'Hello Vue!',
+         		dataList: [],
+         		empty: null,
+         		length: '',
+         		formData:{empGender:'男'},
+         		//emp:{empName:'老五',empGender:'男'},
+         		emp:{empName:'老五'},
+         		headerImg:'',
+         		file:'',
+         		image:'',
+         		loginForm:{},
+         		checkForm:{},
+         		userInfo:'',
+         		sessionInfo:'',
+         		pagination: {//分頁相關資料
+                     currentPage: 1,//當前頁
+                     pageSize:10,//每頁顯示幾筆
+                     total:0, //資料總筆數
+                     pages:0,//總頁數
+                     empName:'',
+                     empAge:'',
+                     empGender:''
+                 },
+               	categoryForm:{type:1,name:'套牌',sort:1},
+               	imageUrl:'',
+               	fileForm: new FormData(),
+               	categoryList: [],
+        	}
+      },
+      //頁面載入完成Vue後執行
+      mounted(){
+    	  		//查詢所有
+    	  		this.getAll();
+    	  		//const user = sessionStorage.getItem('test')
+	  			//if(user){
+	  			//this.user=JSON.parse(user)
+	  			//}
+    	  		//console.log(user);
+    	  		
+    	  		
+    	  		
+      },
+      //頁面渲染前執行
+      created(){
+	  			const userInfo = window.localStorage.getItem('userInfo')
+	  			if(userInfo){
+	  			this.userInfo=JSON.parse(userInfo);	  			
+	  			}
+	  			const sessionInfo = sessionStorage.getItem('test');
+	  			if(sessionInfo){
+	  			this.sessionInfo=JSON.parse(sessionInfo);
+	  			}
+	  			this.getCategoryList();
+	 },
+      
+      methods:{
+    	  getAll() {//查詢所有資料並進行分頁
+    		  		param="?query"
+    		  		param+="&empName="+this.pagination.empName;
+    		  		param+="&empAge="+this.pagination.empAge;
+    		  		param+="&empGender="+this.pagination.empGender;
+    		  		axios.get("/emps/"+this.pagination.currentPage+"/"+this.pagination.pageSize+param).then((response)=> {//成功時執行的回調函數
+  		 		      console.log(response.data);
+  		 		      console.log(response.data.data.records.length);
+  		 		      console.log(response.data.data.records[0]);
+  		 		      console.log(response.data.data);
+  		 		   	  this.pagination.currentPage=response.data.data.current;
+  		 		   	  this.pagination.pageSize=response.data.data.size;
+  		 		   	  this.pagination.total=response.data.data.total;
+  		 		   	  this.pagination.pages=response.data.data.pages;
+    		  		  this.dataList = response.data.data.records;
+		 			  this.length = response.data.data.length;
+  		 		  });
+    	  },
+    	  changePage(currentPage){
+    		  	this.pagination.currentPage=currentPage;
+    		  	this.getAll();
+    	  },
+    	  addEmp() {
+		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
+		  			  //判斷操作是否成功
+		  			  if (response.data.flag) {
+		  				
+		  				//this.$refs.Close.click();
+// 		  				Swal.fire({
+// 	       	  				  position: 'top',
+// 	       	  				  icon: 'success',
+// 	       	  				  title: '新增成功',
+// 	       	  				  showConfirmButton: false,
+// 	       	  				  timer: 3000
+// 	       	  				})		
+		  				Toast.fire({
+		  	                icon: 'success', title: '資料新增成功',
+		  	                timer: 3000
+		  	            });
+					  }else {
+						  Toast.fire({
+			  	                icon: 'error', title: response.data.msg
+			  	            });
+					  }
+	 		  		}).finally(()=>{	
+	 		  		   //新增完成後再查詢一次，重整資料 	
+		  			   this.getAll();			  
+	 		  		});
+	 	  },
+	 	  addEmpWithFile(e) {
+	 		 		//event.preventDefault();
+	 		  		console.log(e)
+	 		  	 	
+	 		  		const file = document.querySelector('#fileupload');
+	 		 		const options = {
+	 				headers: //{"Content-Type": "application/x-www-form-urlencoded"}
+	 				{"Content-Type":"multipart/form-data"}
+	 		 		//contentType:false,
+	 		 		//processData:false
+	 				}
+	 		 		let fileForm2 = new FormData();
+	 		 		//fileForm2.append("emp",new Blob([JSON.stringify({"empName": "小黑",
+ 		 				//"empAge": 26,"empGender":"男"})],{type:"application/json"}));
+	 		 		//fileForm2.append("file",file[0]);
+	 		 		console.log(fileForm2.get("empName"));
+	 		 		var empdata = 
+	 		 		{"empName": this.emp.empName,
+	 		 				"empAge": 26,"empGender":"男"}
+//	 		 		fileForm2.append("emp",JSON.stringify(empdata));	
+	 		 		fileForm2.append('file',file.files[0]);
+	 		 		fileForm2.append("emp",new Blob([JSON.stringify(empdata)],{type:"application/json"}));	
+// 	 		 		fileForm2.append("emp",empdata);	
+	 		 		console.log(fileForm2);
+	 		 		console.log(fileForm2.get("emp"));
+	 		 		//fileForm2.append("emp",JSON.stringify(emp));
+	 		 		//fileForm2.append("emp",emp);
+	 		 		//fileForm2.append("emp",{"empName": "小王","empAge": 26,"empGender":"男"});
+	 		 		
+	 		 		
+	  			axios.post("/emps/newfile",fileForm2,options).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  	console.log("回應"+response);
+	  			  if (response.data.flag) {
+	  				
+	  				//this.$refs.Close.click();
+//	  				Swal.fire({
+//      	  				  position: 'top',
+//      	  				  icon: 'success',
+//      	  				  title: '新增成功',
+//      	  				  showConfirmButton: false,
+//      	  				  timer: 3000
+//      	  				})		
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料新增成功',
+	  	                timer: 3000
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	  	  },
+	 	  removeEmp(empId){		  	　
+	  		   	   Swal.fire({
+                   		title: "確定刪除此項資料(序號:" + empId + ")?",
+                   		text:"刪除後將無法復原，請謹慎操作！",
+                   		icon: "warning",
+                   		showCancelButton: true,
+                   		closeOnConfirm: false, //false=確認時關閉彈出框
+                   		showLoaderOnConfirm: true,
+                   		showCloseButton: true, //右上角x
+                   		confirmButtonClass: "btn-danger",
+                   	 	confirmButtonColor: '#d33',
+                   		cancelButtonText: "取消",
+                   		confirmButtonText: "刪除",
+                   	 	//reverseButtons: true //反轉按鈕位置讓確定在右側
+               	   }).then((result)=>{
+               		   if (result.isConfirmed) {			
+               		 axios.delete("/emps/"+empId).then((response)=> {//成功時執行的回調函數
+       	  			  //判斷操作是否成功
+       	  			  if (response.data.flag) {
+       	  				Swal.fire({
+       	  				  position: 'top',
+       	  				  icon: 'success',
+       	  				  title: '資料刪除成功',
+       	  				  showConfirmButton: false,
+       	  				  timer: 3000
+       	  				})				
+       				  }else {
+       					Swal.fire({
+         	  				  position: 'top',
+         	  				  icon: 'error',
+         	  				  title: '資料刪除失敗，請重新嘗試',
+         	  				  showConfirmButton: false,
+         	  				  timer: 3000
+         	  				})	
+       				  }
+       		  		}).finally(()=>{
+       		  		   //刪除完成後再查詢 	
+       	  			   this.getAll();
+       		  		});  
+               		 
+					}		   
+               	   });
+
+	      },
+	      openUpdateForm(empId) {
+	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
+	  				//判斷操作是否成功
+					 
+	  			  if (response.data.flag && response.data.data!=null ) {
+	  			  		this.formData = response.data.data;	 			  					
+				  }else {
+//					  	bootstrap.Modal.getOrCreateInstance(document.getElementById('updateMoadl')).hide()
+// 					  	this.hideModal = new bootstrap.Modal(document.getElementById('updateMoadl'));
+// 					  	this.hideModal.hide();
+						Swal.fire({
+       	  				  position: 'top',
+       	  				  icon: 'error',
+       	  				  title: '資料獲取失敗，請重新嘗試',
+       	  				  showConfirmButton: false,
+       	  				  timer: 3000
+       	  				})	
+					  	
+				  }
+		  		}).finally(()=>{
+		  			
+		  		   //新增完成後再查詢 	
+	  			   this.getAll();
+		  		});
+	  	  },
+	  	 　updateEmp() {
+	  			axios.put("/emps",this.formData).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				 //console.log(this.formData.empId);
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料修改成功'
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: '資料修改失敗，請重新嘗試'
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	      },
+	  	  //清空表單
+          resetForm() {
+              this.formData = {empGender:'男'};          
+             
+          },
+          userLogin(){
+        	 const config ={
+        		  withcredentials : true
+        	  }
+        	  axios.post("/users/newlogin2",this.loginForm,config).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.code=="001") {	
+	  				Toast.fire({
+	  	                icon: 'success', title: '登入成功'
+	  	            });
+	  				//let xx =JSON.parse(sessionStorage.getItem("loginUser")); 
+	  				//console.log("session:"+xx);
+	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data));
+	  				const userInfo = window.localStorage.getItem('userInfo')
+		  			if(userInfo){
+		  			this.userInfo=JSON.parse(userInfo);
+		  			sessionStorage.setItem('test',userInfo);
+		  			const sessionInfo =sessionStorage.getItem('test');
+	  			    this.sessionInfo=JSON.parse(sessionInfo);
+		  			}
+	  				//window.location.href='/index.html';
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+ 		  		}).finally(()=>{	
+ 		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+ 		  		});    	  
+          },
+          userLogout(){
+        	  axios.post("/users/logout").then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {	
+	  				Toast.fire({
+	  	                icon: 'success', title: '登出成功'
+	  	            });
+	  				localStorage.removeItem('userInfo');
+	  				localStorage.removeItem('loginUser');
+	  				sessionStorage.removeItem('test');
+	  				//window.location.href='/index.html';
+	  				setTimeout("location.href='/index.html'",2000);//2秒後跳轉
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+ 		  		}).finally(()=>{	
+ 		  		   //新增完成後再查詢一次，重整資料 	
+	  			   //this.getAll();			  
+ 		  		});    	  
+          },
+         　updateStatus(item) {
+        	   //this.empName=item.empName;
+	  			axios.put("/emps",{empId:item.empId,empName:item.empName.length>2?"張三":"老李"}).then((response)=> {//成功時執行的回調函數
+	  			  //對應的欄位名:數值 修改權限測試  三元運算判斷測試 姓名長度>2更新為張三 反之老李
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				Toast.fire({
+	  	                icon: 'success', title: '權限修改成功'
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: '修改失敗，請重新嘗試'
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+		  		});
+	      },
+	      addCategory() {
+	  			axios.post("/categorys",this.categoryForm).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				
+	  				//this.$refs.Close.click();
+//	  				Swal.fire({
+//      	  				  position: 'top',
+//      	  				  icon: 'success',
+//      	  				  title: '新增成功',
+//      	  				  showConfirmButton: false,
+//      	  				  timer: 3000
+//      	  				})		
+	  				Toast.fire({
+	  	                icon: 'success', title: '資料新增成功'
+	  	            });
+		 		  }else {
+		 			  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+		  		}).finally(()=>{	
+		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();
+	  		
+	  			   
+	  			 	
+		  		});
+	  	 },
+	  	 removeCategory(categoryId){		  	　
+		   	   Swal.fire({
+          		title: "確定刪除此項資料(序號:" + categoryId + ")?",
+          		text:"刪除後將無法復原，請謹慎操作！",
+          		icon: "warning",
+          		showCancelButton: true,
+          		closeOnConfirm: false, //false=確認時關閉彈出框
+          		showLoaderOnConfirm: true,
+          		showCloseButton: true, //右上角x
+          		confirmButtonClass: "btn-danger",
+          	 	confirmButtonColor: '#d33',
+          		cancelButtonText: "取消",
+          		confirmButtonText: "刪除",
+          	 	//reverseButtons: true //反轉按鈕位置讓確定在右側
+      	   	   }).then((result)=>{
+      		    if (result.isConfirmed) {			
+      		     axios.delete("/categorys/"+categoryId).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  if (response.data.flag) {
+	  				Swal.fire({
+	  				  position: 'top',
+	  				  icon: 'success',
+	  				  title: '資料刪除成功',
+	  				  showConfirmButton: false,
+	  				  timer: 3000
+	  				})				
+				  }else {
+					Swal.fire({
+	  				  position: 'top',
+	  				  icon: 'error',
+	  				  title: response.data.msg,
+	  				  showConfirmButton: false,
+	  				  timer: 3000
+	  				})	
+				  }
+		  		}).finally(()=>{
+		  		   //刪除完成後再查詢 	
+	  			   this.getAll();
+		  		});  
+      		 
+			}		   
+      	   });
+
+ 		  },
+    	  testFile(){	//先調用上傳 上傳成功後處理url
+		 		axios.post("/commons/upload").then(function (response) {
+		 			//成功時執行的回調函數
+		 			 //this.imageUrl='/commons/download/'+response.data.msg
+		 		      console.log(response.data.msg);
+		 		  });
+	  	  },
+	  	  testDownload(){	//先調用上傳 上傳成功後處理url
+		 		axios.post("/commons/upload",this.fileForm).then(function (response) {
+		 			//成功時執行的回調函數
+		 			 this.imageUrl="/commons/download/"+response.data.msg
+		 		      console.log(response);
+		 		  });
+	  	  },
+	  	  fileChange(e) {
+	            this.fileForm.append('file', e.target.files[0]) //放進上傳的檔案
+	            console.log(e.target.files[0]);
+	      },
+	      fileSelected(e) {
+	            const file = e.target.files.item(0);
+	            const reader = new FileReader();
+	            reader.addEventListener('load', this.imageLoaded);
+	            reader.readAsDataURL(file);
+	            this.fileChange(e);
+	      },
+	      imageLoaded(e) {
+	            this.image = e.target.result;
+	      },
+	      getCategoryList(){
+	    	    //get請求傳參數使用params {params:{type:1}} 或是/categorys/list?type=1拼接
+    		  		axios.get("/categorys/list",{params:{type:1}}).then((response)=> {//成功時執行的回調函數
+  		 		    if (response.data.flag) {	
+  		 		        console.log(response.data);  		 		    
+  		 		        console.log(response.data.data);   		 			
+  		 		     	this.categoryList = response.data.data;
+				   }else {
+// 						Toast.fire({
+// 			  	           icon: 'error', title: response.data.msg
+// 			  	        });
+					}
+	 		  	  }).finally(()=>{	
+		  
+	 		  		});
+	      },  
+	      userCheck(){
+        	  axios.post("/users/check",this.checkForm).then((response)=> {//成功時執行的回調函數
+	  			  //判斷操作是否成功
+	  			  console.log(response)
+	  			  if (response.data.code==001) {	
+	  				Toast.fire({
+	  	                icon: 'success', title: response.data.msg
+	  	            });
+				  }else {
+					  Toast.fire({
+		  	                icon: 'error', title: response.data.msg
+		  	            });
+				  }
+ 		  		}).finally(()=>{	
+ 		  		   //新增完成後再查詢一次，重整資料 	
+	  			   this.getAll();			  
+ 		  		});    	  
+          },
+    	  testAjax(){	
+    		 		axios.post(
+    		 			"/CardstoreSSM/test/ajax?id=1001",
+    		 			{username:"admin",password:"123456"}		
+    		 		).then(function (response) {//成功時執行的回調函數
+    		 		      console.log(response);
+    		 		  });
+    	  },
+    	  testRequestBody(){
+    		  	axios.post(
+    		  		 "/CardstoreSSM/test/RequestBody/json",
+    		  		{username:"admin",password:"123456",age:23,gender:"男"}
+    		   ).then(function (response) {//成功時執行的回調函數
+		 		      console.log(response);
+		 		  });
+    	  },
+    	  testResponseBody(){
+    		  axios.post(
+     		  		 "/CardstoreSSM/test/ResponseBody/json"
+     		   ).then(function (response) {//成功時執行的回調函數
+ 		 		      console.log(response);
+ 		 		  });
+    	  },
+    	
+    	 
+      }, //methods
+      computed:{
+    	  navpages:function(){
+    	  	var current = this.pagination.currentPage
+    	  	var total = this.pagination.pages
+    	  	var page = []
+    	    for (var i = 1; i <= total; i++) {
+    	    	page.push(i)
+    	        }
+    	        var l = page.length
+    	        if (l <= 10) { //總頁數<=10 顯示所有頁碼
+    	          return page
+    	        } else if (l > 10 && current <= 5) { // 總頁數>10 && 當前頁<=5
+    	          return [1, 2, 3, 4, 5, '...', total] 
+    	        } else if (l > 10 && current > 5 && current < l - 3) { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 < 總頁數 - 3
+    	          return [1, '...', current - 2, current - 1, current , current +1, current + 2, '...', total]  
+    	        } else { // 總頁數 > 10 && 當前頁 > 5 && 當前頁 > 總頁數 - 3
+    	          return [1, '...', total - 3, total - 2, total - 1, total] 
+    	        }
+    		  
+    	  },
+          
+      },
+      
+    })
+
+    app.mount('#app')
+  
+
+      
+    
+</script>
+</html>

@@ -75,6 +75,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 			order.setProductId(cartVo.getProductId());
 			order.setProductNum(cartVo.getNumber());
 			order.setProductPrice(cartVo.getPrice());
+			order.setAddressId(orderParam.getAddressId());
 			orderList.add(order);
 			if (cartVo.getNumber()>cartVo.getStock()) {
 				throw new CustomException("商品庫存不足");

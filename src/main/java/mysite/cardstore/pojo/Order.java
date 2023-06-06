@@ -21,5 +21,6 @@ public class Order implements Serializable{
 	private Integer productNum;
 	private BigDecimal productPrice;
 	private LocalDateTime orderTime;
+	private Integer addressId;
 	
 }
