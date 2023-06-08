@@ -150,8 +150,46 @@ a {
 }
 </style>
 </head>
-
 <body>
+	<div id="navheader">
+		<header-component></header-component>
+	</div> 
+	<div id="app">
+		{{message}}
+	</div>
 
 </body>
+<script src="../js/script.js" type="module"></script>
+<script src="../vue/header.vue" type="module"></script>
+<script>
+// import navComponent from '../vue/header.vue';
+// export default{
+// 	components: {
+// 		navComponent,
+// 	  }
+// }
+// const app = createApp({
+// 	  components: {
+// 		navComponent,
+// 	  }
+// 	});
+// 	app.mount('#app');
+const app = Vue.createApp({
+	 data() {
+         return {
+          		message: 'Hello Vue!',     
+        	}
+      },
+})
+app.mount('#app');
+//  app({
+//  data() {
+//          return {
+//           		message: 'Hello Vue!',     
+//         	}
+//       },	
+// }).mount('#app');
+
+
+</script>
 </html>
