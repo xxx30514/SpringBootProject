@@ -2,12 +2,17 @@ package mysite.cardstore.controller;
 
 
 
+import java.awt.Font;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mysql.cj.Session;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.controller.utils.Result;
@@ -32,6 +39,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	private LineCaptcha lineCaptcha;
+		
 	@PostMapping("/login")
 	// 登入
 	public Result login(HttpServletRequest request, @RequestBody User user) {
@@ -123,9 +132,32 @@ public class UserController {
 		if (b) {
 			return R.fail("請輸入您的帳號與密碼");
 		}
-		Object attribute = request.getAttribute("loginUser");
-		System.out.println("abc"+attribute);//null
+		System.out.println("登入驗證碼"+lineCaptcha.getCode());
+		boolean verify = lineCaptcha.verify(userLoginParam.getVerCode().toLowerCase());
 		
+		if (!verify) {
+			return R.fail("驗證碼錯誤");
+		}
+		//request.setAttribute("loginUser", userLoginParam.getUserAccount());
+		Object attribute = request.getAttribute("loginUser");
+		System.out.println("abc"+attribute);//null	
 		return userService.login2(request, userLoginParam);
+	}
+	@GetMapping("/getCode")
+	public void getCode(HttpServletResponse response) {
+		lineCaptcha = CaptchaUtil.createLineCaptcha(130, 48, 5, 5);
+		Font font = new Font("Times New Roman", Font.PLAIN, 28);
+		lineCaptcha.setFont(font);
+		
+		System.out.println("驗證碼"+lineCaptcha.getCode());
+		response.setContentType("image/jpeg");
+		response.setHeader("Pragma", "No-cache");
+		try {
+			ServletOutputStream outputStream = response.getOutputStream();
+			lineCaptcha.write(outputStream);
+			outputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

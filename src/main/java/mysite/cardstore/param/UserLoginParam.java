@@ -10,4 +10,5 @@ public class UserLoginParam {
 	private String userAccount;
 	@NotBlank 
 	private String userPassword;
+	private String verCode;
 }
