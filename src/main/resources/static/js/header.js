@@ -1,6 +1,6 @@
 export default {
-	name: 'header',
-	template: `
+  name: "myHeader", //name不能為header
+  template: `
  <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
   <div class="container-fluid">
     <button class="navbar-toggler"
@@ -99,5 +99,5 @@ export default {
     </div>
   </div>
 </nav>
-`
-}
+`,
+};

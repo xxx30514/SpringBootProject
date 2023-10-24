@@ -152,14 +152,34 @@ a {
 </head>
 <body>
 	<div id="navheader">
-		<header-component></header-component>
+		<header-component></header-component><!-- 頁首組件 -->
 	</div> 
 	<div id="app">
 		{{message}}
-	</div>
-
+		{{userInfo.userId}}
+		總價:{{subtotal}}
+		<div v-for="item in dataList">
+		<input type="checkbox" v-model="item.check">
+			{{item}}
+		</div>
+		<div class="card mb-3" style="max-width: 540px;" v-for="item in dataList">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{item.productName}}</h5>
+        <h5 class="card-title">{{item.check}}</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+	</div><!-- #app -->
 </body>
-<script src="../js/script.js" type="module"></script>
+<script src="../js/script.js" type="module"></script><!-- 引入頁首 -->
 <script>
 // import navComponent from '../vue/header.vue';
 // export default{
@@ -173,13 +193,42 @@ a {
 // 	  }
 // 	});
 // 	app.mount('#app');
-const app = Vue.createApp({
-	 data() {
-         return {
-          		message: 'Hello Vue!',     
+	const app = Vue.createApp({
+		data() {
+         	return {
+          		message: 'Hello Vue!',
+          		dataList: [],
         	}
-      },
-})
-app.mount('#app');
+      	},
+      	mounted(){
+    		this.getCart();
+      	},
+      	created(){
+      		const userInfo = window.localStorage.getItem('userInfo');
+  			if(userInfo){
+  			//localStorage為字串類型 要取出要轉為物件
+  			//JSON.parse:JSON轉物件
+  			this.userInfo=JSON.parse(userInfo);
+  			};	
+      	},
+      	methods:{
+      		getCart() {//查詢購物車資料      		
+      		  		axios.get("/carts/"+this.userInfo.userId).then((response)=> {//成功時執行的回調函數
+    		 		  console.log(response.data);
+      		  		  this.dataList = response.data.data; 	
+    		 		  });		
+      		},
+      	},
+      	computed:{
+      		subtotal: function(){
+      			let total=0;
+      			for (let i in this.dataList){
+      				total+=(this.dataList[i].price*this.dataList[i].number)
+      			}
+      			return total;
+      		},
+      	},
+	});
+	app.mount('#app');
 </script>
 </html>

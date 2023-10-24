@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author yeh
  * 登入檢查
  * 1.配置攔截器要攔截那些請求 實現implements HandlerInterceptor介面
- * 2.配置攔截器至IOC容器中(註冊組件) implements WebMvcConfigurer
+ * 2.配置攔截器至IOC容器中(註冊攔截器組件) implements WebMvcConfigurer
  * 3.指定攔截規則
  */
 @Slf4j
@@ -36,14 +36,14 @@ public class LoginInterceptor implements HandlerInterceptor{
 			log.info("使用者已登入,ID為:{}",loginUser);
 			//放行
 			return true;
+		}else {			
+			//攔截 =未登入 =>跳轉到登入頁面
+			log.info("使用者尚未登入,跳轉到登入頁面");
+			request.setAttribute("msg", "請先登入");
+			//request.getRequestDispatcher("/backend/login.html").forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/backend/login.html");		
+			return false;
 		}
-		//攔截 =未登入 =>跳轉到登入頁面
-		log.info("使用者尚未登入,跳轉到登入頁面");
-		request.setAttribute("msg", "請先登入");
-		//request.getRequestDispatcher("/backend/login.html").forward(request, response);
-		response.sendRedirect("/backend/login.html");
-		
-		return false;
 	}
 	
 	@Override

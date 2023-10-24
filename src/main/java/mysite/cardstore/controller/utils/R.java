@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 public class R {
 
     /**
-     * 成功狀態碼
+     * 成功
      */
-    public static final String SUCCESS_CODE = "001";
+    public static final String SUCCESS_CODE = "200";
     /**
-     * 失敗狀態碼
+     * 失敗
      */
-    public static final String FAIL_CODE = "002";
+    public static final String FAIL_CODE = "400";
     /**
-     * 未登入狀態碼
+     * 未登入
      */
     public static final String USER_NO_LOGIN = "401";
 

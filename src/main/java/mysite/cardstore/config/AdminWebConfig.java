@@ -9,7 +9,7 @@ import mysite.cardstore.interceptor.LoginInterceptor;
  * 
  * @author yeh
  * 1.配置攔截器要攔截那些請求 實現implements HandlerInterceptor介面
- * 2.配置攔截器至IOC容器中(註冊組件) implements WebMvcConfigurer
+ * 2.配置攔截器至IOC容器中(註冊攔截器組件) implements WebMvcConfigurer
  * 3.指定攔截規則
  */
 @Configuration

@@ -1,7 +1,5 @@
 package mysite.cardstore.controller;
 
-
-
 import java.awt.Font;
 
 import javax.servlet.ServletOutputStream;
@@ -38,9 +36,9 @@ import mysite.cardstore.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-
+	
 	private LineCaptcha lineCaptcha;
-		
+
 	@PostMapping("/login")
 	// 登入
 	public Result login(HttpServletRequest request, @RequestBody User user) {
@@ -70,10 +68,10 @@ public class UserController {
 
 	@PostMapping("/logout")
 	// 登出
-	public Result logout(HttpServletRequest request) {
+	public R logout(HttpServletRequest request) {
 		// 清除session
 		request.getSession().removeAttribute("loginUser");
-		return new Result(true);
+		return R.success("登出成功");
 	}
 
 	@PostMapping
@@ -88,12 +86,11 @@ public class UserController {
 		return new Result(true, userService.updateUser(user));
 	}
 
-	
 	/**
 	 * 檢查帳號是否已經存在
 	 * 
 	 * @param userCheckParam 接收檢查帳號的實體 內部有參數userAccount進行校驗
-	 * @param result 校驗結果的實體
+	 * @param result         校驗結果的實體
 	 * @return 封裝好的json物件Result
 	 */
 	@PostMapping("/check")
@@ -124,32 +121,45 @@ public class UserController {
 		}
 		return userService.login(userLoginParam);
 	}
-	//postman測試過
+
+	// postman測試過
 	@PostMapping("/newlogin2")
-	public R newlogin2(@RequestBody @Validated UserLoginParam userLoginParam, BindingResult result,HttpServletRequest request) {
+	public R newlogin2(@RequestBody @Validated UserLoginParam userLoginParam, BindingResult result,
+			HttpServletRequest request) {
 		// 檢查是否符合校驗規則 符合false 不符合true
 		boolean b = result.hasErrors();
 		if (b) {
 			return R.fail("請輸入您的帳號與密碼");
 		}
-		System.out.println("登入驗證碼"+lineCaptcha.getCode());
-		boolean verify = lineCaptcha.verify(userLoginParam.getVerCode().toLowerCase());
-		
-		if (!verify) {
+		System.out.println("登入驗證碼" + lineCaptcha.getCode());
+//		String verCode = lineCaptcha.getCode();
+//		boolean verify = lineCaptcha.verify(userLoginParam.getVerCode().toLowerCase());
+
+//		if (!verify) {
+//			return R.fail("驗證碼錯誤");
+//		}
+//		if (!userLoginParam.getVerCode().equalsIgnoreCase(verCode)) {
+//
+//			return R.fail("驗證碼錯誤");
+//		}
+		if (!lineCaptcha.verify(userLoginParam.getVerCode())) {
 			return R.fail("驗證碼錯誤");
 		}
-		//request.setAttribute("loginUser", userLoginParam.getUserAccount());
+//		if (!verCode.equalsIgnoreCase(userLoginParam.getVerCode())) {	
+//			return R.fail("驗證碼錯誤");
+//		}
+		// request.setAttribute("loginUser", userLoginParam.getUserAccount());
 		Object attribute = request.getAttribute("loginUser");
-		System.out.println("abc"+attribute);//null	
+		System.out.println("abc" + attribute);// null
 		return userService.login2(request, userLoginParam);
 	}
+
 	@GetMapping("/getCode")
 	public void getCode(HttpServletResponse response) {
-		lineCaptcha = CaptchaUtil.createLineCaptcha(130, 48, 5, 5);
+		lineCaptcha = CaptchaUtil.createLineCaptcha(130, 30, 5, 3);
 		Font font = new Font("Times New Roman", Font.PLAIN, 28);
 		lineCaptcha.setFont(font);
-		
-		System.out.println("驗證碼"+lineCaptcha.getCode());
+		System.out.println("驗證碼" + lineCaptcha.getCode());
 		response.setContentType("image/jpeg");
 		response.setHeader("Pragma", "No-cache");
 		try {

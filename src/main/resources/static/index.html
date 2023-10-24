@@ -154,7 +154,7 @@ a {
 <body>
 	<!-- vue -->
 	<div id="app">
-	<img alt="" src="http://localhost/users/getCode">
+<!-- 	<img alt="" src="http://localhost/users/getCode"> -->
 	<!-- 頂部導航列  sticky-top 固定在頂端-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
 		<div class="container-fluid">
@@ -324,7 +324,8 @@ a {
 			</table>
 		</div>
 		<!-- Modal  彈出新增表單-->
-		<div class="modal fade" data-bs-backdrop="static" id="addForm"
+		<!-- class: data-bs-backdrop="static" 視窗不會因為點擊背景而關閉 -->
+		<div class="modal fade"  id="addForm"
 			tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -458,7 +459,7 @@ a {
 					<div class="modal-footer">
 						<button :plain="true" class="btn btn-secondary"
 							data-bs-dismiss="modal">取消</button>
-						<button class="btn btn-primary" data-bs-dismiss="modal"
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
 							form="updateEmp">修改</button>
 					</div>
 				</div>
@@ -470,32 +471,20 @@ a {
 			<div class="dataTables_paginate paging_simple_numbers"
 				id="example1_paginate">
 				<ul class="pagination justify-content-center">
-					<li class="paginate_button page-item previous"
-						id="example1_previous"
-						:class="{ 'disabled' : pagination.currentPage === 1}"><a
-						v-on:click="changePage(1)" aria-controls="example1"
-						data-dt-idx="0" tabindex="0" class="page-link">首頁</a></li>
-					<li class="paginate_button page-item previous"
-						id="example1_previous"
-						:class="{ 'disabled' : pagination.currentPage === 1}"><a
-						v-on:click="changePage(pagination.currentPage-1)"
-						aria-controls="example1" data-dt-idx="0" tabindex="0"
-						class="page-link">上一頁</a></li>
+					<li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
+					 <a v-on:click="changePage(1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
+					</li>
+					<li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
+						<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
+					</li>
 					<!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
 					<!--               <li  class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }"> -->
-					<li class="paginate_button page-item" v-for="item in navpages"
-						:class="{ 'active' : pagination.currentPage === item }">
-						<!--               		<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
-						<a v-on:click="changePage(item)" aria-controls="example1"
-						data-dt-idx="1" tabindex="0" class="page-link"
-						:class="{ 'disabled' : item === '...'}">{{item}}</a> <!--               		<a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
+					<li class="paginate_button page-item" v-for="item in navpages" :class="{ 'active' : pagination.currentPage === item }">
+						<!-- <a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
+						<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" :class="{ 'disabled' : item === '...'}">{{item}}</a> <!-- <a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
 					</li>
-
-					<li class="paginate_button page-item next" id="example1_next"
-						:class="{ 'disabled' : pagination.currentPage === pagination.pages}">
-						<a v-on:click="changePage(pagination.currentPage+1)"
-						aria-controls="example1" data-dt-idx="5" tabindex="0"
-						class="page-link">下一頁</a>
+					<li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
+						<a v-on:click="changePage(pagination.currentPage+1)"aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
 					</li>
 					<li class="paginate_button page-item next" id="example1_next"
 						:class="{ 'disabled' : pagination.currentPage === pagination.pages}">
@@ -512,13 +501,15 @@ a {
 			</div>
 		</div>
 		<form id="userLogin" v-if="userInfo==''">
-			帳號:<input type="text" name="username" v-model="loginForm.userAccount"><br>
-			密碼:<input type="password" name="password"
-				v-model="loginForm.userPassword"><br> <input
-				type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
+			<label>帳號:</label><input type="text" name="username" v-model="loginForm.userAccount"><br>
+			<label>密碼:</label><input type="password" name="password" v-model="loginForm.userPassword"><br> 	
+			<label>驗證碼:</label><input type="text" v-model="loginForm.verCode"> 
+			<img alt="" src="http://localhost/users/getCode"><br>
+			<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
 		</form>
 		<p>姓名:{{userInfo.userName}}</p>
 		<p>ID:{{userInfo.userId}}</p>
+		<p>{{userInfo}}</p>
 		<p v-if="sessionInfo!=''">ID:{{sessionInfo}}</p>
 		<p v-if="sessionInfo!=''">ID:{{sessionInfo.userId}}</p>
 		<!-- v-if="JSON.stringify(userInfo)!='{}'"本來是使用這個判斷生效 不知為何突然無效 改成現行用法 -->
@@ -726,7 +717,7 @@ a {
          		checkForm:{},
          		userInfo:'',
          		sessionInfo:'',
-         		queryInfo:'',
+//          		queryInfo:'',
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
                      pageSize:10,//每頁顯示幾筆
@@ -734,7 +725,7 @@ a {
                      pages:0,//總頁數
                      empName:'',
                      empAge:'',
-                     empGender:''
+                     empGender:'',
                  },
                	categoryForm:{type:1,name:'套牌',sort:1},
                	imageUrl:'',
@@ -757,23 +748,28 @@ a {
       },
       //頁面渲染前執行
       created(){
-	  			const userInfo = window.localStorage.getItem('userInfo')
+	  			const userInfo = window.localStorage.getItem('userInfo');
 	  			if(userInfo){
-	  			this.userInfo=JSON.parse(userInfo);	  			
-	  			}
+	  			//localStorage為字串類型 要取出要轉為物件
+	  			//JSON.parse:JSON轉物件
+	  			this.userInfo=JSON.parse(userInfo);
+	  			};
 	  			const sessionInfo = sessionStorage.getItem('test');
 	  			if(sessionInfo){
 	  			this.sessionInfo=JSON.parse(sessionInfo);
-	  			}
+	  			};
 	  			this.getCategoryList();
 	  			//重整頁面時保存當前頁面 不會因為重整回到第一頁
 	  			this.storePageNum();		
 	  			const queryInfo = window.sessionStorage.getItem('name');
 	  			if(queryInfo){
-	  				this.pagination.empName = queryInfo;  			
-// 	  			this.squeryInfo=JSON.parse(queryInfo);
-// 	  			this.squeryInfo=JSON.stringify(queryInfo);
-	  			}
+	  				this.pagination.empName = queryInfo;  
+	  			    this.queryInfo=JSON.stringify(queryInfo);
+	  			};
+				const ageInfo = window.sessionStorage.getItem('age');
+				if(ageInfo){
+					this.pagination.empAge = ageInfo;
+				};
 	 },
 	 beforeRouteLeave(to,from){
 		  window.sessionStorage.setItem('currentPage',1)
@@ -816,6 +812,7 @@ a {
 		 			  this.length = response.data.data.length;
 // 		 			  this.param=param;
 		 			  window.sessionStorage.setItem('name',this.pagination.empName);		 	
+		 			  window.sessionStorage.setItem('age',this.pagination.empAge);		 	
   		 		  });
     	  },
     	  search() {//查詢所有資料並進行分頁
@@ -835,6 +832,7 @@ a {
     		  		  this.dataList = response.data.data.records;
 		 			  this.length = response.data.data.length;
 		 			  window.sessionStorage.setItem('name',this.pagination.empName);
+		 			  window.sessionStorage.setItem('age',this.pagination.empAge);
 		 			  window.sessionStorage.setItem('currentPage',1)
 		 			  this.storePageNum();
   		 		  });
@@ -1026,19 +1024,21 @@ a {
         	  }
         	  axios.post("/users/newlogin2",this.loginForm,config).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
-	  			  if (response.data.code=="001") {	
+	  			  if (response.data.code=="200") {	
 	  				Toast.fire({
-	  	                icon: 'success', title: '登入成功'
+	  	                icon: 'success', title: response.data.msg
 	  	            });
 	  				//let xx =JSON.parse(sessionStorage.getItem("loginUser")); 
 	  				//console.log("session:"+xx);
-	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data));
+	  				localStorage.setItem('userInfo',JSON.stringify(response.data.data))
+					//JSON.stringify:物件轉JSON字串
+					//localStorage只能儲存字串
 	  				const userInfo = window.localStorage.getItem('userInfo')
 		  			if(userInfo){
 		  			this.userInfo=JSON.parse(userInfo);
-		  			sessionStorage.setItem('test',userInfo);
-		  			const sessionInfo =sessionStorage.getItem('test');
-	  			    this.sessionInfo=JSON.parse(sessionInfo);
+// 		  			sessionStorage.setItem('test',userInfo);
+// 		  			const sessionInfo =sessionStorage.getItem('test');
+// 	  			    this.sessionInfo=JSON.parse(sessionInfo);
 		  			}
 	  				//window.location.href='/index.html';
 				  }else {
@@ -1054,9 +1054,9 @@ a {
           userLogout(){
         	  axios.post("/users/logout").then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
-	  			  if (response.data.flag) {	
+	  			  if (response.data.code="200") {	
 	  				Toast.fire({
-	  	                icon: 'success', title: '登出成功'
+	  	                icon: 'success', title: response.data.msg
 	  	            });
 	  				localStorage.removeItem('userInfo');
 	  				localStorage.removeItem('loginUser');
@@ -1209,7 +1209,7 @@ a {
         	  axios.post("/users/check",this.checkForm).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  console.log(response)
-	  			  if (response.data.code==001) {	
+	  			  if (response.data.code=="200") {	
 	  				Toast.fire({
 	  	                icon: 'success', title: response.data.msg
 	  	            });
@@ -1279,7 +1279,7 @@ a {
       },      
     });
 	app.component('my-component1',{template: '<h1>my-component1</h1>'});
-    app.mount('#app')
+    app.mount('#app');
   
 
       
