@@ -159,7 +159,7 @@ a {
 		{{userInfo.userId}}
 		總價:{{subtotal}}
 		<div v-for="item in dataList">
-		<input type="checkbox" v-model="item.check">
+		<input type="checkbox" v-model="item.check" @click="checkItem($event,index)">
 			{{item}}
 		</div>
 		<div class="card mb-3" style="max-width: 540px;" v-for="item in dataList">
@@ -198,11 +198,14 @@ a {
          	return {
           		message: 'Hello Vue!',
           		dataList: [],
+          		checkList:[],
         	}
       	},
+      	//頁面載入完成Vue後執行
       	mounted(){
     		this.getCart();
       	},
+      	//頁面渲染前執行
       	created(){
       		const userInfo = window.localStorage.getItem('userInfo');
   			if(userInfo){
@@ -218,14 +221,39 @@ a {
       		  		  this.dataList = response.data.data; 	
     		 		  });		
       		},
+      		checkItem: function (event, index) {
+      	        console.log("checkItem");
+      	        console.log(this.checkList);
+      	        var element = event.target;
+//       	        var $allCheck = document.querySelector(".checkAll");
+      	        if (element.checked) {//勾选，加入已选择列表
+      	            this.checkList.push(this.dataList[index]);
+//       	            this.checkAllElement($allCheck);
+      	        } else {//不勾选，从已选择列表中去除
+      	            this.checkList.splice(index, 1);
+//       	            $allCheck.checked = false;
+      	        }
+      	    },
       	},
-      	computed:{
-      		subtotal: function(){
-      			let total=0;
+      	computed:{ //效能較method好 會暫存計算出的結果 若數據沒有變化 會直接使用該暫存的數據 不需要再次執行
+      		subtotal: function(){ //: function 可以省略=> subtotal() //簡寫computed屬性 僅能獲取 不能set
+      			let total = 0;
       			for (let i in this.dataList){
-      				total+=(this.dataList[i].price*this.dataList[i].number)
+      				total += (this.dataList[i].price*this.dataList[i].number);
       			}
       			return total;
+      		},
+      		getAndSet: {
+      			//同簡寫 計算屬性被獲取時執行
+      			get () {
+      				//計算邏輯
+      				return	//return結果	
+      			},
+      			//計算屬性被修改賦值時執行
+      			set (val) { //val =修改的值
+      				//修改邏輯
+      				console.log(val);
+      			}
       		},
       	},
 	});

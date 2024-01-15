@@ -4,19 +4,35 @@
 <meta charset="UTF-8">
 <title>首頁</title>
 <link rel="icon" href="/img/favicon.ico" />
-<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/element-plus/dist/index.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/element-plus"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script>
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.all.min.js"></script>
 <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+	integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style type="text/css">
 .carousel-inner  .item {
 	width: 100%;
@@ -120,11 +136,13 @@
 a {
 	display: inline-block;
 	text-decoration: none;
-	&:
+	&
 	hover
 	{
-	text-decoration :none;
-	}
+	text-decoration
+	:
+	none;
+}
 
 }
 .position { &-relative { position:relative;
@@ -154,91 +172,98 @@ a {
 <body>
 	<!-- vue -->
 	<div id="app">
-<!-- 	<img alt="" src="http://localhost/users/getCode"> -->
-	<!-- 頂部導航列  sticky-top 固定在頂端-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+		<!-- 	<img alt="" src="http://localhost/users/getCode"> -->
+		<!-- 頂部導航列  sticky-top 固定在頂端-->
+		<nav
+			class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand" href="#">Navbar</a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="#">Home</a></li>
+						<li class="nav-item"><a class="nav-link active" href="#">Link</a>
+						</li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown
+						</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#">Something else
+										here</a></li>
+							</ul></li>
+						<li class="nav-item"><a class="nav-link disabled" href="#"
+							tabindex="-1" aria-disabled="true">Disabled</a></li>
+					</ul>
+					<a class="position-relative me-3" href="store/cart.html"> <svg
+							xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+							fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+  <path
+								d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+</svg> <!-- 				<i class="fas fa-shopping-cart fa-2x"></i>  --> <!-- 					<i class="fas fa-light fa-cart-shopping fa-2x" style="color: #ed5b1d;"></i> -->
+						<span class="cartQuantity text-white bg-danger">0</span>
+					</a>
+					<!--       	<a class="nav-link me-3" href="#" tabindex="-1" aria-disabled="true">購物車</a> -->
+					<!--              <div class="cart-num">3</div> -->
+					<form class="d-flex">
+						<input class="form-control me-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+		<!-- /頂部導航列 -->
+		<!-- 輪播圖 -->
+		<div id="carouselExampleIndicators"
+			class="carousel slide carousel-dark slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="0" class="active" aria-current="true"
+					aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<!--     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+			</div>
+			<div class="carousel-inner container">
+				<!-- data-bs-interval="5000" 5秒輪播  data-pause="hover" 滑鼠在上面時暫停輪播 -->
+				<div class="carousel-item active" data-bs-interval="3000"
+					data-pause="hover">
+					<img src="img\0612.png" class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="img/favicon.ico" class="d-block w-80" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="" class="d-block w-100" alt="...">
+				</div>
+				<!--      <div class="carousel-item"> -->
+				<!--       <img src="img/house-door.svg" class="d-block w-100" alt="..."> -->
+				<!--     </div> -->
+			</div>
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
 			</button>
-			<a class="navbar-brand" href="#">Navbar</a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active"aria-current="page" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">Link</a>
-					</li>
-					<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown </a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Something else
-									here</a></li>
-					   </ul>
-					</li>
-					<li class="nav-item"><a class="nav-link disabled" href="#"
-						tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-				<a class="position-relative me-3" href="store/cart.html"> 
-<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-</svg>
-<!-- 				<i class="fas fa-shopping-cart fa-2x"></i>  -->
-<!-- 					<i class="fas fa-light fa-cart-shopping fa-2x" style="color: #ed5b1d;"></i> -->
-					<span class="cartQuantity text-white bg-danger">0</span>
-				</a>
-				<!--       	<a class="nav-link me-3" href="#" tabindex="-1" aria-disabled="true">購物車</a> -->
-				<!--              <div class="cart-num">3</div> -->
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
-			</div>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-	</nav>
-	<!-- /頂部導航列 -->
-	<!-- 輪播圖 -->
-	<div id="carouselExampleIndicators"
-		class="carousel slide carousel-dark slide" data-bs-ride="carousel">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-				data-bs-slide-to="0" class="active" aria-current="true"
-				aria-label="Slide 1"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-				data-bs-slide-to="1" aria-label="Slide 2"></button>
-			<button type="button" data-bs-target="#carouselExampleIndicators"
-				data-bs-slide-to="2" aria-label="Slide 3"></button>
-			<!--     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
-		</div>
-		<div class="carousel-inner container">
-			<!-- data-bs-interval="5000" 5秒輪播  data-pause="hover" 滑鼠在上面時暫停輪播 -->
-			<div class="carousel-item active" data-bs-interval="3000"
-				data-pause="hover">
-				<img src="img\0612.png" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="img/favicon.ico" class="d-block w-80" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="" class="d-block w-100" alt="...">
-			</div>
-			<!--      <div class="carousel-item"> -->
-			<!--       <img src="img/house-door.svg" class="d-block w-100" alt="..."> -->
-			<!--     </div> -->
-		</div>
-		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-				class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
-				class="visually-hidden">Next</span>
-		</button>
-	</div>
-	<!-- /輪播圖 -->
+		<!-- /輪播圖 -->
 		<p>{{message}}</p>
 		<p>{{length}}</p>
 		<!-- 		<p>{{dataList}}</p> -->
@@ -246,24 +271,25 @@ a {
 		<!-- 			<li v-for="item in dataList">{{item}}</li> -->
 		<!-- 			<li v-for="item in dataList">{{item.empId}}</li> -->
 		<!-- 		</ul> -->
-		<input type="text" v-model.trim="pagination.empName" @keydown.enter="search()" placeholder="依姓名查詢"> 
-		<input type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">
+		<input type="text" v-model.trim="pagination.empName"
+			@keydown.enter="search()" placeholder="依姓名查詢"> <input
+			type="text" v-model.trim="pagination.empAge" placeholder="依年齡查詢">
 		<select v-model.lazy="pagination.empGender">
 			<option value="">請選擇</option>
 			<option value="男">男</option>
 			<option value="女">女</option>
 		</select>
 		<!-- <input type="text" v-model.trim="pagination.empGender" placeholder="依性別查詢">		 -->
-		<button type="button" class="btn btn-outline-success" @click="search()">查詢</button>
+		<button type="button" class="btn btn-outline-success"
+			@click="search()">查詢</button>
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addForm" @:click="resetForm()">新增</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+			data-bs-target="#addForm" @:click="resetForm()">新增</button>
 		<!-- <div> -->
 		<div class="table-responsive container-fluid">
 			<h1 v-if="dataList.length===0">查無符合資料，請重新查詢</h1>
-			<table id="example1"
-				class="table table-bordered table-striped table-hover"
-				v-if="dataList.length>0">
-				<div>
+			<table id="example1" class="table table-bordered table-striped table-hover">
+<!-- 				<div> -->
 					<thead>
 						<tr class="table-primary">
 							<th class="col col-1 col-sm-2 col-md-4 col-lg-1">員工ID</th>
@@ -275,10 +301,11 @@ a {
 							<!--                     <th>圖片</th> -->
 						</tr>
 					</thead>
-					<tbody>
-						<tr v-for="item in dataList">
+<!-- 				</div> -->
+					<tbody v-if="dataList.length>0">
+						<tr v-for="(item, index) in dataList" :key="item.empId">
 							<div>
-								<td>{{item.empId}}</td>
+								<td :class="{ 'bg-primary' : index === activeIndex }" @click="activeIndex = index">{{item.empId}}</td>
 							</div>
 							<div>
 								<td>{{item.empName}}</td>
@@ -325,8 +352,8 @@ a {
 		</div>
 		<!-- Modal  彈出新增表單-->
 		<!-- class: data-bs-backdrop="static" 視窗不會因為點擊背景而關閉 -->
-		<div class="modal fade"  id="addForm"
-			tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addForm" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -344,20 +371,20 @@ a {
 							<div class="col-md-6">
 								<label for="inputPassword4" class="form-label">年齡</label> <input
 									type="text" autocomplete="off" class="form-control"
-									id="inputPassword4" v-model="formData.empAge">
+									id="inputPassword4" v-model.number="formData.empAge">
 							</div>
 							<div class="col-12">
-								<label for="inputAddress" class="form-label">性別</label>
+								<label class="form-label">性別</label>
 								<div class="form-check">
-									<input class="form-check-input" value="男" type="radio"
+									<input class="form-check-input" value="男" type="radio" name="gender"
 										id="male" v-model="formData.empGender">
 									<!--checked屬性搭配v-model會抓不到 要在Vue的data模型中設定formData.empGender的初始值  -->
 									<label class="form-check-label" for="male"> 男 </label>
 								</div>
 								<div class="form-check">
-									<input class="form-check-input" value="女" type="radio"
-										id="female" v-model="formData.empGender"> <label
-										class="form-check-label" for="female"> 女 </label>
+									<input class="form-check-input" value="女" type="radio" name="gender"
+										id="female" v-model="formData.empGender"> 
+										<label class="form-check-label" for="female"> 女 </label>
 								</div>
 							</div>
 							<div class="col-12">
@@ -426,7 +453,7 @@ a {
 									id="inputPassword24" v-model="formData.empAge">
 							</div>
 							<div class="col-12">
-								<label for="inputAddress" class="form-label">性別</label>
+								<label class="form-label">性別</label>
 								<div class="form-check">
 									<input class="form-check-input" value="男" type="radio"
 										name="flexRadioDefault" id="flexRadioDefault21"
@@ -459,8 +486,8 @@ a {
 					<div class="modal-footer">
 						<button :plain="true" class="btn btn-secondary"
 							data-bs-dismiss="modal">取消</button>
-						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-							form="updateEmp">修改</button>
+						<button type="submit" class="btn btn-primary"
+							data-bs-dismiss="modal" form="updateEmp">修改</button>
 					</div>
 				</div>
 			</div>
@@ -471,23 +498,34 @@ a {
 			<div class="dataTables_paginate paging_simple_numbers"
 				id="example1_paginate">
 				<ul class="pagination justify-content-center">
-					<li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
-					 <a v-on:click="changePage(1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">首頁</a>
-					</li>
-					<li class="paginate_button page-item previous" id="example1_previous" :class="{ 'disabled' : pagination.currentPage === 1}">
-						<a v-on:click="changePage(pagination.currentPage-1)" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
-					</li>
+					<li class="paginate_button page-item previous"
+						id="example1_previous"
+						:class="{ 'disabled' : pagination.currentPage === 1 }"><a
+						v-on:click="changePage(1)" aria-controls="example1"
+						data-dt-idx="0" tabindex="0" class="page-link">首頁</a></li>
+					<li class="paginate_button page-item previous"
+						id="example1_previous"
+						:class="{ 'disabled' : pagination.currentPage === 1 }"><a
+						v-on:click="changePage(pagination.currentPage-1)"
+						aria-controls="example1" data-dt-idx="0" tabindex="0"
+						class="page-link">上一頁</a></li>
 					<!-- th:class="${num==page.current?'active':''}"  class="paginate_button page-item active" -->
 					<!--               <li  class="paginate_button page-item" v-for="item in pagination.pages" :class="{ 'active' : pagination.currentPage === item }"> -->
-					<li class="paginate_button page-item" v-for="item in navpages" :class="{ 'active' : pagination.currentPage === item }">
+					<li class="paginate_button page-item" v-for="item in navpages"
+						:class="{ 'active' : pagination.currentPage === item }">
 						<!-- <a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
-						<a v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" :class="{ 'disabled' : item === '...'}">{{item}}</a> <!-- <a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
-					</li>
-					<li class="paginate_button page-item next" id="example1_next" :class="{ 'disabled' : pagination.currentPage === pagination.pages}">
-						<a v-on:click="changePage(pagination.currentPage+1)"aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">下一頁</a>
+						<a v-on:click="changePage(item)" aria-controls="example1"
+						data-dt-idx="1" tabindex="0" class="page-link"
+						:class="{ 'disabled' : item === '...' }">{{item}}</a> <!-- <a v-if="pagination.currentPage >10" v-on:click="changePage(item)" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link" >{{item}}</a> -->
 					</li>
 					<li class="paginate_button page-item next" id="example1_next"
-						:class="{ 'disabled' : pagination.currentPage === pagination.pages}">
+						:class="{ 'disabled' : pagination.currentPage === pagination.pages }">
+						<a v-on:click="changePage(pagination.currentPage+1)"
+						aria-controls="example1" data-dt-idx="5" tabindex="0"
+						class="page-link">下一頁</a>
+					</li>
+					<li class="paginate_button page-item next" id="example1_next"
+						:class="{ 'disabled' : pagination.currentPage === pagination.pages }">
 						<a v-on:click="changePage(pagination.pages)"
 						aria-controls="example1" data-dt-idx="5" tabindex="0"
 						class="page-link">末頁</a>
@@ -501,11 +539,12 @@ a {
 			</div>
 		</div>
 		<form id="userLogin" v-if="userInfo==''">
-			<label>帳號:</label><input type="text" name="username" v-model="loginForm.userAccount"><br>
-			<label>密碼:</label><input type="password" name="password" v-model="loginForm.userPassword"><br> 	
-			<label>驗證碼:</label><input type="text" v-model="loginForm.verCode"> 
-			<img alt="" src="http://localhost/users/getCode"><br>
-			<input type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
+			<label>帳號:</label><input type="text" name="username"
+				v-model="loginForm.userAccount"><br> <label>密碼:</label><input
+				type="password" name="password" v-model="loginForm.userPassword"><br>
+			<label>驗證碼:</label><input type="text" v-model="loginForm.verCode">
+			<img alt="" src="http://localhost/users/getCode"><br> <input
+				type="button" value="登入" form="userLogin" v-on:click="userLogin()"><br>
 		</form>
 		<p>姓名:{{userInfo.userName}}</p>
 		<p>ID:{{userInfo.userId}}</p>
@@ -538,8 +577,8 @@ a {
 								id="exampleInputEmail1" placeholder="Enter email">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">姓名</label> <input type="text"
-								name="username" class="form-control" id="exampleInputPassword1"
+							<label for="exampleInputPassword">姓名</label> <input type="text"
+								name="username" class="form-control" id="exampleInputPassword"
 								placeholder="請輸入姓名">
 						</div>
 						<div class="form-group">
@@ -561,9 +600,9 @@ a {
 							</div>
 						</div>
 						<div class="form-check">
-							<input type="checkbox" class="form-check-input"
-								id="exampleCheck1"> <label class="form-check-label"
-								for="exampleCheck1">Check me out</label>
+							<input type="checkbox" class="form-check-input" id="exampleCheck">
+							<label class="form-check-label" for="exampleCheck1">Check
+								me out</label>
 						</div>
 					</div>
 					<!-- /.card-body -->
@@ -594,9 +633,9 @@ a {
 				<form action="" enctype="multipart/form-data" id="up2">
 					<div class="card-body">
 						<div class="form-group">
-							<label for="exampleInputEmail1">Email address</label> <input
+							<label for="exampleInputEmail">Email address</label> <input
 								type="email" name="email" class="form-control"
-								id="exampleInputEmail1" placeholder="Enter email">
+								id="exampleInputEmail" placeholder="Enter email">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">姓名</label> <input type="text"
@@ -707,34 +746,35 @@ a {
          		dataList: [],
          		empty: null,
          		length: '',
-         		formData:{empGender:'男'},
+         		formData: {empGender: '男'},
          		//emp:{empName:'老五',empGender:'男'},
-         		emp:{empName:'老五'},
-         		headerImg:'',
-         		file:'',
-         		image:'',
-         		loginForm:{},
-         		checkForm:{},
-         		userInfo:'',
-         		sessionInfo:'',
+         		emp: {empName: '老五'},
+         		headerImg: '',
+         		file: '',
+         		image: '',
+         		loginForm: {},
+         		checkForm: {},
+         		userInfo: '',
+         		sessionInfo: '',
 //          		queryInfo:'',
          		pagination: {//分頁相關資料
                      currentPage: 1,//當前頁
-                     pageSize:10,//每頁顯示幾筆
-                     total:0, //資料總筆數
-                     pages:0,//總頁數
-                     empName:'',
-                     empAge:'',
-                     empGender:'',
+                     pageSize: 10,//每頁顯示幾筆
+                     total: 0, //資料總筆數
+                     pages: 0,//總頁數
+                     empName: '',
+                     empAge: '',
+                     empGender: '',
                  },
-               	categoryForm:{type:1,name:'套牌',sort:1},
-               	imageUrl:'',
+               	categoryForm: {type: 1,name: '套牌',sort: 1},
+               	imageUrl: '',
                	fileForm: new FormData(),
                	categoryList: [],
+               	activeIndex: 0,
         	}
       },
       //頁面載入完成Vue後執行
-      mounted(){
+      mounted() {
     	  		//查詢所有
     	  		this.getAll();
     	  		//const user = sessionStorage.getItem('test')
@@ -747,16 +787,16 @@ a {
     	  		
       },
       //頁面渲染前執行
-      created(){
+      created() {
 	  			const userInfo = window.localStorage.getItem('userInfo');
 	  			if(userInfo){
 	  			//localStorage為字串類型 要取出要轉為物件
 	  			//JSON.parse:JSON轉物件
-	  			this.userInfo=JSON.parse(userInfo);
+	  			this.userInfo = JSON.parse(userInfo);
 	  			};
 	  			const sessionInfo = sessionStorage.getItem('test');
 	  			if(sessionInfo){
-	  			this.sessionInfo=JSON.parse(sessionInfo);
+	  			this.sessionInfo = JSON.parse(sessionInfo);
 	  			};
 	  			this.getCategoryList();
 	  			//重整頁面時保存當前頁面 不會因為重整回到第一頁
@@ -764,7 +804,7 @@ a {
 	  			const queryInfo = window.sessionStorage.getItem('name');
 	  			if(queryInfo){
 	  				this.pagination.empName = queryInfo;  
-	  			    this.queryInfo=JSON.stringify(queryInfo);
+	  			    this.queryInfo = JSON.stringify(queryInfo);
 	  			};
 				const ageInfo = window.sessionStorage.getItem('age');
 				if(ageInfo){
@@ -837,12 +877,19 @@ a {
 		 			  this.storePageNum();
   		 		  });
     	  },
-    	  changePage(currentPage){
+    	  changePage(currentPage) {
     		  	this.pagination.currentPage=currentPage;
     		  	window.sessionStorage.setItem('currentPage',currentPage);
     		  	this.getAll();
     	  },
     	  addEmp() {
+    		  		if (typeof this.formData.empAge !== 'number') {
+	  					Toast.fire({
+	  	                 	icon: 'error', title: '年齡格式錯誤',
+	  	                 	timer: 3000
+	  	             	});
+	  					return;
+	  			 	};	 
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 		  			  //判斷操作是否成功
 		  			  if (response.data.flag) {
@@ -865,6 +912,8 @@ a {
 			  	            });
 					  }
 	 		  		}).finally(()=>{	
+	 		  		   //新增後清空表單
+	 		  		   this.formData = {};
 	 		  		   //新增完成後再查詢一次，重整資料 	
 		  			   this.getAll();			  
 	 		  		});
@@ -885,7 +934,7 @@ a {
  		 				//"empAge": 26,"empGender":"男"})],{type:"application/json"}));
 	 		 		//fileForm2.append("file",file[0]);
 	 		 		console.log(fileForm2.get("empName"));
-	 		 		var empdata = 
+	 		 		let empdata = 
 	 		 		{"empName": this.emp.empName,
 	 		 				"empAge": 26,"empGender":"男"}
 //	 		 		fileForm2.append("emp",JSON.stringify(empdata));	
@@ -896,9 +945,7 @@ a {
 	 		 		console.log(fileForm2.get("emp"));
 	 		 		//fileForm2.append("emp",JSON.stringify(emp));
 	 		 		//fileForm2.append("emp",emp);
-	 		 		//fileForm2.append("emp",{"empName": "小王","empAge": 26,"empGender":"男"});
-	 		 		
-	 		 		
+	 		 		//fileForm2.append("emp",{"empName": "小王","empAge": 26,"empGender":"男"});		 		
 	  			axios.post("/emps/newfile",fileForm2,options).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  	console.log("回應"+response);
@@ -926,7 +973,7 @@ a {
 	  			   this.getAll();			  
 		  		});
 	  	  },
-	 	  removeEmp(empId){		  	　
+	 	  removeEmp(empId) {		  	　
 	  		   	   Swal.fire({
                    		title: "確定刪除此項資料(序號:" + empId + ")?",
                    		text:"刪除後將無法復原，請謹慎操作！",
@@ -968,7 +1015,6 @@ a {
                		 
 					}		   
                	   });
-
 	      },
 	      openUpdateForm(empId) {
 	  			axios.get("/emps/"+empId).then((response)=> {//成功時執行的回調函數
@@ -986,11 +1032,9 @@ a {
        	  				  title: '資料獲取失敗，請重新嘗試',
        	  				  showConfirmButton: false,
        	  				  timer: 3000
-       	  				})	
-					  	
+       	  				})						  	
 				  }
-		  		}).finally(()=>{
-		  			
+		  		}).finally(()=>{	  			
 		  		   //新增完成後再查詢 	
 	  			   this.getAll();
 		  		});
@@ -1018,7 +1062,7 @@ a {
               this.formData = {empGender:'男' ,check:false};          
              
           },
-          userLogin(){
+          userLogin() {
         	 const config ={
         		  withcredentials : true
         	  }
@@ -1051,7 +1095,7 @@ a {
 	  			   this.getAll();			  
  		  		});    	  
           },
-          userLogout(){
+          userLogout() {
         	  axios.post("/users/logout").then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  if (response.data.code="200") {	
@@ -1117,7 +1161,7 @@ a {
 	  			   this.getAll();	  		  		  			 	
 		  		});
 	  	 },
-	  	 removeCategory(categoryId){		  	　
+	  	 removeCategory(categoryId) {		  	　
 		   	   Swal.fire({
           		title: "確定刪除此項資料(序號:" + categoryId + ")?",
           		text:"刪除後將無法復原，請謹慎操作！",
@@ -1161,14 +1205,14 @@ a {
       	   });
 
  		  },
-    	  testFile(){	//先調用上傳 上傳成功後處理url
+    	  testFile() {	//先調用上傳 上傳成功後處理url
 		 		axios.post("/commons/upload").then(function (response) {
 		 			//成功時執行的回調函數
 		 			 //this.imageUrl='/commons/download/'+response.data.msg
 		 		      console.log(response.data.msg);
 		 		  });
 	  	  },
-	  	  testDownload(){	//先調用上傳 上傳成功後處理url
+	  	  testDownload() {	//先調用上傳 上傳成功後處理url
 		 		axios.post("/commons/upload",this.fileForm).then(function (response) {
 		 			//成功時執行的回調函數
 		 			 this.imageUrl="/commons/download/"+response.data.msg
@@ -1189,7 +1233,7 @@ a {
 	      imageLoaded(e) {
 	            this.image = e.target.result;
 	      },
-	      getCategoryList(){
+	      getCategoryList() {
 	    	    //get請求傳參數使用params {params:{type:1}} 或是/categorys/list?type=1拼接
     		  		axios.get("/categorys/list",{params:{type:1}}).then((response)=> {//成功時執行的回調函數
   		 		    if (response.data.flag) {	
@@ -1205,7 +1249,7 @@ a {
 		  
 	 		  		});
 	      },  
-	      userCheck(){
+	      userCheck() {
         	  axios.post("/users/check",this.checkForm).then((response)=> {//成功時執行的回調函數
 	  			  //判斷操作是否成功
 	  			  console.log(response)
@@ -1223,7 +1267,7 @@ a {
 	  			   this.getAll();			  
  		  		});    	  
           },
-    	  testAjax(){	
+    	  testAjax() {	
     		 		axios.post(
     		 			"/CardstoreSSM/test/ajax?id=1001",
     		 			{username:"admin",password:"123456"}		
@@ -1231,7 +1275,7 @@ a {
     		 		      console.log(response);
     		 		  });
     	  },
-    	  testRequestBody(){
+    	  testRequestBody() {
     		  	axios.post(
     		  		 "/CardstoreSSM/test/RequestBody/json",
     		  		{username:"admin",password:"123456",age:23,gender:"男"}
@@ -1239,14 +1283,14 @@ a {
 		 		      console.log(response);
 		 		  });
     	  },
-    	  testResponseBody(){
+    	  testResponseBody() {
     		  axios.post(
      		  		 "/CardstoreSSM/test/ResponseBody/json"
      		   ).then(function (response) {//成功時執行的回調函數
  		 		      console.log(response);
  		 		  });
     	  },
-    	  storePageNum(){ //重整頁面時保存當前頁碼 不會因為重整回到第一頁
+    	  storePageNum() { //重整頁面時保存當前頁碼 不會因為重整回到第一頁
     		  let pageNum =Number(window.sessionStorage.getItem('currentPage')) || 1;
 //     	  	  let query = window.sessionStorage.getItem('query')||"";
 //     	  	  this.param=query;
@@ -1259,13 +1303,13 @@ a {
       }, //methods
       computed:{
     	  navpages:function(){
-    	  	var current = this.pagination.currentPage
-    	  	var total = this.pagination.pages
-    	  	var page = []
-    	    for (var i = 1; i <= total; i++) {
+    	  	let current = this.pagination.currentPage
+    	  	let total = this.pagination.pages
+    	  	let page = []
+    	    for (let i = 1; i <= total; i++) {
     	    	page.push(i)
     	        }
-    	        var l = page.length
+    	        let l = page.length
     	        if (l <= 10) { //總頁數<=10 顯示所有頁碼
     	          return page
     	        } else if (l > 10 && current <= 5) { // 總頁數>10 && 當前頁<=5
