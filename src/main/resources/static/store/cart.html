@@ -158,25 +158,32 @@ a {
 		{{message}}
 		{{userInfo.userId}}
 		總價:{{subtotal}}
+		<input type="checkbox" v-model="allSelect2">
+		<input type="checkbox" v-model="allSelect">
 		<div v-for="item in dataList">
 		<input type="checkbox" v-model="item.check" @click="checkItem($event,index)">
 			{{item}}
 		</div>
-		<div class="card mb-3" style="max-width: 540px;" v-for="item in dataList">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{item.productName}}</h5>
-        <h5 class="card-title">{{item.check}}</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  </div>
-</div>
+		<div class="card mb-3" style="max-width: 540px;" v-if="dataList.length > 0">
+			<div v-for="(item, index) in dataList" :key="item.cartId">
+  				<div class="row g-0">
+    				<div class="col-md-4">
+    				<!-- url要''嵌套 -->
+      					<img class="col-md-12" :src="/image/+item.productImage"  alt="..." v-if="item.productImage!==null">
+      					<img class="col-md-12" :src="'/image/No-Image-Placeholder.svg.png'"  alt="..." v-else>
+    				</div>
+		    <div class="col-md-8" :class="{ 'bg-secondary  bg-opacity-50' : item.check}">
+		      <div class="card-body">
+		        <h5 class="card-title">{{item.productName}}</h5>
+		        <h5 class="card-title">{{item.check}}</h5>
+		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		        <p class="card-text fw-bolder fs-3"><b style="color: #B95F00;">{{item.price}}</b></p>
+		      </div>
+		    </div>
+  			  </div>
+  		</div>
+		</div><!-- class="card mb-3" -->
+		<div v-else>購物車尚無商品</div>
 	</div><!-- #app -->
 </body>
 <script src="../js/script.js" type="module"></script><!-- 引入頁首 -->
@@ -243,17 +250,22 @@ a {
       			}
       			return total;
       		},
-      		getAndSet: {
-      			//同簡寫 計算屬性被獲取時執行
-      			get () {
+      		allSelect: {
+      			get(){//計算屬性被獲取時執行		
       				//計算邏輯
-      				return	//return結果	
+      				//return結果	
+      				return this.dataList.every(item => item.check === true);
       			},
-      			//計算屬性被修改賦值時執行
-      			set (val) { //val =修改的值
+      			set(val){//計算屬性被修改賦值時執行 val =修改的值
       				//修改邏輯
-      				console.log(val);
+      				this.dataList.forEach(item => item.check = val);
       			}
+      		},
+      		allSelect2: function(){
+      			let checkflag = this.dataList.every(function(item){
+      			return item.check === true;	
+      			});	
+      			return checkflag;
       		},
       	},
 	});

@@ -107,6 +107,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 		List<Product> selectList = productMapper.selectList(productQuery);
 		//商品map集合 key=productId value=Product實體類
 		//Map<Integer, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
+		//List 轉 Map
 		Map<Integer, Product> collect = selectList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
 		//4.封裝vo資料 
 		List<CartVo> cartVoList = new ArrayList<>();
