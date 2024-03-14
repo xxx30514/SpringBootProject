@@ -54,6 +54,6 @@ public class CartController {
 	@DeleteMapping("{cartId}")
 	public R delete(@PathVariable Integer cartId) {
 		cartService.removeById(cartId);
-		return R.success("購物車刪除成功");
-	}
+        return R.success("購物車刪除成功");
+      }
 }

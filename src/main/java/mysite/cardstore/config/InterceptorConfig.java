@@ -13,7 +13,7 @@ import mysite.cardstore.interceptor.LoginInterceptor;
  * 3.指定攔截規則
  */
 @Configuration
-public class AdminWebConfig implements WebMvcConfigurer{
+public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginInterceptor())

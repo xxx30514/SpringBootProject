@@ -246,7 +246,10 @@ a {
       		subtotal: function(){ //: function 可以省略=> subtotal() //簡寫computed屬性 僅能獲取 不能set
       			let total = 0;
       			for (let i in this.dataList){
+      				//被選中時計算 也可使用js的reduce方法
+      				if (this.dataList[i].check) {				
       				total += (this.dataList[i].price*this.dataList[i].number);
+					}
       			}
       			return total;
       		},

@@ -880,16 +880,16 @@ a {
     	  changePage(currentPage) {
     		  	this.pagination.currentPage=currentPage;
     		  	window.sessionStorage.setItem('currentPage',currentPage);
-    		  	this.getAll();
+    		    this.getAll();
     	  },
     	  addEmp() {
-    		  		if (typeof this.formData.empAge !== 'number') {
-	  					Toast.fire({
-	  	                 	icon: 'error', title: '年齡格式錯誤',
-	  	                 	timer: 3000
-	  	             	});
-	  					return;
-	  			 	};	 
+    		  if (typeof this.formData.empAge !== 'number') {
+    			   Toast.fire({
+    				   icon: 'error', title: '年齡格式錯誤',
+    				   timer: 3000
+    				  	});
+    			  return;//加上return 年齡格式有誤時不會執行下面的新增函數送出表單
+    			  };	 
 		  			axios.post("/emps",this.formData).then((response)=> {//成功時執行的回調函數
 		  			  //判斷操作是否成功
 		  			  if (response.data.flag) {
