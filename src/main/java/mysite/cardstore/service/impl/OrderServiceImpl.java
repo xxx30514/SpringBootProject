@@ -24,8 +24,6 @@ import mysite.cardstore.mapper.OrderMapper;
 import mysite.cardstore.mapper.ProductMapper;
 import mysite.cardstore.param.OrderParam;
 import mysite.cardstore.param.OrdertoProductParam;
-import mysite.cardstore.param.ProductIdParam;
-import mysite.cardstore.param.ProductListParam;
 import mysite.cardstore.pojo.Order;
 import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.OrderService;
@@ -101,7 +99,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 	 * 4.封裝返回的OrderVo
 	 */
 	@Override
-	public R getOrder(@NotNull Integer userId) {
+	//@NotNull
+	public R getOrder(Integer userId) {
 		//查詢使用者訂單
 		QueryWrapper<Order> query = new QueryWrapper<>();
 		query.eq("user_id", userId);
@@ -126,7 +125,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 				Product product = productMap.get(order.getProductId());
 				orderVo.setProductName(product.getName());
 				orderVo.setProductPicture(product.getImage());
-				//List<OrderVo> 
+				//List<OrderVo>
 				orderVos.add(orderVo);
 			}
 			result.add(orderVos);
@@ -135,5 +134,5 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>  implement
 		log.info("OrderServiceImpl.getOrder業務結束,結果:{}",r);
 		return r;
 	}
-	
+
 }

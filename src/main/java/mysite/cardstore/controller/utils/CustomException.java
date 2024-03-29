@@ -1,6 +1,6 @@
 package mysite.cardstore.controller.utils;
 /**
- * 
+ *
  * @author yeh
  * 自定義異常
  */

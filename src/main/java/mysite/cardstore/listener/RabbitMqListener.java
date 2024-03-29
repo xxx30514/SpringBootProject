@@ -18,13 +18,13 @@ public class RabbitMqListener {
 
 	@Autowired
 	private CartService cartService;
-	
+
 	@Autowired
 	private ProductService productService;
 	//沒有在@exchange裡配置type = ExchangeTypes.TOPIC 預設為DIRECT
 	@RabbitListener(
 			bindings = @QueueBinding(
-					value = @Queue(name = "clear.queue"), 
+					value = @Queue(name = "clear.queue"),
 					exchange = @Exchange(value = "order.exchange"),
 					key = "clear.cart"
 					)
@@ -32,10 +32,10 @@ public class RabbitMqListener {
 	public void clear(List<Integer> cartIds) {
 		cartService.removeByIds(cartIds);
 	}
-	
+
 	@RabbitListener(
 			bindings = @QueueBinding(
-					value = @Queue(name = "update.queue"), 
+					value = @Queue(name = "update.queue"),
 					exchange = @Exchange(value = "order.exchange"),
 					key = "update.number"
 					)

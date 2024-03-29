@@ -5,7 +5,6 @@ import java.awt.Font;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.mysql.cj.Session;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
@@ -36,7 +34,7 @@ import mysite.cardstore.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
+
 	private LineCaptcha lineCaptcha;
 
 	@PostMapping("/login")
@@ -88,7 +86,7 @@ public class UserController {
 
 	/**
 	 * 檢查帳號是否已經存在
-	 * 
+	 *
 	 * @param userCheckParam 接收檢查帳號的實體 內部有參數userAccount進行校驗
 	 * @param result         校驗結果的實體
 	 * @return 封裝好的json物件Result
@@ -145,7 +143,7 @@ public class UserController {
 		if (!lineCaptcha.verify(userLoginParam.getVerCode())) {
 			return R.fail("驗證碼錯誤");
 		}
-//		if (!verCode.equalsIgnoreCase(userLoginParam.getVerCode())) {	
+//		if (!verCode.equalsIgnoreCase(userLoginParam.getVerCode())) {
 //			return R.fail("驗證碼錯誤");
 //		}
 		// request.setAttribute("loginUser", userLoginParam.getUserAccount());

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionAdvice {
-	
+
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public Result doException(Exception exception) {
 		exception.printStackTrace();
@@ -22,11 +22,11 @@ public class ExceptionAdvice {
 		}
 		return new Result("發生異常，請稍後再試!");
 	}
-	
+
 	@ExceptionHandler(CustomException.class)
 	public Result doException(CustomException exception) {
 		log.error(exception.getMessage());
-		exception.printStackTrace();	
+		exception.printStackTrace();
 		return new Result(exception.getMessage());
 	}
 }

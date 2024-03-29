@@ -6,7 +6,7 @@ public class Dept {
 	private Integer deptId;
 	private String deptName;
 	private List<Emp> emps;
-	
+
 	public Dept() {
 	}
 
@@ -30,8 +30,8 @@ public class Dept {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	
-	
+
+
 	public List<Emp> getEmps() {
 		return emps;
 	}
@@ -44,6 +44,6 @@ public class Dept {
 	public String toString() {
 		return "Dept [deptId=" + deptId + ", deptName=" + deptName + ", emps=" + emps + "]";
 	}
-	
-	
+
+
 }

@@ -47,18 +47,18 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements EmpSe
 
 	@Override
 	public IPage<Emp> getPage(int currentPage, int pageSize) {
-		IPage<Emp> page = new Page<Emp>(currentPage, pageSize);
+		IPage<Emp> page = new Page<>(currentPage, pageSize);
 		empMapper.selectPage(page, null);
 		return page;
 	}
 
 	@Override
 	public IPage<Emp> getPage(int currentPage, int pageSize, Emp emp) {
-		LambdaQueryWrapper<Emp> query = new LambdaQueryWrapper<Emp>();
+		LambdaQueryWrapper<Emp> query = new LambdaQueryWrapper<>();
 		query.like(!emp.getEmpName().isEmpty(), Emp::getEmpName, emp.getEmpName());
 		query.like(emp.getEmpAge() != null, Emp::getEmpAge, emp.getEmpAge());
-		query.like(!emp.getEmpGender().isEmpty(), Emp::getEmpGender, emp.getEmpGender());
-		IPage<Emp> page = new Page<Emp>(currentPage, pageSize);
+		query.like(emp.getEmpGender() !=null, Emp::getEmpGender, emp.getEmpGender());
+		IPage<Emp> page = new Page<>(currentPage, pageSize);
 		empMapper.selectPage(page, query);
 		return page;
 	}

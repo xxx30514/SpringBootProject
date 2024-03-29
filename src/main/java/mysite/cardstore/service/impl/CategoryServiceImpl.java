@@ -21,7 +21,7 @@ import mysite.cardstore.service.ProductService;
 
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService{
-	
+
 	@Autowired
 	private CategoryMapper categoryMapper;
 	@Autowired
@@ -52,9 +52,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 		removeById(categoryId);
 	}
 
-	
 
-	
+
+
 
 
 }

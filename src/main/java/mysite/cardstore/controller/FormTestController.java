@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
+ *
  * @author yeh
  * 文件上傳功能測試
  */
@@ -30,7 +29,7 @@ public class FormTestController {
 			@RequestParam("username") String username,
 			@RequestPart("headerImg") MultipartFile headerImg,
 			@RequestPart("productImgs") MultipartFile[] productImgs) throws IllegalStateException, IOException {
-		
+
 		log.info("上傳資訊:email={},username={},headerImg={},productImgs={}",
 				email,username,headerImg.getSize(),productImgs.length);
 		if (!headerImg.isEmpty()) {

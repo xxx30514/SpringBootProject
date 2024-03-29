@@ -1,7 +1,6 @@
 package mysite.cardstore.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 

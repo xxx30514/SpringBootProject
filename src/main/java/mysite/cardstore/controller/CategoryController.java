@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
-
-import mysite.cardstore.controller.utils.R;
 import mysite.cardstore.controller.utils.Result;
 import mysite.cardstore.pojo.Category;
 import mysite.cardstore.service.CategoryService;
@@ -26,24 +24,24 @@ import mysite.cardstore.service.CategoryService;
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@PostMapping
 	public Result save(HttpServletRequest request,@RequestBody Category category) {
 		return new Result(true,categoryService.saveCategory(request, category));
 	}
-	
+
 	@DeleteMapping("{categoryId}")
 	public Result delete(@PathVariable("categoryId") Integer categoryId) {
 		categoryService.removeCategory(categoryId);
 		return new Result(true);
 	}
-	
+
 	@GetMapping("/list")
 	public Result list(Category category){
 		LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(category.getType()!=null,Category::getType,category.getType());
 		queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
-		List<Category> list = categoryService.list(queryWrapper);	
+		List<Category> list = categoryService.list(queryWrapper);
 		return new Result(true,list);
 	}
 

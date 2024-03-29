@@ -37,13 +37,13 @@ class CardstoreApplicationTests {
 	UserService userService;
 	@Autowired
 	OrderMapper orderMapper;
-	
+
 	@Test
 	void contextLoads() {
 		Long long1 = jdbcTemplate.queryForObject("select count(*) from t_emp", Long.class);
 		log.info("總資料數:{}筆資料",long1);
 	}
-	
+
 	@Test
 	void testEmpMapper() {
 		Emp emp = empMapper.selectById(1);
@@ -53,13 +53,13 @@ class CardstoreApplicationTests {
 		log.info("員工資訊:{}",emp2);
 		log.info("員工資訊:{}",emp3);
 	}
-	
+
 	@Test
 	void testInsertEmp() {
 		Emp emp = new Emp();
 		emp.setEmpName("新增測試");
 		emp.setEmpAge(25);
-		emp.setEmpGender("男");
+		emp.setEmpGender(0);
 		empMapper.insert(emp);
 
 	}
@@ -69,7 +69,7 @@ class CardstoreApplicationTests {
 		emp.setEmpId(36);
 		emp.setEmpName("新增測試更新");
 		emp.setEmpAge(26);
-		emp.setEmpGender("男");
+		emp.setEmpGender(0);
 		empMapper.updateById(emp);
 
 	}
@@ -89,7 +89,7 @@ class CardstoreApplicationTests {
 	}
 	@Test
 	void testPage() {
-		IPage<Emp> page = new Page(1,5); 
+		IPage<Emp> page = new Page(1,5);
 		empMapper.selectPage(page, null);
 
 	}
@@ -103,8 +103,8 @@ class CardstoreApplicationTests {
 	@Test
 	void testGetBy2() {
 		String name = "王";
-		IPage<Emp> page = new Page(1,5); 
-		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<Emp>();
+		IPage<Emp> page = new Page(1,5);
+		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<>();
 		emp.like(StringUtils.isNotEmpty(name),Emp::getEmpName, name);
 		empMapper.selectPage(page,emp);
 		empService.page(page);
@@ -113,8 +113,8 @@ class CardstoreApplicationTests {
 	@Test
 	void testService() {
 		String name = "王";
-		IPage<Emp> page = new Page(1,5); 
-		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<Emp>();
+		IPage<Emp> page = new Page(1,5);
+		LambdaQueryWrapper<Emp> emp =new LambdaQueryWrapper<>();
 		emp.like(StringUtils.isNotEmpty(name),Emp::getEmpName, name);
 		empService.page(page,emp);
 
@@ -124,7 +124,7 @@ class CardstoreApplicationTests {
 		Emp emp = new Emp();
 		emp.setEmpName("新增測試");
 		emp.setEmpAge(25);
-		emp.setEmpGender("男");
+		emp.setEmpGender(0);
 		empMapper.insertEmp(emp);
 	}
 	@Test
@@ -152,7 +152,7 @@ class CardstoreApplicationTests {
 		orders.add(order);
 		orders.add(order2);
 		orderMapper.batchSaveOrder(orders);
-		
+
 	}
 
 }

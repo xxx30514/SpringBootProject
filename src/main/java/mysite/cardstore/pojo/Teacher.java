@@ -1,10 +1,10 @@
 package mysite.cardstore.pojo;
 
 public class Teacher {
-	
+
 	private Integer tid;
 	private String tname;
-	
+
 	public Teacher() {
 		System.out.println("生命周期1:bean實例化");
 	}
@@ -29,11 +29,11 @@ public class Teacher {
 	public String toString() {
 		return "Teacher [tid=" + tid + ", tname=" + tname + "]";
 	}
-	
+
 	public void initMethod() {
 		System.out.println("生命周期:初始化");
 	}
-	
+
 	public void destroyMethod() {
 		System.out.println("生命周期:銷毀");
 	}

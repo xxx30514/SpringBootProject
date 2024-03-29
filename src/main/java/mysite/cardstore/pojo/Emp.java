@@ -3,20 +3,21 @@ package mysite.cardstore.pojo;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Map;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("t_emp")
 public class Emp implements Serializable {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@TableId
 	private Integer empId;
 	private String empName;
 	private Integer empAge;
-	private String empGender;
+	private Integer empGender;
 	private Integer deptId;
 	@TableField(exist = false)
 	private Dept dept; //員工對部門 多對一 對一 對應一個實體對象 對多 對應集合
@@ -24,11 +25,11 @@ public class Emp implements Serializable {
 	private String[] hobby;
 	@TableField(exist = false)
 	private Map<String, Teacher> teacherMap;
-	
+
 	public Emp() {
 	}
 
-	public Emp(Integer empId, String empName, Integer empAge, String empGender, Integer deptId, Dept dept,
+	public Emp(Integer empId, String empName, Integer empAge, Integer empGender, Integer deptId, Dept dept,
 			String[] hobby, Map<String, Teacher> teacherMap) {
 		this.empId = empId;
 		this.empName = empName;
@@ -40,7 +41,7 @@ public class Emp implements Serializable {
 		this.teacherMap = teacherMap;
 	}
 
-	
+
 
 	public Integer getEmpId() {
 		return empId;
@@ -66,15 +67,15 @@ public class Emp implements Serializable {
 		this.empAge = empAge;
 	}
 
-	public String getEmpGender() {
+	public Integer getEmpGender() {
 		return empGender;
 	}
 
-	public void setEmpGender(String empGender) {
+	public void setEmpGender(Integer empGender) {
 		this.empGender = empGender;
 	}
-	
-	
+
+
 	public Dept getDept() {
 		return dept;
 	}
@@ -82,9 +83,9 @@ public class Emp implements Serializable {
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
-	
-	
-	
+
+
+
 	public String[] getHobby() {
 		return hobby;
 	}
@@ -92,8 +93,8 @@ public class Emp implements Serializable {
 	public void setHobby(String[] hobby) {
 		this.hobby = hobby;
 	}
-	
-	
+
+
 	public Map<String, Teacher> getTeacherMap() {
 		return teacherMap;
 	}
@@ -109,14 +110,14 @@ public class Emp implements Serializable {
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Emp [empId=" + empId + ", empName=" + empName + ", empAge=" + empAge + ", empGender=" + empGender
 				+ ", deptId=" + deptId + ", dept=" + dept + ", hobby=" + Arrays.toString(hobby) + ", teacherMap="
 				+ teacherMap + "]";
 	}
-	
-	
-	
+
+
+
 }

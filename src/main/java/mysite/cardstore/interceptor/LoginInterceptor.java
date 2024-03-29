@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
+ *
  * @author yeh
  * 登入檢查
  * 1.配置攔截器要攔截那些請求 實現implements HandlerInterceptor介面
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class LoginInterceptor implements HandlerInterceptor{
-	
+
 	@Override
 	//目標方法執行前
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,16 +36,16 @@ public class LoginInterceptor implements HandlerInterceptor{
 			log.info("使用者已登入,ID為:{}",loginUser);
 			//放行
 			return true;
-		}else {			
+		}else {
 			//攔截 =未登入 =>跳轉到登入頁面
 			log.info("使用者尚未登入,跳轉到登入頁面");
 			request.setAttribute("msg", "請先登入");
 			//request.getRequestDispatcher("/backend/login.html").forward(request, response);
-			response.sendRedirect(request.getContextPath()+"/backend/login.html");		
+			response.sendRedirect(request.getContextPath()+"/backend/login.html");
 			return false;
 		}
 	}
-	
+
 	@Override
 	//目標方法執行完成後
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -53,7 +53,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		// TODO Auto-generated method stub
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
-	
+
 	@Override
 	//頁面渲染後
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)

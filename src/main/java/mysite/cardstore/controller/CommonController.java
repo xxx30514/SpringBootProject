@@ -9,7 +9,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import mysite.cardstore.controller.utils.Result;
 
 /**
- * 
+ *
  * @author yeh
  * 檔案上傳下載
  */
@@ -31,13 +30,13 @@ import mysite.cardstore.controller.utils.Result;
 public class CommonController {
 	@Value("${cardstore.path}")
 	private String basePath;
-	
+
 	@PostMapping("/upload")
 	public Result upload(MultipartFile headerImg){
 		log.info(headerImg.toString());
 		//獲取上傳的檔案名稱
 		String originalFilename = headerImg.getOriginalFilename();
-		if (!headerImg.isEmpty()) {	
+		if (!headerImg.isEmpty()) {
 			//獲取上傳的檔案的後綴名 ex. jpg
 			String typeName =  originalFilename.substring(originalFilename.lastIndexOf("."));
 			//獲取UUID
@@ -52,7 +51,7 @@ public class CommonController {
 			file.mkdirs();
 		}
 		try {
-			if (!headerImg.isEmpty()) {				
+			if (!headerImg.isEmpty()) {
 				headerImg.transferTo(new File(basePath+originalFilename));
 			}
 		} catch (IllegalStateException e) {
@@ -62,7 +61,7 @@ public class CommonController {
 		}
 		return new Result(true,originalFilename);
 	}
-	
+
 	@GetMapping("/download/{originalFilename}")
 	public void download(@PathVariable("originalFilename") String originalFilename,HttpServletResponse response) {
 		try {

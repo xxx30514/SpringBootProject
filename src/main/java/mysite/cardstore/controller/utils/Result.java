@@ -7,9 +7,9 @@ public class Result {
 	private Boolean flag;
 	private Object data;
 	private String msg;
-	
+
 	public Result() {
-		
+
 	}
 	public Result(Boolean flag) {
 		this.flag=flag;

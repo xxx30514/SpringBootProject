@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @TableName("t_category")
 public class Category implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	@TableId
 	private Integer categoryId;
@@ -20,7 +20,7 @@ public class Category implements Serializable {
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	private Integer updateUser;
-	
-	
+
+
 
 }

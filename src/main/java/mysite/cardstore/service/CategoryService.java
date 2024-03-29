@@ -10,9 +10,9 @@ import mysite.cardstore.pojo.Category;
 
 
 public interface CategoryService extends IService<Category>{
-	
-	Boolean saveCategory(HttpServletRequest request,Category category); 
-	
+
+	Boolean saveCategory(HttpServletRequest request,Category category);
+
 	void removeCategory(Integer categoryId);
 
 }

@@ -21,10 +21,10 @@ import mysite.cardstore.service.CartService;
 @RestController
 @RequestMapping("/carts")
 public class CartController {
-	
+
 	@Autowired
 	private CartService cartService;
-	
+
 	@PostMapping("/save")
 	public R save(@RequestBody @Validated CartSaveParam cartSaveParam,BindingResult result) {
 		if (result.hasErrors()) {
@@ -32,7 +32,7 @@ public class CartController {
 		}
 		return cartService.saveCart(cartSaveParam);
 	}
-	
+
 	@PostMapping("/list")
 	public R list(@RequestBody @Validated CartListParam cartListParam,BindingResult result) {
 		if (result.hasErrors()) {
@@ -40,17 +40,17 @@ public class CartController {
 		}
 		return cartService.cartList(cartListParam.getUserId());
 	}
-	
+
 	@GetMapping("{userId}")
 	public R cartList(@PathVariable Integer userId) {
 		return cartService.cartList(userId);
 	}
-	
+
 	@PutMapping("/update")
 	public R update(@RequestBody Cart cart) {
 		return cartService.updateCart(cart);
 	}
-	
+
 	@DeleteMapping("{cartId}")
 	public R delete(@PathVariable Integer cartId) {
 		cartService.removeById(cartId);

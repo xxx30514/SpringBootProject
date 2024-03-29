@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,7 +23,6 @@ import mysite.cardstore.param.ProductIdParam;
 import mysite.cardstore.pojo.Cart;
 import mysite.cardstore.pojo.Product;
 import mysite.cardstore.service.CartService;
-
 import mysite.cardstore.vo.CartVo;
 
 
@@ -36,10 +34,11 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 	private CartMapper cartMapper;
 	@Autowired
 	private ProductMapper productMapper;
-	
+
 
 	@Override
-	public R saveCart(@NotNull CartSaveParam cartSaveParam) {
+	//public R saveCart(@NotNull CartSaveParam cartSaveParam)
+	public R saveCart(CartSaveParam cartSaveParam) {
 		// 1.查詢商品資料
 		ProductIdParam productIdParam = new ProductIdParam();
 		productIdParam.setProductId(cartSaveParam.getProductId());
@@ -86,8 +85,9 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 	}
 
 	@Override
-	public R cartList(@NotNull Integer userId) {
-		// 1.使用者id查詢購物車資料 
+	//cartList(@NotNull Integer userId)
+	public R cartList( Integer userId) {
+		// 1.使用者id查詢購物車資料
 		QueryWrapper<Cart> query = new QueryWrapper<>();
 		query.eq("user_id", userId);
 		List<Cart> cartList = cartMapper.selectList(query);
@@ -109,7 +109,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 		//Map<Integer, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
 		//List 轉 Map
 		Map<Integer, Product> collect = selectList.stream().collect(Collectors.toMap(Product::getProductId, p->p));
-		//4.封裝vo資料 
+		//4.封裝vo資料
 		List<CartVo> cartVoList = new ArrayList<>();
 		for (Cart cart : cartList) {
 			//CartVo cartVo = new CartVo(productMap.get(cart.getProductId()),cart);

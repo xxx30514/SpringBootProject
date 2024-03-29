@@ -161,7 +161,7 @@ a {
 		<input type="checkbox" v-model="allSelect2">
 		<input type="checkbox" v-model="allSelect">
 		<div v-for="item in dataList">
-		<input type="checkbox" v-model="item.check" @click="checkItem($event,index)">
+		<input type="checkbox" v-model="item.check">
 			{{item}}
 		</div>
 		<div class="card mb-3" style="max-width: 540px;" v-if="dataList.length > 0">

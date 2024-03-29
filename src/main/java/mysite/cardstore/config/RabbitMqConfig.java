@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 	/**
-	 * RabbitMQ序列化方式 Json 格式 
+	 * RabbitMQ序列化方式 Json 格式
 	 * @return
 	 */
 	@Bean

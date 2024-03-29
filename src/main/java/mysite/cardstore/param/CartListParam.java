@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class CartListParam {
-	
+
 	@NotNull
 	private Integer userId;
 }

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @TableName("t_order")
 public class Order implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
 	@TableId
 	private Integer orderId;
@@ -22,5 +22,5 @@ public class Order implements Serializable{
 	private BigDecimal productPrice;
 	private LocalDateTime orderTime;
 	private Integer addressId;
-	
+
 }

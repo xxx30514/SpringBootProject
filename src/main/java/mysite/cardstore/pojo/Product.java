@@ -13,7 +13,7 @@ import lombok.Data;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@TableId
 	private Integer productId;
 	private String name;
