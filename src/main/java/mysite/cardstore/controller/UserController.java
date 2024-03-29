@@ -158,6 +158,7 @@ public class UserController {
 		Font font = new Font("Times New Roman", Font.PLAIN, 28);
 		lineCaptcha.setFont(font);
 		System.out.println("驗證碼" + lineCaptcha.getCode());
+		System.out.println("驗證碼" + lineCaptcha.getCode());
 		response.setContentType("image/jpeg");
 		response.setHeader("Pragma", "No-cache");
 		try {
